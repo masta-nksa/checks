@@ -1,0 +1,10 @@
+{
+  "checks": [
+    {
+      "gefaess": "FMS · Farben und Bilder",
+      "titel": "Pixel-Check",
+      "lektion": "Lektion 1",
+      "pfad": "graphiken/pixel/"
+    }
+  ]
+}

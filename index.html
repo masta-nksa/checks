@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Checks</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/check.css">
+<link rel="stylesheet" href="assets/index.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Informatik · Selbstkontrolle</span>
+    <h1>Self-Checks</h1>
+    <p class="lead">Kurze Multiple-Choice-Checks zum Selbstprüfen. Keine Anmeldung, keine Auswertung – die Antworten bleiben bei Ihnen.</p>
+    <div class="pixelrule" aria-hidden="true"></div>
+  </header>
+  <div id="liste"><p class="leer">Wird geladen …</p></div>
+</div>
+
+<!-- Optional: qrcode.min.js nach assets/ legen und die naechste Zeile entkommentieren,
+     dann zeigt die Uebersicht pro Check einen QR-Code zum Anbeamen.
+<script src="assets/qrcode.min.js"></script>
+-->
+<script>
+(function () {
+  "use strict";
+  var liste = document.getElementById("liste");
+
+  var rule = document.querySelector(".pixelrule");
+  for (var i = 0; i < 40; i++) rule.append(document.createElement("i"));
+
+  fetch("manifest.json", { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(render)
+    .catch(function (err) {
+      liste.innerHTML =
+        '<div class="oops"><h2>Übersicht nicht verfügbar</h2>' +
+        '<p><code>manifest.json</code> fehlt oder ist fehlerhaft.<br><code>' +
+        String(err.message || err) + '</code></p></div>';
+    });
+
+  function render(data) {
+    var checks = (data && data.checks) || [];
+    liste.textContent = "";
+    if (!checks.length) {
+      liste.innerHTML = '<p class="leer">Noch keine Checks eingetragen.</p>';
+      return;
+    }
+
+    var gruppen = {};
+    var reihenfolge = [];
+    checks.forEach(function (c) {
+      var g = c.gefaess || "Ohne Gefäss";
+      if (!gruppen[g]) { gruppen[g] = []; reihenfolge.push(g); }
+      gruppen[g].push(c);
+    });
+
+    reihenfolge.forEach(function (g) {
+      var box = document.createElement("section");
+      box.className = "gruppe";
+      var h = document.createElement("h2");
+      h.textContent = g;
+      var karten = document.createElement("div");
+      karten.className = "karten";
+
+      gruppen[g].forEach(function (c) {
+        var a = document.createElement("a");
+        a.className = "karte";
+        a.href = c.pfad;
+
+        var meta = document.createElement("span");
+        meta.className = "meta";
+        meta.textContent = c.lektion || "";
+
+        var t = document.createElement("span");
+        t.className = "titel";
+        t.textContent = c.titel || c.pfad;
+
+        var pfeil = document.createElement("span");
+        pfeil.className = "pfeil";
+        pfeil.textContent = "→";
+
+        a.append(meta, t, pfeil);
+
+        if (window.QRCode) {
+          var qr = document.createElement("span");
+          a.insertBefore(qr, pfeil);
+          try {
+            new window.QRCode(qr, {
+              text: new URL(c.pfad, location.href).href,
+              width: 56, height: 56
+            });
+          } catch (e) { qr.remove(); }
+        }
+
+        karten.append(a);
+      });
+
+      box.append(h, karten);
+      liste.append(box);
+    });
+  }
+})();
+</script>
+</body>
+</html>
