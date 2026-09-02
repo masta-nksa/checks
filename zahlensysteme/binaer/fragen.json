@@ -59,7 +59,7 @@
       "fb": "16 passt (Rest 3) → 8 passt nicht → 4 passt nicht → 2 passt (Rest 1) → 1 passt. Ergebnis: <b>10011</b> = 16 + 2 + 1 = 19."
     },
     {
-      "q": "Wie viele verschiedene Zahlen lassen sich mit 5 Stellen (16-8-4-2-1) darstellen?",
+      "q": "Wie viele verschiedene Zahlen lassen sich mit 5 Stellen <span style=\"white-space:nowrap\">(16-8-4-2-1)</span> darstellen?",
       "opts": [
         "31 Zahlen, von 1 bis 31",
         "32 Zahlen, von 0 bis 31",
