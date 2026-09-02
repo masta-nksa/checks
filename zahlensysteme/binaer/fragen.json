@@ -59,7 +59,7 @@
       "fb": "16 passt (Rest 3) → 8 passt nicht → 4 passt nicht → 2 passt (Rest 1) → 1 passt. Ergebnis: <b>10011</b> = 16 + 2 + 1 = 19."
     },
     {
-      "q": "Wie viele verschiedene Zahlen lassen sich mit einer fünfstelligen Binärzahl darstellen?",
+      "q": "Wie viele verschiedene Zahlen lassen sich mit 5 Stellen (16-8-4-2-1) darstellen?",
       "opts": [
         "31 Zahlen, von 1 bis 31",
         "32 Zahlen, von 0 bis 31",
@@ -67,7 +67,7 @@
         "16 Zahlen, von 0 bis 15"
       ],
       "a": 1,
-      "fb": "Jede der fünf Stellen kann 0 oder 1 sein: 2⁵ = <b>32</b> Möglichkeiten – von 00000 (= 0) bis 11111 (= 31). Auch 00000 ist eine gültige Zahl."
+      "fb": "Jede der 5 Stellen kann 0 oder 1 sein: 2⁵ = <b>32</b> Möglichkeiten – von 00000 (= 0) bis 11111 (= 31). Auch 00000 ist eine gültige Zahl."
     },
     {
       "q": "Welche Aussage über Zehner- und Binärsystem stimmt?",
