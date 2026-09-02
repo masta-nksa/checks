@@ -22,6 +22,17 @@
           "pfad": "graphiken/pixel/"
         }
       ]
+    },
+    {
+      "thema": "Hardware und Software",
+      "gefaess": "FMS",
+      "checks": [
+        {
+          "titel": "Hardware-Check",
+          "untertitel": "CPU, RAM, Speicher, Grafikkarte, Auflösung",
+          "pfad": "hardware/komponenten/"
+        }
+      ]
     }
   ]
 }
