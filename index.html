@@ -44,47 +44,53 @@
     });
 
   function render(data) {
-    var checks = (data && data.checks) || [];
+    // Gruppen und Reihenfolge kommen aus manifest.json: thematisch gruppiert,
+    // von den Grundlagen zu den Anwendungen. Keine Lektionsnummern.
+    var themen = (data && data.themen) || [];
     liste.textContent = "";
-    if (!checks.length) {
+    if (!themen.length) {
       liste.innerHTML = '<p class="leer">Noch keine Checks eingetragen.</p>';
       return;
     }
 
-    var gruppen = {};
-    var reihenfolge = [];
-    checks.forEach(function (c) {
-      var g = c.gefaess || "Ohne Gefäss";
-      if (!gruppen[g]) { gruppen[g] = []; reihenfolge.push(g); }
-      gruppen[g].push(c);
-    });
+    themen.forEach(function (t) {
+      var checks = t.checks || [];
+      if (!checks.length) return;
 
-    reihenfolge.forEach(function (g) {
       var box = document.createElement("section");
       box.className = "gruppe";
+
       var h = document.createElement("h2");
-      h.textContent = g;
+      h.textContent = t.gefaess ? t.thema + " · " + t.gefaess : t.thema;
+
       var karten = document.createElement("div");
       karten.className = "karten";
 
-      gruppen[g].forEach(function (c) {
+      checks.forEach(function (c) {
         var a = document.createElement("a");
         a.className = "karte";
         a.href = c.pfad;
 
-        var meta = document.createElement("span");
-        meta.className = "meta";
-        meta.textContent = c.lektion || "";
+        var titel = document.createElement("span");
+        titel.className = "titel";
+        titel.textContent = c.titel || c.pfad;
 
-        var t = document.createElement("span");
-        t.className = "titel";
-        t.textContent = c.titel || c.pfad;
+        var text = document.createElement("span");
+        text.className = "text";
+        text.append(titel);
+
+        if (c.untertitel) {
+          var unter = document.createElement("span");
+          unter.className = "unter";
+          unter.textContent = c.untertitel;
+          text.append(unter);
+        }
 
         var pfeil = document.createElement("span");
         pfeil.className = "pfeil";
         pfeil.textContent = "→";
 
-        a.append(meta, t, pfeil);
+        a.append(text, pfeil);
 
         if (window.QRCode) {
           var qr = document.createElement("span");

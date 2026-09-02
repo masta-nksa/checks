@@ -10,12 +10,16 @@ Pfadschema: ein Ordner pro Themengebiet, darin ein Ordner pro Check –
 Das Gefäss (FMS, Freifach, Gym) steht nicht im Pfad, sondern in `manifest.json`;
 so bleibt die URL kurz und gültig, auch wenn ein Thema das Gefäss wechselt.
 
+Die Checks sind **thematisch** gruppiert und bewusst **nicht** an einzelne Lektionen
+gebunden – ein Check kann jederzeit und unabhängig vom Lektionsstand gelöst werden.
+
 ## Neuen Check anlegen (drei Handgriffe)
 
 1. Einen bestehenden Check-Ordner kopieren und umbenennen
    (z. B. `graphiken/pixel/` → `zahlensysteme/binaer/`).
 2. `fragen.json` inhaltlich ersetzen.
-3. In `manifest.json` eine Zeile ergänzen.
+3. In `manifest.json` beim passenden Thema einen Eintrag ergänzen
+   (oder ein neues Thema anlegen).
 
 `index.html` im Check-Ordner wird **nie** angefasst – sie ist für alle Checks identisch
 und findet `assets/` selbst, unabhängig von der Ordnertiefe.
@@ -25,7 +29,7 @@ und findet `assets/` selbst, unabhängig von der Ordnertiefe.
 ```json
 {
   "titel": "Pixel-Check",
-  "eyebrow": "FMS · Farben und Bilder · Lektion 1",
+  "eyebrow": "FMS · Farben und Bilder",
   "intro": "Sechs Fragen zu …",
   "quellen": ["inf-schule.de/…"],
   "fragen": [
@@ -41,8 +45,32 @@ und findet `assets/` selbst, unabhängig von der Ordnertiefe.
 
 - `a` = Nullindex der richtigen Option.
 - `opts` = 2 bis 4 Optionen; die Buchstaben A–D vergibt die Engine.
-- `quellen` und `eyebrow` sind optional.
+- `quellen` und `eyebrow` sind optional. Im `eyebrow` steht das Thema, keine Lektionsnummer.
 - Datei als **UTF-8** speichern (Umlaute, «·», «→»).
+
+## Format `manifest.json`
+
+```json
+{
+  "themen": [
+    {
+      "thema": "Zahlensysteme",
+      "gefaess": "FMS",
+      "checks": [
+        {
+          "titel": "Binär-Check",
+          "untertitel": "Stellenwerte, Zweierpotenzen, Umrechnung",
+          "pfad": "zahlensysteme/binaer/"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Die Reihenfolge der Themen und der Checks innerhalb eines Themas ist genau die
+Reihenfolge in dieser Datei – sinnvollerweise von den Grundlagen zu den Anwendungen.
+`gefaess` und `untertitel` sind optional.
 
 ## Papierversion
 

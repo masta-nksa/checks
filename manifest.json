@@ -1,16 +1,27 @@
 {
-  "checks": [
+  "_hinweis": "Reihenfolge der Themen und der Checks innerhalb eines Themas ergibt sich aus der Reihenfolge in dieser Datei – von den Grundlagen zu den Anwendungen. Kein Bezug auf einzelne Lektionen.",
+  "themen": [
     {
-      "gefaess": "FMS · Farben und Bilder",
-      "titel": "Pixel-Check",
-      "lektion": "Lektion 1",
-      "pfad": "graphiken/pixel/"
+      "thema": "Zahlensysteme",
+      "gefaess": "FMS",
+      "checks": [
+        {
+          "titel": "Binär-Check",
+          "untertitel": "Stellenwerte, Zweierpotenzen, Umrechnung",
+          "pfad": "zahlensysteme/binaer/"
+        }
+      ]
     },
     {
-      "gefaess": "FMS · Zahlensysteme",
-      "titel": "Binär-Check",
-      "lektion": "Lektion 1",
-      "pfad": "zahlensysteme/binaer/"
+      "thema": "Farben und Bilder",
+      "gefaess": "FMS",
+      "checks": [
+        {
+          "titel": "Pixel-Check",
+          "untertitel": "Pixel, Auflösung, Schärfe",
+          "pfad": "graphiken/pixel/"
+        }
+      ]
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "titel": "Binär-Check",
-  "eyebrow": "FMS · Zahlensysteme · Lektion 1",
-  "intro": "Sieben Fragen zur Lektion „Vom Zahlenschloss zum Binärcode“ – Stellenwerttafel, Zweierpotenzen und Umrechnung. Klicken Sie eine Antwort an – Sie sehen sofort, ob sie stimmt, und warum.",
+  "eyebrow": "FMS · Zahlensysteme",
+  "intro": "Sieben Fragen zum Binärsystem – Stellenwerttafel, Zweierpotenzen und Umrechnung zwischen Dezimal- und Binärzahlen. Klicken Sie eine Antwort an – Sie sehen sofort, ob sie stimmt, und warum.",
   "fragen": [
     {
       "q": "Welche Ziffern kommen in einer Binärzahl vor?",
@@ -10,7 +10,7 @@
       "fb": "Ein Computer kennt nur zwei Zustände (Strom an / aus). Darum genügen die Ziffern <b>0 und 1</b>."
     },
     {
-      "q": "Bei der Bit-Karten-Übung lag eine Karte sichtbar auf dem Tisch, eine andere war zugedeckt. Wie schreibt man das als Binärzahl?",
+      "q": "Karten mit den Werten 16-8-4-2-1 liegen nebeneinander – einige sichtbar, andere zugedeckt. Wie überträgt man das in eine Binärzahl?",
       "opts": [
         "sichtbar = 1, zugedeckt = 0",
         "sichtbar = 0, zugedeckt = 1",
