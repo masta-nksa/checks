@@ -13,17 +13,6 @@
       ]
     },
     {
-      "thema": "Farben und Bilder",
-      "gefaess": "FMS",
-      "checks": [
-        {
-          "titel": "Pixel-Check",
-          "untertitel": "Pixel, Auflösung, Schärfe",
-          "pfad": "graphiken/pixel/"
-        }
-      ]
-    },
-    {
       "thema": "Hardware und Software",
       "gefaess": "FMS",
       "checks": [
@@ -31,6 +20,17 @@
           "titel": "Hardware-Check",
           "untertitel": "CPU, RAM, Speicher, Grafikkarte, Auflösung",
           "pfad": "hardware/komponenten/"
+        }
+      ]
+    },
+    {
+      "thema": "Farben und Bilder",
+      "gefaess": "FMS",
+      "checks": [
+        {
+          "titel": "Pixel-Check",
+          "untertitel": "Pixel, Auflösung, Schärfe",
+          "pfad": "graphiken/pixel/"
         }
       ]
     }
