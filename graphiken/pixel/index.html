@@ -12,6 +12,7 @@
 (function () {
   var p = location.pathname, i = p.indexOf("/checks/");
   window.CHECK_ROOT = i >= 0 ? p.slice(0, i + 8) : "/";
+  document.write('<link rel="icon" href="' + window.CHECK_ROOT + 'assets/favicon.svg">');
   document.write('<link rel="stylesheet" href="' + window.CHECK_ROOT + 'assets/check.css">');
 })();
 </script>

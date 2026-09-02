@@ -72,7 +72,19 @@
 
     if (Array.isArray(data.quellen) && data.quellen.length) {
       var src = el("div", "sources");
-      data.quellen.forEach(function (q) { src.append(el("span", null, q)); });
+      src.append(el("p", "sources-lead",
+        data.quellenText ||
+        "Der Check bezieht sich auf diese Theorie – schlagen Sie dort nach, " +
+        "wenn Sie unsicher sind:"));
+      data.quellen.forEach(function (q) {
+        var url = typeof q === "string" ? q : (q && q.url) || "";
+        var label = typeof q === "string" ? q : (q && (q.titel || q.url)) || "";
+        var a = el("a", null, label);
+        a.href = /^https?:\/\//.test(url) ? url : "https://" + url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        src.append(a);
+      });
       head.append(src);
     }
 
