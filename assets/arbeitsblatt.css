@@ -139,15 +139,14 @@
   }
   #arbeitsblatt h3 { font-size: 10.5pt; margin: 3mm 0 1mm; }
 
-  /* Harter Seitenumbruch ([[seitenumbruch]]) */
-  #arbeitsblatt .seitenumbruch { break-before: page; height: 0; }
-
-  /* Reserve hinter jeder ##-Überschrift: passt Titel + ~65 mm (rund ein
-     Seitenviertel) nicht mehr auf die Seite, rückt der ganze Teil auf die
-     nächste. Der negative Rand hält den Platz frei, ohne eine Lücke zu machen. */
+  /* Kein „Teil“ soll unten auf einer fast vollen Seite beginnen. Hinter jeder
+     ##-Überschrift steht ein unsichtbarer, nicht umbrechbarer Block von rund
+     einem Seitenviertel (lernseite.js fügt ihn ein). Passt er nicht mehr aufs
+     Blatt, nimmt er die Überschrift (break-after: avoid) mit auf die nächste
+     Seite. Der negative Aussenabstand macht ihn im Layout wieder unsichtbar. */
   #arbeitsblatt .teil-reserve {
-    height: 65mm;
-    margin-bottom: -65mm;
+    height: 62mm;
+    margin-bottom: -62mm;
     break-inside: avoid;
   }
   #arbeitsblatt p { margin: 0 0 2mm; }

@@ -1,6 +1,6 @@
 # Bildauflösung und DPI
 
-*FMS · Farben und Bilder · Lektion 1b · Lesezeit ca. 10 Minuten*
+*Farben und Bilder · Lesezeit ca. 10 Minuten*
 
 Diese Seite enthält alles aus dem Selbstlernmodul, das Sie im Unterricht bearbeitet haben — zum Nachlesen, wenn Sie gefehlt haben, und zum Nacharbeiten vor einer Prüfung. Die Lösungen sind eingeklappt: erst selbst überlegen, dann aufklappen.
 

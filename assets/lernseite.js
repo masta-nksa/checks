@@ -384,11 +384,6 @@
         p.parentNode.replaceChild(namensfeld(), p);
       } else if (m.name === 'antwort') {
         p.parentNode.replaceChild(antwortfeld(m.arg), p);
-      } else if (m.name === 'seitenumbruch') {
-        var u = document.createElement('div');
-        u.className = 'seitenumbruch';
-        u.setAttribute('aria-hidden', 'true');
-        p.parentNode.replaceChild(u, p);
       }
     });
   }

@@ -109,8 +109,6 @@ Wie viele Zentimeter sind 5 Zoll?
 5 × 2,54 = 12,7 cm.
 [[/kontrolle]]
 
-[[seitenumbruch]]
-
 ## Teil 5 — Theorie: DPI
 
 **DPI** steht für *dots per inch*, auf Deutsch **Punkte pro Zoll**. Die Zahl sagt, wie viele Bildpunkte beim Ausgeben auf **einem Zoll Länge** untergebracht werden. 300 DPI heisst also: auf jedem Zoll Papier liegen 300 Punkte nebeneinander.
