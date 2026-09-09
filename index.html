@@ -53,30 +53,64 @@
       return;
     }
 
+    // Pro Thema: erst die Lernseiten ("Zum Nachlesen"), dann die Checks
+    // ("Zum Selbstprüfen"). Fehlt eines der beiden Arrays, entfaellt der
+    // Abschnitt – Themen mit nur Checks sehen aus wie bisher.
     themen.forEach(function (t) {
+      var lernseiten = t.lernseiten || [];
       var checks = t.checks || [];
-      if (!checks.length) return;
+      if (!lernseiten.length && !checks.length) return;
 
       var box = document.createElement("section");
       box.className = "gruppe";
 
       var h = document.createElement("h2");
       h.textContent = t.gefaess ? t.thema + " · " + t.gefaess : t.thema;
+      box.append(h);
 
+      var beide = lernseiten.length && checks.length;
+
+      if (lernseiten.length) {
+        if (beide) box.append(abschnitt("Zum Nachlesen"));
+        box.append(kartenBauen(lernseiten, true));
+      }
+      if (checks.length) {
+        if (beide) box.append(abschnitt("Zum Selbstprüfen"));
+        box.append(kartenBauen(checks, false));
+      }
+
+      liste.append(box);
+    });
+
+    function abschnitt(text) {
+      var p = document.createElement("p");
+      p.className = "subhead";
+      p.textContent = text;
+      return p;
+    }
+
+    function kartenBauen(items, istLernseite) {
       var karten = document.createElement("div");
       karten.className = "karten";
 
-      checks.forEach(function (c) {
+      items.forEach(function (c) {
         var a = document.createElement("a");
         a.className = "karte";
         a.href = c.pfad;
 
+        var text = document.createElement("span");
+        text.className = "text";
+
+        if (istLernseite) {
+          var eyebrow = document.createElement("span");
+          eyebrow.className = "eyebrow";
+          eyebrow.textContent = "Lernseite";
+          text.append(eyebrow);
+        }
+
         var titel = document.createElement("span");
         titel.className = "titel";
         titel.textContent = c.titel || c.pfad;
-
-        var text = document.createElement("span");
-        text.className = "text";
         text.append(titel);
 
         if (c.untertitel) {
@@ -106,9 +140,8 @@
         karten.append(a);
       });
 
-      box.append(h, karten);
-      liste.append(box);
-    });
+      return karten;
+    }
   }
 })();
 </script>

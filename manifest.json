@@ -26,6 +26,13 @@
     {
       "thema": "Farben und Bilder",
       "gefaess": "FMS",
+      "lernseiten": [
+        {
+          "titel": "Bildauflösung und DPI",
+          "untertitel": "Pixelanzahl, DPI, Druckgrösse berechnen",
+          "pfad": "lernen/graphiken/aufloesung-dpi/"
+        }
+      ],
       "checks": [
         {
           "titel": "Pixel-Check",
