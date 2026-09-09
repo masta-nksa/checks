@@ -61,13 +61,13 @@ Rechnen Sie die Megapixel aus. Runden Sie auf eine Nachkommastelle.
 
 | Gerät | Auflösung | Megapixel |
 |---|---|---|
-| Ältere Handykamera | 3264 × 2448 | |
-| Aktuelle Handykamera | 4000 × 3000 | |
+| Ältere Handykamera | 4000 × 3000 | |
+| Aktuelle Handykamera | 8160 × 6120 | |
 | Bildschirm im Schulzimmer | 1920 × 1080 | |
 [[/aufgabe]]
 
 [[kontrolle]]
-8,0 Megapixel — 12,0 Megapixel — 2,1 Megapixel. Beachten Sie, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Darauf kommen wir in Teil 8 zurück.
+12,0 Megapixel — 49,9 Megapixel (die Herstellerangabe „50 Megapixel" ist gerundet) — 2,1 Megapixel. Beachten Sie, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Darauf kommen wir in Teil 8 zurück.
 [[/kontrolle]]
 
 ## Teil 4 — Theorie: Zoll
@@ -89,6 +89,8 @@ Wie viele Zentimeter sind 5 Zoll?
 [[kontrolle]]
 5 × 2,54 = 12,7 cm.
 [[/kontrolle]]
+
+[[seitenumbruch]]
 
 ## Teil 5 — Theorie: DPI
 
@@ -249,13 +251,13 @@ Sie möchten ein Plakat im Format A4 (21 × 29,7 cm) mit 300 DPI drucken.
 
 [[antwort:1]]
 
-**c)** Eine Handykamera nimmt Fotos mit 12 Megapixeln auf (siehe Aufgabe 3). Reicht das?
+**c)** Eine aktuelle Handykamera nimmt Fotos mit rund 50 Megapixeln auf (siehe Aufgabe 3). Reicht das?
 
 [[antwort:2]]
 [[/aufgabe]]
 
 [[kontrolle]]
-a) ca. 2480 × 3508 Pixel. b) ca. 8,7 Megapixel. c) Ja — 4000 × 3000 Pixel, beide Seiten sind lang genug. Weil das Seitenverhältnis nicht exakt zu A4 passt, müssten Sie aber einen Streifen wegschneiden.
+a) ca. 2480 × 3508 Pixel. b) ca. 8,7 Megapixel. c) Ja, locker — ein 50-Megapixel-Foto hat 8160 × 6120 Pixel, weit mehr als nötig. Selbst eine ältere 12-Megapixel-Kamera (4000 × 3000) würde reichen. Weil das Seitenverhältnis nicht exakt zu A4 passt, müssten Sie aber einen Streifen wegschneiden.
 [[/kontrolle]]
 
 ## Selbstcheck: Haben Sie alles?

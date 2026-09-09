@@ -34,11 +34,11 @@ Daraus berechnet man die gesamte Pixelanzahl:
 
 | Gerät | Auflösung | Megapixel |
 |---|---|---|
-| Ältere Handykamera | 3264 × 2448 | 8,0 |
-| Aktuelle Handykamera | 4000 × 3000 | 12,0 |
+| Ältere Handykamera | 4000 × 3000 | 12,0 |
+| Aktuelle Handykamera | 8160 × 6120 | 49,9 |
 | Bildschirm im Schulzimmer | 1920 × 1080 | 2,1 |
 
-Beachten Sie, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Das wird weiter unten wichtig.
+Die Herstellerangabe „50 Megapixel" ist gerundet — 8160 × 6120 ergibt genau 49,9 Millionen Pixel. Beachten Sie ausserdem, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Das wird weiter unten wichtig.
 
 </details>
 
@@ -172,7 +172,7 @@ Bild B, weil es mehr Pixel hat (3600 × 2400 statt 2400 × 1800). Bei gleicher D
 <details>
 <summary>Warum reicht eine Bildschirmauflösung von 72 DPI für den Druck nicht?</summary>
 
-Ein Bild, das für den Bildschirm gedacht ist, enthält entsprechend wenige Pixel — mehr könnte der Bildschirm gar nicht anzeigen (ein Schulzimmer-Bildschirm schafft 2,1 Megapixel, eine Handykamera 12). Für guten Druck braucht man aber rund 300 DPI. Von so einem Bildschirmbild bliebe bei 300 DPI nur eine sehr kleine scharfe Fläche übrig.
+Ein Bild, das für den Bildschirm gedacht ist, enthält entsprechend wenige Pixel — mehr könnte der Bildschirm gar nicht anzeigen (ein Schulzimmer-Bildschirm schafft 2,1 Megapixel, eine aktuelle Handykamera rund 50). Für guten Druck braucht man aber rund 300 DPI. Von so einem Bildschirmbild bliebe bei 300 DPI nur eine sehr kleine scharfe Fläche übrig.
 
 </details>
 
@@ -210,7 +210,7 @@ Fehlende Details lassen sich nachträglich nicht herbeirechnen. **Wer gross druc
 
 ## Zusatzaufgabe
 
-Sie möchten ein Plakat im Format A4 (21 × 29,7 cm) mit 300 DPI drucken. Wie viele Pixel muss Ihr Bild mindestens haben, wie vielen Megapixeln entspricht das, und reicht eine 12-Megapixel-Handykamera?
+Sie möchten ein Plakat im Format A4 (21 × 29,7 cm) mit 300 DPI drucken. Wie viele Pixel muss Ihr Bild mindestens haben, wie vielen Megapixeln entspricht das, und reicht eine aktuelle Handykamera (rund 50 Megapixel)?
 
 <details>
 <summary>Lösung</summary>
@@ -218,7 +218,7 @@ Sie möchten ein Plakat im Format A4 (21 × 29,7 cm) mit 300 DPI drucken. Wie vi
 - Breite: 21 ÷ 2,54 = 8,27 Zoll → 8,27 × 300 ≈ **2480 Pixel**
 - Höhe: 29,7 ÷ 2,54 = 11,69 Zoll → 11,69 × 300 ≈ **3508 Pixel**
 - 2480 × 3508 ≈ 8 700 000 Pixel ≈ **8,7 Megapixel**
-- Ja, 12 Megapixel reichen: ein solches Foto hat typischerweise 4000 × 3000 Pixel, beide Seiten sind lang genug. Weil das Seitenverhältnis 4:3 nicht exakt zu A4 passt, müssten Sie aber einen Streifen wegschneiden.
+- Ja, eine aktuelle Handykamera reicht locker: ein 50-Megapixel-Foto hat 8160 × 6120 Pixel, beide Seiten sind weit länger als nötig. Weil das Seitenverhältnis 4:3 nicht exakt zu A4 passt, müssten Sie aber einen Streifen wegschneiden. (Schon eine ältere 12-Megapixel-Kamera mit 4000 × 3000 Pixeln würde übrigens genügen.)
 
 </details>
 

@@ -380,8 +380,29 @@
     Array.prototype.slice.call(root.querySelectorAll('p')).forEach(function (p) {
       var m = istMarke(p);
       if (!m) return;
-      if (m.name === 'namensfeld') p.parentNode.replaceChild(namensfeld(), p);
-      else if (m.name === 'antwort') p.parentNode.replaceChild(antwortfeld(m.arg), p);
+      if (m.name === 'namensfeld') {
+        p.parentNode.replaceChild(namensfeld(), p);
+      } else if (m.name === 'antwort') {
+        p.parentNode.replaceChild(antwortfeld(m.arg), p);
+      } else if (m.name === 'seitenumbruch') {
+        var u = document.createElement('div');
+        u.className = 'seitenumbruch';
+        u.setAttribute('aria-hidden', 'true');
+        p.parentNode.replaceChild(u, p);
+      }
+    });
+  }
+
+  // Nach jeder ##-Überschrift einen unsichtbaren Reserve-Block einziehen: passt
+  // Titel + rund ein Seitenviertel Inhalt nicht mehr auf die Seite, wandert die
+  // Überschrift im Druck auf die nächste – so beginnt kein „Teil“ zuunterst.
+  // Die Höhe steckt in arbeitsblatt.css (.teil-reserve).
+  function teilUmbruchVorbereiten(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('h2'), function (h) {
+      var reserve = document.createElement('div');
+      reserve.className = 'teil-reserve';
+      reserve.setAttribute('aria-hidden', 'true');
+      h.parentNode.insertBefore(reserve, h.nextSibling);
     });
   }
 
@@ -406,6 +427,7 @@
     blockMarkenAufloesen(sec);
     einzelmarkenAufloesen(sec);
     ausfuelltabellen(sec);
+    teilUmbruchVorbereiten(sec);
     document.body.appendChild(sec);
   }
 

@@ -95,11 +95,18 @@ eigenen Zeile; die Engine sorgt selbst für die nötigen Leerzeilen):
 | `[[kontrolle]] … [[/kontrolle]]` | Kontrollblock (Variante 1 ausgeblendet, Variante 2 gedruckt) |
 | `[[merksatz]] … [[/merksatz]]` | hervorgehobener Merksatz |
 | `[[checkliste]] … [[/checkliste]]` | Liste mit leeren Ankreuzkästchen |
+| `[[seitenumbruch]]` | erzwingt im Druck einen Seitenumbruch an dieser Stelle |
 
 Tabellen im Arbeitsblatt, die leere Zellen enthalten, werden automatisch zu
 Ausfülltabellen: leere Zellen bekommen Mindesthöhe und hellen Hintergrund, die
 erste Spalte bleibt als Monospace-Label stehen. Eine Aufgabe mit mehreren
 Tabellen darf über mehrere Seiten umbrechen (`.aufgabe.teilbar`, automatisch).
+
+Jede `##`-Überschrift bekommt im Druck automatisch etwas Reserve: passt der
+Titel plus rund ein Seitenviertel Inhalt nicht mehr auf die Seite, rückt der
+ganze Abschnitt auf die nächste — so beginnt kein Teil im unteren Seitenviertel. Wo ein Teil
+zwingend oben auf einer neuen Seite starten soll, setzt man zusätzlich
+`[[seitenumbruch]]` davor.
 
 ### `arbeitsblatt.css`
 

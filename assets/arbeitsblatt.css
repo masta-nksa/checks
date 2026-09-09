@@ -138,6 +138,18 @@
     break-after: avoid;
   }
   #arbeitsblatt h3 { font-size: 10.5pt; margin: 3mm 0 1mm; }
+
+  /* Harter Seitenumbruch ([[seitenumbruch]]) */
+  #arbeitsblatt .seitenumbruch { break-before: page; height: 0; }
+
+  /* Reserve hinter jeder ##-Überschrift: passt Titel + ~65 mm (rund ein
+     Seitenviertel) nicht mehr auf die Seite, rückt der ganze Teil auf die
+     nächste. Der negative Rand hält den Platz frei, ohne eine Lücke zu machen. */
+  #arbeitsblatt .teil-reserve {
+    height: 65mm;
+    margin-bottom: -65mm;
+    break-inside: avoid;
+  }
   #arbeitsblatt p { margin: 0 0 2mm; }
   #arbeitsblatt ul,
   #arbeitsblatt ol { margin: 0 0 2mm; padding-left: 6mm; }
