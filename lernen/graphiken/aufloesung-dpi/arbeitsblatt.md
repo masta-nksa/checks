@@ -72,20 +72,20 @@ Rechnen Sie die Megapixel aus. Runden Sie auf eine Nachkommastelle.
 
 Ein Bildschirm zeigt immer nur so viele Pixel, wie er selbst hat — auch der grösste Fernseher im Wohnzimmer bleibt weit unter dem, was die Kamera aufnimmt:
 
-<svg viewBox="0 0 580 440" role="img" aria-label="Ineinanderliegende Rechtecke nach Pixelzahl: Handy-Bildschirm 2,6 Megapixel, 4K-Fernseher 8,3 Megapixel, Foto der Handykamera 50 Megapixel." style="display:block;width:100%;height:auto">
-<rect x="8" y="8" width="560" height="420" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)" stroke-width="1.5"></rect>
-<rect x="8" y="8" width="264" height="148" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5"></rect>
-<rect x="8" y="8" width="165" height="74" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)" stroke-width="1.5"></rect>
+<svg viewBox="0 0 620 300" role="img" aria-label="Ineinanderliegende Rechtecke nach Pixelzahl: Handy-Bildschirm 2,6 Megapixel, 4K-Fernseher 8,3 Megapixel, Foto der Handykamera 50 Megapixel." style="display:block;width:100%;height:auto">
+<rect x="6" y="6" width="384" height="288" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)" stroke-width="1.5"></rect>
+<rect x="6" y="6" width="181" height="102" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5"></rect>
+<rect x="6" y="6" width="113" height="51" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)" stroke-width="1.5"></rect>
 <g font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="13" fill="currentColor">
-<rect x="300" y="206" width="15" height="15" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"></rect>
-<text x="324" y="214" font-weight="600">Handy-Bildschirm</text>
-<text x="324" y="232">2400 × 1080 · ≈ 2,6 MP</text>
-<rect x="300" y="258" width="15" height="15" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)"></rect>
-<text x="324" y="266" font-weight="600">4K-Fernseher</text>
-<text x="324" y="284">3840 × 2160 · ≈ 8,3 MP</text>
-<rect x="300" y="310" width="15" height="15" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"></rect>
-<text x="324" y="318" font-weight="600">Foto der Handykamera</text>
-<text x="324" y="336">8160 × 6120 · ≈ 50 MP</text>
+<rect x="410" y="40" width="14" height="14" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"></rect>
+<text x="432" y="47" font-weight="600">Handy-Bildschirm</text>
+<text x="432" y="65">2400 × 1080 · ≈ 2,6 MP</text>
+<rect x="410" y="98" width="14" height="14" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)"></rect>
+<text x="432" y="105" font-weight="600">4K-Fernseher</text>
+<text x="432" y="123">3840 × 2160 · ≈ 8,3 MP</text>
+<rect x="410" y="156" width="14" height="14" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"></rect>
+<text x="432" y="163" font-weight="600">Foto der Handykamera</text>
+<text x="432" y="181">8160 × 6120 · ≈ 50 MP</text>
 </g>
 </svg>
 

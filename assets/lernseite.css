@@ -218,7 +218,7 @@ body {
 /* Eingebettete Grafiken (z. B. Grössenvergleiche) */
 .inhalt svg {
   display: block;
-  max-width: 440px;
+  max-width: 400px;
   height: auto;
   margin: 20px 0;
 }
@@ -238,6 +238,6 @@ body {
   .inhalt details > *:not(summary) { display: revert !important; }
   .inhalt h2 { break-after: avoid; }
   .inhalt table, .inhalt blockquote, .inhalt svg { break-inside: avoid; }
-  .inhalt svg { max-width: 120mm; }
+  .inhalt svg { max-width: 95mm; }
   .inhalt a { color: inherit; text-decoration: none; }
 }
