@@ -215,6 +215,14 @@ body {
   border-radius: 3px;
 }
 
+/* Eingebettete Grafiken (z. B. Grössenvergleiche) */
+.inhalt svg {
+  display: block;
+  max-width: 440px;
+  height: auto;
+  margin: 20px 0;
+}
+
 /* Druck: alles aufgeklappt, ohne Navigation */
 @media print {
   :root {
@@ -229,6 +237,7 @@ body {
   .inhalt details { break-inside: avoid; }
   .inhalt details > *:not(summary) { display: revert !important; }
   .inhalt h2 { break-after: avoid; }
-  .inhalt table, .inhalt blockquote { break-inside: avoid; }
+  .inhalt table, .inhalt blockquote, .inhalt svg { break-inside: avoid; }
+  .inhalt svg { max-width: 120mm; }
   .inhalt a { color: inherit; text-decoration: none; }
 }

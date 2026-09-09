@@ -36,11 +36,40 @@ Daraus berechnet man die gesamte Pixelanzahl:
 |---|---|---|
 | Ältere Handykamera | 4000 × 3000 | 12,0 |
 | Aktuelle Handykamera | 8160 × 6120 | 49,9 |
+| Handy-Bildschirm | 2400 × 1080 | 2,6 |
 | Bildschirm im Schulzimmer | 1920 × 1080 | 2,1 |
+| 4K-Fernseher | 3840 × 2160 | 8,3 |
 
-Die Herstellerangabe „50 Megapixel" ist gerundet — 8160 × 6120 ergibt genau 49,9 Millionen Pixel. Beachten Sie ausserdem, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Das wird weiter unten wichtig.
+Die Herstellerangabe „50 Megapixel" ist gerundet — 8160 × 6120 ergibt genau 49,9 Millionen Pixel. Beachten Sie ausserdem, wie wenige Pixel ein Bildschirm im Vergleich zu einer Kamera darstellt. Das wird gleich wichtig.
 
 </details>
+
+---
+
+## Was ein Bildschirm anzeigt
+
+Ein Bildschirm kann immer nur so viele Pixel zeigen, wie er selbst besitzt — auch wenn das Bild viel mehr hat. Und das sind erstaunlich wenige: Selbst ein grosser 4K-Fernseher zeigt nur rund einen Sechstel der Pixel, die eine aktuelle Handykamera aufnimmt. Auf dem Handy-Bildschirm sehen Sie noch weniger.
+
+<svg viewBox="0 0 580 440" role="img" aria-label="Ineinanderliegende Rechtecke nach Pixelzahl: Handy-Bildschirm 2,6 Megapixel, 4K-Fernseher 8,3 Megapixel, Foto der Handykamera 50 Megapixel." style="display:block;width:100%;height:auto">
+<rect x="8" y="8" width="560" height="420" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)" stroke-width="1.5"></rect>
+<rect x="8" y="8" width="264" height="148" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5"></rect>
+<rect x="8" y="8" width="165" height="74" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)" stroke-width="1.5"></rect>
+<g font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="13" fill="currentColor">
+<rect x="300" y="206" width="15" height="15" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"></rect>
+<text x="324" y="214" font-weight="600">Handy-Bildschirm</text>
+<text x="324" y="232">2400 × 1080 · ≈ 2,6 MP</text>
+<rect x="300" y="258" width="15" height="15" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)"></rect>
+<text x="324" y="266" font-weight="600">4K-Fernseher</text>
+<text x="324" y="284">3840 × 2160 · ≈ 8,3 MP</text>
+<rect x="300" y="310" width="15" height="15" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"></rect>
+<text x="324" y="318" font-weight="600">Foto der Handykamera</text>
+<text x="324" y="336">8160 × 6120 · ≈ 50 MP</text>
+</g>
+</svg>
+
+Das Bild wird beim Anzeigen also verkleinert — die Datei selbst bleibt gleich gross.
+
+> **Ein Bild kann mehr Pixel haben, als der Bildschirm zeigen kann.**
 
 ---
 
