@@ -45,6 +45,7 @@ Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Gelesen wir
 <div style="width:46%"><svg viewBox="0 0 216 96" role="img" aria-label="Wiederholung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
 <rect x="3" y="3" width="210" height="90" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="60" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
 <rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
@@ -54,6 +55,7 @@ Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Gelesen wir
 <div style="width:46%"><svg viewBox="0 0 216 66" role="img" aria-label="Wiederholung mit Bedingung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
 <rect x="3" y="3" width="210" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">solange Bedingung gilt</text>
 <rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
@@ -80,6 +82,7 @@ Der Wasserflaschen-Plan als Struktogramm:
 <svg viewBox="0 0 426 126" role="img" aria-label="Struktogramm Wasserflaschen tragen" style="display:block;width:100%;height:auto;max-width:426px">
 <rect x="3" y="3" width="420" height="120" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="420" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="90" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 3-mal</text>
 <rect x="29" y="33" width="394" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="226.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">4 Flaschen ins Harass legen</text>
@@ -100,6 +103,7 @@ Um ein Struktogramm auszuführen, spielen Sie den Computer: Sie gehen Kasten fü
 <text x="143.0" y="22.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">z ← 1</text>
 <rect x="3" y="33" width="280" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="33" width="280" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="63" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="52.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole n-mal</text>
 <rect x="29" y="63" width="254" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="156.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">z ← z · 2</text>
@@ -118,6 +122,7 @@ Ein Käfer läuft auf einem Feld und kennt drei Befehle: **vorwärts**, **rechts
 <svg viewBox="0 0 246 126" role="img" aria-label="Käfer-Struktogramm 1" style="display:block;width:100%;height:auto;max-width:246px">
 <rect x="3" y="3" width="240" height="120" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="240" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="90" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
 <rect x="29" y="33" width="214" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="136.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">vorwärts</text>

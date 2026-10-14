@@ -73,6 +73,7 @@ Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird imm
 <div style="break-inside:avoid"><p><b>Wiederholung:</b> Der farbige Kopf nennt, wie oft oder wie lange. Was <b>eingerückt</b> darunter steht, wird wiederholt.</p><div style="display:flex;gap:8mm;flex-wrap:wrap"><div style="width:46%"><svg viewBox="0 0 216 96" role="img" aria-label="Wiederholung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
 <rect x="3" y="3" width="210" height="90" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="60" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
 <rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
@@ -81,6 +82,7 @@ Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird imm
 </svg></div><div style="width:46%"><svg viewBox="0 0 216 66" role="img" aria-label="Wiederholung mit Bedingung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
 <rect x="3" y="3" width="210" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">solange Bedingung gilt</text>
 <rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
@@ -106,6 +108,7 @@ Der Wasserflaschen-Plan aus Teil 1 sieht als Struktogramm so aus:
 <svg viewBox="0 0 426 126" role="img" aria-label="Struktogramm Wasserflaschen tragen" style="display:block;width:100%;height:auto;max-width:426px">
 <rect x="3" y="3" width="420" height="120" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="420" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="90" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 3-mal</text>
 <rect x="29" y="33" width="394" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="226.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">4 Flaschen ins Harass legen</text>
@@ -118,6 +121,8 @@ Der Wasserflaschen-Plan aus Teil 1 sieht als Struktogramm so aus:
 [[merksatz]]
 Struktogramm: von oben nach unten lesen. **Eingerückt** heisst: gehört zum Kasten darüber. Ein Rahmen mit Kopf heisst: wiederholen. Ein Dreieck mit Ja und Nein heisst: Verzweigung.
 [[/merksatz]]
+
+<div style="break-before:page"></div>
 
 ## Teil 4 — Streifen ordnen
 
@@ -138,16 +143,19 @@ Zeichnen Sie das Ergebnis dann als Struktogramm in das Feld. Verwenden Sie dafü
 *Kontrollhinweis: Ihr Struktogramm hat 7 Kästchen mit Text, davon 2 in der Wiederholung und 2 in der Verzweigung.*
 [[/aufgabe]]
 
+<div style="break-before:page"></div>
+
 ## Teil 5 — Struktogramme lesen
 
 Ein **Käfer** läuft auf einem Feld aus Kästchen. Er kennt drei Befehle: **vorwärts** (ein Feld in Blickrichtung), **rechts drehen** und **links drehen** (jeweils eine Vierteldrehung, er bleibt dabei auf seinem Feld). Das Dreieck zeigt, wo er startet und wohin er schaut.
 
 [[aufgabe:Aufgabe 4 — der Käfer, Wiederholung]]
-Führen Sie das Struktogramm aus und zeichnen Sie den **Weg** des Käfers ein.
+Führen Sie das Struktogramm aus und zeichnen Sie den **Weg** des Käfers in beiden Situationen ein.
 
-<svg viewBox="0 0 246 126" role="img" aria-label="Käfer-Struktogramm 1" style="display:block;width:100%;height:auto;max-width:246px">
+<div style="display:flex;gap:4mm;align-items:flex-start"><div style="width:36%"><svg viewBox="0 0 246 126" role="img" aria-label="Käfer-Struktogramm 1" style="display:block;width:100%;height:auto;max-width:246px">
 <rect x="3" y="3" width="240" height="120" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="240" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="90" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
 <rect x="29" y="33" width="214" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="136.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">vorwärts</text>
@@ -155,185 +163,173 @@ Führen Sie das Struktogramm aus und zeichnen Sie den **Weg** des Käfers ein.
 <text x="136.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">vorwärts</text>
 <rect x="29" y="93" width="214" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="136.0" y="112.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">rechts drehen</text>
-</svg>
-
-<div style="display:flex;gap:8mm;flex-wrap:wrap">
-<div style="width:46%"><svg viewBox="0 0 218 236" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:218px">
+</svg></div><div style="width:30%"><svg viewBox="0 0 197 215" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:197px">
 <text x="4" y="12" font-size="11" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Situation A</text>
-<rect x="4.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4" y="22" width="210" height="210" fill="none" stroke="currentColor" stroke-width="2.4"/>
-<polygon points="49,177.1 56.2,193.3 41.8,193.3" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
-</svg></div>
-<div style="width:46%"><svg viewBox="0 0 218 236" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:218px">
+<rect x="4.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4" y="22" width="189" height="189" fill="none" stroke="currentColor" stroke-width="2.4"/>
+<polygon points="44.5,161.59 50.98,176.17 38.02,176.17" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
+</svg></div><div style="width:30%"><svg viewBox="0 0 197 215" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:197px">
 <text x="4" y="12" font-size="11" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Situation B</text>
-<rect x="4.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="34.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="64.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="94.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="124.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="154.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="202.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="172.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="142.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="112.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="82.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="52.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="184.0" y="22.0" width="30" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4" y="22" width="210" height="210" fill="none" stroke="currentColor" stroke-width="2.4"/>
-<polygon points="139,76.9 131.8,60.7 146.2,60.7" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
-</svg></div>
-</div>
+<rect x="4.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="31.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="58.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="85.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="112.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="139.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="184.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="157.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="130.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="103.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="76.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="49.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="166.0" y="22.0" width="27" height="27" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4" y="22" width="189" height="189" fill="none" stroke="currentColor" stroke-width="2.4"/>
+<polygon points="125.5,71.41 119.02,56.83 131.98,56.83" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
+</svg></div></div>
 
 In welcher Form läuft der Käfer? Beschreiben Sie in einem Satz, was der Algorithmus zeichnet.
 
-[[antwort:2]]
-
-*Kontrollhinweis: In beiden Situationen kehrt der Käfer auf sein Startfeld zurück.*
+[[antwort:1]]
 [[/aufgabe]]
 
 [[aufgabe:Aufgabe 5 — der Käfer, Verzweigung]]
-Dunkle Felder sind Hindernisse. Der Käfer darf sie und den Rand nicht betreten. «Feld vorne frei» heisst: Dort ist weder ein Hindernis noch der Rand.
+Dunkle Felder sind Hindernisse. Der Käfer darf sie und den Rand nicht betreten. «Feld vorne frei» heisst: Dort ist weder ein Hindernis noch der Rand. Zeichnen Sie den Weg ein. Auch das **Drehen** zählt als ein Durchlauf.
 
-<svg viewBox="0 0 366 112" role="img" aria-label="Käfer-Struktogramm 2" style="display:block;width:100%;height:auto;max-width:366px">
-<rect x="3" y="3" width="360" height="106" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<rect x="3" y="3" width="360" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<div style="display:flex;gap:6mm;align-items:flex-start"><div style="width:58%"><svg viewBox="0 0 306 112" role="img" aria-label="Käfer-Struktogramm 2" style="display:block;width:100%;height:auto;max-width:306px">
+<rect x="3" y="3" width="300" height="106" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="3" width="300" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="76" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 10-mal</text>
-<rect x="29" y="33" width="334" height="76" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<rect x="29" y="33" width="334" height="46" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
-<line x1="29" y1="33" x2="196.0" y2="79" stroke="currentColor" stroke-width="1.4"/>
-<line x1="363" y1="33" x2="196.0" y2="79" stroke="currentColor" stroke-width="1.4"/>
-<line x1="196.0" y1="79" x2="196.0" y2="109" stroke="currentColor" stroke-width="1.4"/>
-<text x="196.0" y="50" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Feld vorne frei?</text>
+<rect x="29" y="33" width="274" height="76" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<rect x="29" y="33" width="274" height="46" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<line x1="29" y1="33" x2="166.0" y2="79" stroke="currentColor" stroke-width="1.4"/>
+<line x1="303" y1="33" x2="166.0" y2="79" stroke="currentColor" stroke-width="1.4"/>
+<line x1="166.0" y1="79" x2="166.0" y2="109" stroke="currentColor" stroke-width="1.4"/>
+<text x="166.0" y="50" text-anchor="middle" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Feld vorne frei?</text>
 <text x="37" y="73" font-size="11" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Ja</text>
-<text x="355" y="73" text-anchor="end" font-size="11" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Nein</text>
-<rect x="29" y="79" width="167.0" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<text x="112.5" y="98.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">vorwärts</text>
-<rect x="196.0" y="79" width="167.0" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<text x="279.5" y="98.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">rechts drehen</text>
-</svg>
-
-<svg viewBox="0 0 188 206" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:188px">
+<text x="295" y="73" text-anchor="end" font-size="11" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Nein</text>
+<rect x="29" y="79" width="137.0" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<text x="97.5" y="98.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">vorwärts</text>
+<rect x="166.0" y="79" width="137.0" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<text x="234.5" y="98.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">rechts drehen</text>
+</svg></div><div style="width:34%"><svg viewBox="0 0 178 196" role="img" aria-label="Kaefer-Feld" style="display:block;width:100%;height:auto;max-width:178px">
 <text x="4" y="12" font-size="11" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Käfer-Feld</text>
-<rect x="4.0" y="166.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="130.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="94.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="58.0" width="36" height="36" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4.0" y="22.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="40.0" y="166.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="40.0" y="130.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="40.0" y="94.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="40.0" y="58.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="40.0" y="22.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="76.0" y="166.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="76.0" y="130.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="76.0" y="94.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="76.0" y="58.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="76.0" y="22.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="112.0" y="166.0" width="36" height="36" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="112.0" y="130.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="112.0" y="94.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="112.0" y="58.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="112.0" y="22.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="148.0" y="166.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="148.0" y="130.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="148.0" y="94.0" width="36" height="36" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="148.0" y="58.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="148.0" y="22.0" width="36" height="36" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
-<rect x="4" y="22" width="180" height="180" fill="none" stroke="currentColor" stroke-width="2.4"/>
-<polygon points="22,172.12 30.64,191.56 13.36,191.56" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
-</svg>
+<rect x="4.0" y="158.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="124.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="90.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="56.0" width="34" height="34" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4.0" y="22.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="38.0" y="158.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="38.0" y="124.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="38.0" y="90.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="38.0" y="56.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="38.0" y="22.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="72.0" y="158.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="72.0" y="124.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="72.0" y="90.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="72.0" y="56.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="72.0" y="22.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="106.0" y="158.0" width="34" height="34" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="106.0" y="124.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="106.0" y="90.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="106.0" y="56.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="106.0" y="22.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="140.0" y="158.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="140.0" y="124.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="140.0" y="90.0" width="34" height="34" fill="currentColor" fill-opacity="0.55" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="140.0" y="56.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="140.0" y="22.0" width="34" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"/>
+<rect x="4" y="22" width="170" height="170" fill="none" stroke="currentColor" stroke-width="2.4"/>
+<polygon points="21,163.78 29.16,182.14 12.84,182.14" fill="var(--accent)" stroke="currentColor" stroke-width="1.2"/>
+</svg></div></div>
 
-**a)** Zeichnen Sie den Weg ein. Beachten Sie: Auch das **Drehen** zählt als ein Durchlauf.
-
-**b)** Auf welchem Feld und mit welcher Blickrichtung endet der Käfer?
+Auf welchem Feld und mit welcher Blickrichtung endet der Käfer?
 
 [[antwort:1]]
-
-*Kontrollhinweis: Der Käfer wird an drei Stellen vom Hindernis zum Drehen gezwungen.*
 [[/aufgabe]]
 
 [[aufgabe:Aufgabe 6 — Rechnen im Struktogramm]]
@@ -344,6 +340,7 @@ Im Kasten «z ← 1» wird dem Merkzettel z der Wert 1 zugewiesen. Der Pfeil bed
 <text x="143.0" y="22.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">z ← 1</text>
 <rect x="3" y="33" width="280" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="33" width="280" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="63" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <text x="13" y="52.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole n-mal</text>
 <rect x="29" y="63" width="254" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="156.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">z ← z · 2</text>
