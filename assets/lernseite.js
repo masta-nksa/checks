@@ -439,6 +439,7 @@
     })
     .then(function (md) {
       inhalt.innerHTML = marked.parse(md);
+      teilUmbruchVorbereiten(inhalt);
       kopfBauen();
       ivzBauen();
       fortschritt();
