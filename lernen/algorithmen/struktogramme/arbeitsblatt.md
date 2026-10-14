@@ -55,6 +55,8 @@ Welcher Baustein steckt in jedem Satz? Schreiben Sie *Sequenz*, *Verzweigung* od
 | 6. «Packe das Pausenbrot, die Flasche und den Apfel ein.» | |
 [[/aufgabe]]
 
+<div style="break-before:page"></div>
+
 ## Teil 3 — Das Struktogramm
 
 Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird immer **von oben nach unten** gelesen. Jeder Baustein hat sein Symbol:
@@ -425,7 +427,7 @@ Vervollständigen Sie mit eigenen Worten:
 
 ## Online-Check 1 (freiwillig)
 
-Testen Sie sich selbst: Unter **masta-nksa.github.io/checks** finden Sie beim Thema «Algorithmen» den **Algorithmus-Check**. Er fragt nach dem Begriff, den vier Anforderungen und dem Lesen von Struktogrammen und gibt sofort Rückmeldung.
+Testen Sie sich selbst: Unter **masta-nksa.github.io/checks/algorithmen/begriff/** finden Sie den **Algorithmus-Check**. Er fragt nach dem Begriff, den vier Anforderungen und dem Lesen von Struktogrammen und gibt sofort Rückmeldung.
 
 ## Anhang — Streifen zum Ausschneiden (Aufgabe 3)
 

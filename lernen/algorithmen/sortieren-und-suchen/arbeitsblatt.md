@@ -232,7 +232,7 @@ Vervollständigen Sie mit eigenen Worten:
 
 ## Online-Check 2 (freiwillig)
 
-Testen Sie sich selbst: Unter **masta-nksa.github.io/checks** finden Sie beim Thema «Algorithmen» den **Sortier-Check**. Er fragt nach Durchgängen, Vergleichen und der binären Suche und gibt sofort Rückmeldung.
+Testen Sie sich selbst: Unter **masta-nksa.github.io/checks/algorithmen/sortieren/** finden Sie den **Sortier-Check**. Er fragt nach Durchgängen, Vergleichen und der binären Suche und gibt sofort Rückmeldung.
 
 ## Anhang — Zahlenkarten zum Ausschneiden
 

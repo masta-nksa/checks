@@ -25,7 +25,7 @@
 | 5 | Die Turtle auf Papier | – |
 | 6 | Rückblick und Brücke zum Programmieren | Daten-Check |
 
-Die Online-Checks finden Sie unter **masta-nksa.github.io/checks** beim Thema «Algorithmen». Sie sind freiwillig, geben sofort Rückmeldung und eignen sich auch zur Prüfungsvorbereitung.
+Die Online-Checks finden Sie unter **masta-nksa.github.io/checks/algorithmen/begriff/** (Algorithmus-Check) und **masta-nksa.github.io/checks/algorithmen/sortieren/** (Sortier-Check). Sie sind freiwillig, geben sofort Rückmeldung und eignen sich auch zur Prüfungsvorbereitung.
 
 ## Lernziele
 
