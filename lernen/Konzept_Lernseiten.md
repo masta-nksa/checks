@@ -104,7 +104,10 @@ Tabellen darf über mehrere Seiten umbrechen (`.aufgabe.teilbar`, automatisch).
 Jede `##`-Überschrift bekommt im Druck automatisch etwas Reserve (`.teil-reserve`,
 von `lernseite.js` eingefügt): passt der Titel plus rund ein Seitenviertel Inhalt
 nicht mehr auf die Seite, rückt der ganze Abschnitt auf die nächste — so beginnt
-kein Teil im unteren Seitenviertel.
+kein Teil im unteren Seitenviertel. Dieselbe Reserve steht auch hinter den
+`##`-Überschriften der Lernseite selbst (`.inhalt .teil-reserve` in
+`lernseite.css`), damit die Variante «Lernseite» keine Überschrift am
+Seitenende erzeugt; am Bildschirm hat sie keine Höhe.
 
 ### `arbeitsblatt.css`
 
