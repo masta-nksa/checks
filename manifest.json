@@ -40,6 +40,22 @@
           "pfad": "graphiken/pixel/"
         }
       ]
+    },
+    {
+      "thema": "Algorithmen",
+      "gefaess": "FMS",
+      "lernseiten": [
+        { "titel": "Dossier Algorithmen", "untertitel": "Überblick und Lernziele", "pfad": "lernen/algorithmen/dossier-deckblatt/" },
+        { "titel": "Plan ohne Nachfragen", "untertitel": "Was ist ein Algorithmus?", "pfad": "lernen/algorithmen/plan-ohne-nachfragen/" },
+        { "titel": "Algorithmen sichtbar machen", "untertitel": "Struktogramm, Bausteine, Computational Thinking", "pfad": "lernen/algorithmen/struktogramme/" },
+        { "titel": "Ordnung muss sein", "untertitel": "Bubble Sort und Merge Sort", "pfad": "lernen/algorithmen/sortieren-von-hand/" },
+        { "titel": "Welche Methode ist besser?", "untertitel": "Vergleiche zählen, binäre Suche", "pfad": "lernen/algorithmen/sortieren-und-suchen/" }
+      ],
+      "checks": [
+        { "titel": "Algorithmus-Check", "untertitel": "Anforderungen, Bausteine, Struktogramm", "pfad": "algorithmen/begriff/" },
+        { "titel": "Sortier-Check", "untertitel": "Bubble Sort, Merge Sort, binäre Suche", "pfad": "algorithmen/sortieren/" },
+        { "titel": "Daten-Check", "untertitel": "Speicherarten, CRUD", "pfad": "algorithmen/daten/" }
+      ]
     }
   ]
 }
