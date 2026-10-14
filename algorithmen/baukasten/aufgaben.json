@@ -1,0 +1,372 @@
+{
+  "hinweis": "Aufgaben fuer den Struktogramm-Baukasten (Kaefer). Keine Loesungen enthalten.",
+  "aufgaben": [
+    {
+      "id": "ziel",
+      "titel": "1 · Zum Ziel",
+      "stufe": "Sequenz",
+      "text": "Bringen Sie den Käfer zum Zielfeld. Er kennt drei Befehle: vorwärts, rechts drehen, links drehen.",
+      "feld": {
+        "cols": 6,
+        "rows": 6,
+        "start": [
+          1,
+          1
+        ],
+        "blick": "N",
+        "hindernisse": []
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "verzweigung": false
+      },
+      "maxBloecke": null,
+      "ziel": {
+        "typ": "endfeld",
+        "feld": [
+          3,
+          4
+        ]
+      },
+      "hinweis": "Zählen Sie die Felder: erst geradeaus, dann um die Ecke."
+    },
+    {
+      "id": "mauer",
+      "titel": "2 · Um die Mauer",
+      "stufe": "Sequenz",
+      "text": "Die dunkle Mauer versperrt den Weg. Bringen Sie den Käfer ohne sie zu berühren zum Zielfeld.",
+      "feld": {
+        "cols": 6,
+        "rows": 6,
+        "start": [
+          1,
+          1
+        ],
+        "blick": "N",
+        "hindernisse": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "verzweigung": false
+      },
+      "maxBloecke": null,
+      "ziel": {
+        "typ": "endfeld",
+        "feld": [
+          1,
+          4
+        ]
+      },
+      "hinweis": "Wenn der Käfer an die Mauer stösst, meldet er einen Fehler."
+    },
+    {
+      "id": "quadrat",
+      "titel": "3 · Das Quadrat",
+      "stufe": "Wiederholung",
+      "text": "Der Käfer soll den Rand des Quadrats (3 × 3 Felder) ablaufen und wieder auf dem Startfeld enden. Sie dürfen höchstens 4 Bausteine verwenden.",
+      "feld": {
+        "cols": 6,
+        "rows": 6,
+        "start": [
+          2,
+          2
+        ],
+        "blick": "N",
+        "hindernisse": []
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": true,
+        "verzweigung": false
+      },
+      "maxBloecke": 4,
+      "ziel": {
+        "typ": "besucht",
+        "felder": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "nurDiese": true,
+        "endfeld": [
+          2,
+          2
+        ]
+      },
+      "hinweis": "Welche Schritte wiederholen sich? Ein Quadrat hat vier gleiche Seiten."
+    },
+    {
+      "id": "treppe",
+      "titel": "4 · Die Treppe",
+      "stufe": "Wiederholung",
+      "text": "Der Käfer soll die Treppe über alle markierten Felder hinaufsteigen und oben rechts enden. Höchstens 5 Bausteine.",
+      "feld": {
+        "cols": 6,
+        "rows": 6,
+        "start": [
+          1,
+          1
+        ],
+        "blick": "N",
+        "hindernisse": []
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": true,
+        "verzweigung": false
+      },
+      "maxBloecke": 5,
+      "ziel": {
+        "typ": "besucht",
+        "felder": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            6
+          ]
+        ],
+        "nurDiese": true,
+        "endfeld": [
+          6,
+          6
+        ]
+      },
+      "hinweis": "Eine Stufe besteht aus vier Schritten. Wie oft kommt sie vor?"
+    },
+    {
+      "id": "hindernis",
+      "titel": "5 · Hindernisse umgehen",
+      "stufe": "Verzweigung",
+      "text": "Der Käfer soll bei jedem Durchlauf prüfen, ob das Feld vor ihm frei ist: wenn ja, geht er vorwärts, sonst dreht er sich nach rechts. Wiederholen Sie das 10-mal. Er soll auf dem Zielfeld enden. Höchstens 4 Bausteine.",
+      "feld": {
+        "cols": 5,
+        "rows": 5,
+        "start": [
+          1,
+          1
+        ],
+        "blick": "N",
+        "hindernisse": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ]
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": true,
+        "verzweigung": true
+      },
+      "maxBloecke": 4,
+      "ziel": {
+        "typ": "endfeld",
+        "feld": [
+          3,
+          2
+        ]
+      },
+      "hinweis": "Die Verzweigung gehört in die Wiederholung."
+    },
+    {
+      "id": "fehler",
+      "titel": "6 · Den Fehler finden",
+      "stufe": "Fehlersuche",
+      "text": "Dieses Struktogramm sollte das Quadrat von Aufgabe 3 ablaufen, tut es aber nicht. Finden und beheben Sie den Fehler.",
+      "feld": {
+        "cols": 6,
+        "rows": 6,
+        "start": [
+          2,
+          2
+        ],
+        "blick": "N",
+        "hindernisse": []
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": true,
+        "verzweigung": false
+      },
+      "startprogramm": [
+        {
+          "t": "loop",
+          "n": 3,
+          "body": [
+            {
+              "t": "act",
+              "cmd": "vor"
+            },
+            {
+              "t": "act",
+              "cmd": "vor"
+            },
+            {
+              "t": "act",
+              "cmd": "rechts"
+            }
+          ]
+        }
+      ],
+      "maxBloecke": 4,
+      "ziel": {
+        "typ": "besucht",
+        "felder": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "nurDiese": true,
+        "endfeld": [
+          2,
+          2
+        ]
+      },
+      "hinweis": "Schauen Sie sich an, wohin der Käfer läuft. Wo hört er zu früh auf?"
+    }
+  ]
+}

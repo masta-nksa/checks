@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Struktogramm-Baukasten (Käfer)</title>
+<link rel="icon" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../assets/check.css">
+<link rel="stylesheet" href="baukasten.css">
+</head>
+<body>
+<div class="bk" id="bk">
+  <header class="bk-kopf-seite">
+    <a class="bk-zurueck" href="../../">← Alle Checks</a>
+    <span class="eyebrow">FMS · Algorithmen</span>
+    <h1>Struktogramm-Baukasten (Käfer)</h1>
+    <p class="lead">Ziehen Sie Bausteine ins Struktogramm und lassen Sie den Käfer Ihr Programm ausführen. Keine Anmeldung, nichts wird gesendet – gelöste Aufgaben merkt sich nur dieser Browser.</p>
+    <div class="pixelrule" id="pixelrule" aria-hidden="true"></div>
+  </header>
+
+  <noscript><p class="bk-meldung fehler">Der Baukasten braucht JavaScript.</p></noscript>
+
+  <nav class="bk-aufgaben" aria-label="Aufgaben"><ol id="aufgabenListe"></ol></nav>
+
+  <section class="bk-aufgabe" aria-labelledby="aufgabeTitel">
+    <h2 id="aufgabeTitel"></h2>
+    <p id="aufgabeText"></p>
+    <details class="bk-hinweis" id="hinweisBox">
+      <summary>Hinweis anzeigen</summary>
+      <p id="hinweisText"></p>
+    </details>
+  </section>
+
+  <div class="bk-raster">
+    <section class="bk-bau" aria-labelledby="bauTitel">
+      <h2 id="bauTitel">Struktogramm bauen</h2>
+
+      <div class="bk-palette" id="palette" role="group" aria-label="Bausteine"></div>
+
+      <div class="bk-leiste">
+        <span class="bk-zaehler" id="zaehler"></span>
+        <span class="bk-leiste-knoepfe">
+          <button type="button" class="bk-knopf" id="knopfRueckgaengig">Rückgängig</button>
+          <button type="button" class="bk-knopf" id="knopfNeu">Neu beginnen</button>
+        </span>
+      </div>
+
+      <div class="bk-auswahl" id="auswahlInfo" hidden>
+        <span id="auswahlText"></span>
+        <button type="button" class="bk-knopf" id="knopfAbbrechen">Abbrechen</button>
+      </div>
+
+      <div class="bk-arbeit" id="arbeit" role="group" aria-label="Struktogramm"></div>
+
+      <div class="bk-korb" id="korb" aria-hidden="true">Zum Löschen hierher ziehen</div>
+    </section>
+
+    <section class="bk-lauf" aria-labelledby="laufTitel">
+      <h2 id="laufTitel">Käfer-Feld</h2>
+      <div class="bk-feld" id="feld"></div>
+      <p class="bk-feldinfo" id="feldInfo"></p>
+
+      <div class="bk-steuerung">
+        <button type="button" class="bk-knopf primaer" id="knopfStart">Start</button>
+        <button type="button" class="bk-knopf" id="knopfSchritt">Einzelschritt</button>
+        <button type="button" class="bk-knopf" id="knopfReset">Zurücksetzen</button>
+        <label class="bk-tempo">Tempo
+          <input type="range" id="tempo" min="1" max="5" step="1" value="3" aria-valuetext="mittel">
+          <span class="bk-tempo-skala" aria-hidden="true"><span>langsam</span><span>schnell</span></span>
+        </label>
+      </div>
+
+      <p class="bk-schritt" id="schrittInfo" aria-live="polite"></p>
+      <div class="bk-meldung" id="meldung" role="status" aria-live="polite" hidden></div>
+    </section>
+  </div>
+
+  <p class="bk-hilfe">
+    <b>Bedienung:</b> Baustein aus der Leiste ins Struktogramm ziehen (Maus oder Finger).
+    Ohne Ziehen: Baustein antippen oder mit der Eingabetaste wählen, danach eine Ablagestelle antippen
+    bzw. mit Tab oder Pfeil auf/ab ansteuern und mit der Eingabetaste bestätigen. Escape bricht ab,
+    Entf löscht den Baustein mit Fokus, Strg+Z macht rückgängig.
+  </p>
+</div>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

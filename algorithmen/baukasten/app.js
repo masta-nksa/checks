@@ -1,0 +1,978 @@
+/* ============================================================
+   app.js – Oberfläche des Struktogramm-Baukastens (Käfer)
+   Bausteine ziehen (Pointer Events: Maus und Touch) oder antippen /
+   per Tastatur wählen, Struktogramm bauen, Käfer ablaufen lassen.
+   Interpreter und Prüfung stehen in engine.js (ohne DOM).
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var E = window.BaukastenEngine;
+  var SPEICHER = "checks.baukasten.v1";
+  var TEMPO = [1100, 700, 420, 220, 90];
+  var TEMPO_TEXT = ["sehr langsam", "langsam", "mittel", "schnell", "sehr schnell"];
+  var Z = 40, RAND = 20;                       // Zellgrösse und Randbreite (SVG-Einheiten)
+  var SCREEN_DIR = { N: [0, -1], E: [1, 0], S: [0, 1], W: [-1, 0] };
+  var WINKEL = { N: 0, E: 90, S: 180, W: 270 };
+  var NS = "http://www.w3.org/2000/svg";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var palette = $("palette"), arbeit = $("arbeit"), korb = $("korb");
+  var feldBox = $("feld"), meldungBox = $("meldung"), tempoEl = $("tempo");
+
+  var aufgaben = [], aktuell = 0, aufg = null;
+  var prog = [], undoStack = [];
+  var zustand = {};                // pro Aufgabe: {prog, undo}
+  var geloest = {};
+  var auswahl = null;              // {quelle:"palette",typ,cmd} | {quelle:"block",adr}
+  var fokusZiel = null;
+  var eingabe = "zeiger";
+  var unterdruecke = false;
+  var drag = null;
+  var sim = { lauf: null, i: 0, laeuft: false, ende: false, timer: 0, winkel: 0 };
+  var feldRef = null;
+
+  /* ---------- Helfer ---------------------------------------- */
+
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+  function svgEl(tag, attrs, cls) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (cls) n.setAttribute("class", cls);
+    return n;
+  }
+  function adrStr(adr) { return adr.join("/"); }
+  function adrParse(s) {
+    if (s === "") return [];
+    return s.split("/").map(function (t) { return /^\d+$/.test(t) ? Number(t) : t; });
+  }
+  function nur(liste, f) { return Array.prototype.filter.call(liste, f); }
+
+  function blockLabel(b) {
+    if (b.t === "act") return E.BEFEHLE[b.cmd].label;
+    if (b.t === "loop") return "wiederhole " + b.n + "-mal";
+    return E.BEDINGUNGEN[b.cond].label;
+  }
+  function quelleLabel(q) {
+    if (q.quelle === "block") return blockLabel(E.blockAt(prog, q.adr));
+    if (q.typ === "act") return E.BEFEHLE[q.cmd].label;
+    if (q.typ === "loop") return "wiederhole n-mal";
+    return E.BEDINGUNGEN.frei.label;
+  }
+  function quelleBlock(q) {
+    return q.quelle === "block" ? E.blockAt(prog, q.adr) : E.neuerBlock(q.typ, q.cmd);
+  }
+
+  /* ---------- Fortschritt (localStorage, immer mit try/catch) - */
+
+  function ladeFortschritt() {
+    try {
+      var d = JSON.parse(localStorage.getItem(SPEICHER) || "{}");
+      if (d && typeof d.geloest === "object" && d.geloest) geloest = d.geloest;
+    } catch (e) { geloest = {}; }
+  }
+  function speichereFortschritt() {
+    try { localStorage.setItem(SPEICHER, JSON.stringify({ geloest: geloest })); } catch (e) { /* ohne Speicher weiter */ }
+  }
+
+  /* ---------- Start ----------------------------------------- */
+
+  var rule = $("pixelrule");
+  for (var pi = 0; pi < 40; pi++) rule.append(document.createElement("i"));
+
+  fetch("aufgaben.json", { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) {
+      if (!d || !Array.isArray(d.aufgaben) || !d.aufgaben.length) throw new Error("Feld „aufgaben“ fehlt oder ist leer.");
+      aufgaben = d.aufgaben;
+      ladeFortschritt();
+      baueTabs();
+      waehleAufgabe(0);
+    })
+    .catch(function (err) {
+      var box = el("div", "oops");
+      box.append(el("h2", null, "Der Baukasten kann nicht geladen werden."));
+      var p = el("p");
+      p.innerHTML = "Die Datei <code>aufgaben.json</code> fehlt oder enthält einen Fehler. " +
+        "Bitte melden Sie das der Lehrperson.<br><code>" + String(err && err.message ? err.message : err) + "</code>";
+      box.append(p);
+      $("bk").textContent = "";
+      $("bk").append(box);
+      console.error("[baukasten]", err);
+    });
+
+  /* ---------- Aufgabenwahl ---------------------------------- */
+
+  function baueTabs() {
+    var ol = $("aufgabenListe");
+    ol.textContent = "";
+    aufgaben.forEach(function (a, i) {
+      var li = el("li");
+      var b = el("button", "bk-tab");
+      b.type = "button";
+      b.dataset.i = i;
+      b.append(el("span", null, a.titel));
+      b.append(el("span", "haken"));
+      b.addEventListener("click", function () { waehleAufgabe(i); });
+      li.append(b);
+      ol.append(li);
+    });
+    tabsAktualisieren();
+  }
+
+  function tabsAktualisieren() {
+    Array.prototype.forEach.call($("aufgabenListe").querySelectorAll(".bk-tab"), function (b, i) {
+      var a = aufgaben[i], fertig = !!geloest[a.id];
+      b.setAttribute("aria-current", i === aktuell ? "true" : "false");
+      b.querySelector(".haken").textContent = fertig ? "✓" : "";
+      b.setAttribute("aria-label", a.titel + (fertig ? ", gelöst" : ""));
+    });
+  }
+
+  function startProgramm(a) {
+    var p = a.startprogramm ? E.klonen(a.startprogramm) : [];
+    return E.validiere(p) === null ? p : [];
+  }
+
+  function waehleAufgabe(i) {
+    if (aufg) zustand[aufg.id] = { prog: prog, undo: undoStack };
+    aktuell = i;
+    aufg = aufgaben[i];
+    var z = zustand[aufg.id];
+    prog = z ? z.prog : startProgramm(aufg);
+    undoStack = z ? z.undo : [];
+    auswahl = null;
+    fokusZiel = null;
+
+    $("aufgabeTitel").textContent = aufg.titel;
+    $("aufgabeText").textContent = aufg.text;
+    var hb = $("hinweisBox");
+    hb.hidden = !aufg.hinweis;
+    hb.open = false;
+    $("hinweisText").textContent = aufg.hinweis || "";
+
+    tabsAktualisieren();
+    renderPalette();
+    renderFeld();
+    simReset();
+    renderBau();
+  }
+
+  /* ---------- Palette --------------------------------------- */
+
+  function renderPalette() {
+    palette.textContent = "";
+    var p = aufg.palette;
+    (p.befehle || []).forEach(function (c) {
+      if (E.BEFEHLE[c]) palette.append(chip({ typ: "act", cmd: c }, E.BEFEHLE[c].label, "bk-pal-act"));
+    });
+    if (p.wiederholung) palette.append(chip({ typ: "loop" }, "wiederhole n-mal", "bk-pal-loop"));
+    if (p.verzweigung) palette.append(chip({ typ: "if" }, E.BEDINGUNGEN.frei.label, "bk-pal-if"));
+  }
+
+  function chip(q, text, cls) {
+    var b = el("button", "bk-pal " + cls);
+    b.type = "button";
+    b.dataset.typ = q.typ;
+    if (q.cmd) b.dataset.cmd = q.cmd;
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute("aria-label", "Baustein " + text + ". Ziehen, oder antippen und dann eine Ablagestelle wählen.");
+    if (q.typ === "if") {
+      var s = svgEl("svg", { viewBox: "0 0 26 20", "aria-hidden": "true" });
+      s.append(svgEl("line", { x1: 0, y1: 0, x2: 13, y2: 20 }), svgEl("line", { x1: 26, y1: 0, x2: 13, y2: 20 }));
+      b.append(s);
+    }
+    b.append(el("span", null, text));
+    return b;
+  }
+
+  /* ---------- Struktogramm zeichnen ------------------------- */
+
+  function renderBau() {
+    arbeit.textContent = "";
+    var baum = el("div", "bk-baum");
+    baum.append(renderZone(prog, []));
+    arbeit.append(baum);
+    zaehlerAktualisieren();
+    $("knopfRueckgaengig").disabled = !undoStack.length;
+    auswahlAnwenden();
+
+    if (fokusZiel) {
+      var f = fokusZiel, t = null;
+      fokusZiel = null;
+      if (f.art === "block") t = arbeit.querySelector('.bk-blk[data-adr="' + adrStr(f.adr) + '"] .bk-main');
+      else if (f.art === "slot") t = arbeit.querySelector('.bk-slot[data-liste="' + f.liste + '"][data-idx="' + f.idx + '"]:not(.ungueltig)');
+      if (!t) t = palette.querySelector(".bk-pal");
+      if (t) t.focus();
+    }
+  }
+
+  function renderZone(liste, ladr) {
+    var zone = el("div", "bk-zone");
+    zone.dataset.adr = adrStr(ladr);
+    if (!liste.length) { zone.append(slot(ladr, 0, 0, true)); return zone; }
+    liste.forEach(function (b, i) {
+      zone.append(slot(ladr, i, liste.length, false));
+      zone.append(renderBlock(b, ladr.concat([i]), liste.length));
+    });
+    zone.append(slot(ladr, liste.length, liste.length, false));
+    return zone;
+  }
+
+  function slotText(ladr, idx, len) {
+    var wo = "im Programm";
+    if (ladr.length) {
+      var pb = E.blockAt(prog, ladr.slice(0, -1)), key = ladr[ladr.length - 1];
+      wo = pb.t === "loop" ? "in «" + blockLabel(pb) + "»"
+        : "im " + (key === "yes" ? "Ja" : "Nein") + "-Zweig von «" + blockLabel(pb) + "»";
+    }
+    return "Hier einfügen: " + wo + ", Position " + (idx + 1) + " von " + (len + 1);
+  }
+
+  function slot(ladr, idx, len, leer) {
+    var b = el("button", "bk-slot" + (leer ? " leer" : ""));
+    b.type = "button";
+    b.disabled = true;
+    b.dataset.liste = adrStr(ladr);
+    b.dataset.idx = idx;
+    b.setAttribute("aria-label", slotText(ladr, idx, len));
+    b.append(el("span", "bk-slot-text", leer ? (ladr.length ? "hier ablegen" : "Bausteine hierher ziehen") : "hier einfügen"));
+    return b;
+  }
+
+  function mainBtn(b, adr, liste, text) {
+    var m = el("button", "bk-main", text);
+    m.type = "button";
+    var i = adr[adr.length - 1];
+    m.setAttribute("aria-label", blockLabel(b) + ", Position " + (i + 1) + " von " + liste + ", Ebene " + (adr.length / 2 + 0.5) +
+      ". Eingabetaste: zum Verschieben wählen. Entf: löschen.");
+    return m;
+  }
+  function delBtn() {
+    var d = el("button", "bk-del nograb", "×");
+    d.type = "button";
+    d.setAttribute("aria-label", "Baustein löschen");
+    d.title = "Baustein löschen";
+    return d;
+  }
+
+  function renderBlock(b, adr, laenge) {
+    var blk = el("div", "bk-blk bk-" + b.t);
+    blk.dataset.adr = adrStr(adr);
+
+    if (b.t === "act") {
+      blk.classList.add("grab");
+      blk.append(mainBtn(b, adr, laenge, blockLabel(b)), delBtn());
+      return blk;
+    }
+
+    if (b.t === "loop") {
+      var kopf = el("div", "bk-kopf grab");
+      var inp = el("input", "bk-n nograb");
+      inp.type = "number"; inp.min = 1; inp.max = E.MAX_WIEDERHOLUNG; inp.step = 1; inp.value = b.n;
+      inp.setAttribute("inputmode", "numeric");
+      inp.setAttribute("aria-label", "Anzahl Wiederholungen (1 bis " + E.MAX_WIEDERHOLUNG + ")");
+      var vorher = null;
+      inp.addEventListener("focus", function () { vorher = JSON.stringify(prog); });
+      inp.addEventListener("input", function () {
+        var v = inp.value.trim(), n = Number(v);
+        var ok = /^\d{1,2}$/.test(v) && n >= 1 && n <= E.MAX_WIEDERHOLUNG;
+        inp.classList.toggle("ungueltig", !ok);
+        if (ok) {
+          E.blockAt(prog, adr).n = n;
+          simReset();
+          zaehlerAktualisieren();
+        }
+      });
+      inp.addEventListener("change", function () {
+        var bl = E.blockAt(prog, adr);
+        inp.classList.remove("ungueltig");
+        inp.value = bl.n;
+        if (vorher !== null && vorher !== JSON.stringify(prog)) {
+          undoStack.push(vorher);
+          $("knopfRueckgaengig").disabled = false;
+        }
+        vorher = null;
+      });
+      kopf.append(mainBtn(b, adr, laenge, "wiederhole"), inp, el("span", "bk-mal", "-mal"), el("span", "bk-spacer"), delBtn());
+      blk.append(kopf);
+      var rumpf = el("div", "bk-rumpf");
+      var balken = el("div", "bk-balken grab");
+      rumpf.append(balken, renderZone(b.body, adr.concat(["body"])));
+      blk.append(rumpf);
+      return blk;
+    }
+
+    // Verzweigung
+    var k2 = el("div", "bk-kopf grab");
+    var dreieck = svgEl("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true" }, "bk-dreieck");
+    dreieck.append(svgEl("line", { x1: 0, y1: 0, x2: 50, y2: 100 }), svgEl("line", { x1: 100, y1: 0, x2: 50, y2: 100 }));
+    k2.append(dreieck, mainBtn(b, adr, laenge, blockLabel(b)), el("span", "bk-ja", "Ja"), el("span", "bk-nein", "Nein"), delBtn());
+    blk.append(k2);
+    var aeste = el("div", "bk-aeste");
+    var yes = el("div", "bk-ast"), no = el("div", "bk-ast");
+    yes.append(renderZone(b.yes, adr.concat(["yes"])));
+    no.append(renderZone(b.no, adr.concat(["no"])));
+    aeste.append(yes, no);
+    blk.append(aeste);
+    return blk;
+  }
+
+  function zaehlerAktualisieren() {
+    var n = E.zaehleBausteine(prog), max = aufg.maxBloecke == null ? null : aufg.maxBloecke;
+    var z = $("zaehler");
+    z.textContent = E.bausteineText(n, max);
+    z.classList.toggle("zu-viele", max !== null && n > max);
+  }
+
+  /* ---------- Auswahl (antippen / Tastatur) ----------------- */
+
+  function slotGueltig(s, q) {
+    var ladr = adrParse(s.dataset.liste);
+    if (q.quelle === "block" && E.istPraefix(q.adr, ladr)) return false;
+    return E.kannEinfuegen(prog, ladr, quelleBlock(q));
+  }
+
+  // Zeigt gültige Ablagestellen; q = Quelle beim Antippen oder Ziehen, sonst null.
+  function slotsMarkieren(q, antippbar) {
+    Array.prototype.forEach.call(arbeit.querySelectorAll(".bk-slot"), function (s) {
+      var ok = q ? slotGueltig(s, q) : true;
+      s.classList.toggle("ungueltig", !ok);
+      s.classList.remove("heiss");
+      s.disabled = !(antippbar && ok);
+    });
+  }
+
+  function auswahlAnwenden() {
+    Array.prototype.forEach.call(palette.querySelectorAll(".bk-pal"), function (c) {
+      var an = !!auswahl && auswahl.quelle === "palette" && auswahl.typ === c.dataset.typ && (auswahl.cmd || null) === (c.dataset.cmd || null);
+      c.setAttribute("aria-pressed", an ? "true" : "false");
+    });
+    Array.prototype.forEach.call(arbeit.querySelectorAll(".bk-blk"), function (b) {
+      var an = !!auswahl && auswahl.quelle === "block" && b.dataset.adr === adrStr(auswahl.adr);
+      b.classList.toggle("gewaehlt", an);
+    });
+    arbeit.classList.toggle("bk-waehlen", !!auswahl);
+    slotsMarkieren(auswahl, !!auswahl);
+    var info = $("auswahlInfo");
+    info.hidden = !auswahl;
+    if (auswahl) {
+      $("auswahlText").textContent = "Baustein «" + quelleLabel(auswahl) + "» gewählt. " +
+        (auswahl.quelle === "palette"
+          ? "Wählen Sie eine gestrichelte Ablagestelle, um ihn einzufügen. Er bleibt gewählt, bis Sie abbrechen."
+          : "Wählen Sie eine gestrichelte Ablagestelle, um ihn dorthin zu verschieben.");
+    }
+  }
+
+  function auswaehlen(q, tastatur) {
+    auswahl = q;
+    auswahlAnwenden();
+    if (tastatur) {
+      var s = arbeit.querySelector(".bk-slot:not(.ungueltig):not(:disabled)");
+      if (s) s.focus();
+    }
+  }
+
+  function auswahlAufheben() {
+    auswahl = null;
+    auswahlAnwenden();
+  }
+
+  function gleicheQuelle(a, b) {
+    if (!a || !b || a.quelle !== b.quelle) return false;
+    return a.quelle === "block" ? adrStr(a.adr) === adrStr(b.adr)
+      : a.typ === b.typ && (a.cmd || null) === (b.cmd || null);
+  }
+
+  function fokusZurueck(q) {
+    var t = null;
+    if (q.quelle === "block") t = arbeit.querySelector('.bk-blk[data-adr="' + adrStr(q.adr) + '"] .bk-main');
+    else t = palette.querySelector('.bk-pal[data-typ="' + q.typ + '"]' + (q.cmd ? '[data-cmd="' + q.cmd + '"]' : ""));
+    if (t) t.focus();
+  }
+
+  /* ---------- Programm ändern ------------------------------- */
+
+  function aenderung(neu, opts) {
+    fokusZiel = (opts && opts.fokus) || null;
+    if (auswahl && auswahl.quelle === "block") auswahl = null;
+    if (JSON.stringify(neu) !== JSON.stringify(prog)) {
+      undoStack.push(JSON.stringify(prog));
+      if (undoStack.length > 100) undoStack.shift();
+      prog = neu;
+    }
+    simReset();
+    renderBau();
+  }
+
+  function rueckgaengig() {
+    if (!undoStack.length) return;
+    prog = JSON.parse(undoStack.pop());
+    auswahl = null;
+    simReset();
+    renderBau();
+  }
+
+  function loeschen(adr) {
+    var neu = E.entfernen(prog, adr);
+    if (!neu) return;
+    var l = E.listeAt(neu, adr.slice(0, -1)), i = adr[adr.length - 1], f;
+    if (l.length > i) f = { art: "block", adr: adr };
+    else if (i > 0) f = { art: "block", adr: adr.slice(0, -1).concat([i - 1]) };
+    else if (adr.length > 1) f = { art: "block", adr: adr.slice(0, -2) };
+    else f = { art: "palette" };
+    aenderung(neu, { fokus: f });
+  }
+
+  // Sucht die Adresse des mit _neu markierten Blocks und entfernt die Marke.
+  function findeMarke(liste, adr) {
+    for (var i = 0; i < liste.length; i++) {
+      var b = liste[i], a = adr.concat([i]);
+      if (b._neu) { delete b._neu; return a; }
+      var keys = b.t === "loop" ? ["body"] : b.t === "if" ? ["yes", "no"] : [];
+      for (var k = 0; k < keys.length; k++) {
+        var r = findeMarke(b[keys[k]], a.concat([keys[k]]));
+        if (r) return r;
+      }
+    }
+    return null;
+  }
+
+  // Führt Einfügen bzw. Verschieben aus. Liefert false, wenn die Stelle nicht passt.
+  function ablegen(q, ladr, idx, tastatur) {
+    var neu, fokus = null;
+    if (q.quelle === "palette") {
+      neu = E.einfuegen(prog, ladr, idx, E.neuerBlock(q.typ, q.cmd));
+      // Befehle bleiben gewählt (mehrere hintereinander einfügen), Wiederholung/Verzweigung nur einmal.
+      if (neu && q.typ !== "act") auswahl = null;
+      if (neu && tastatur) fokus = q.typ === "act" ? { art: "slot", liste: adrStr(ladr), idx: idx + 1 } : { art: "block", adr: ladr.concat([idx]) };
+    } else {
+      var kopie = E.klonen(prog);
+      E.blockAt(kopie, q.adr)._neu = true;
+      neu = E.verschieben(kopie, q.adr, ladr, idx);
+      if (neu) {
+        var a = findeMarke(neu, []);
+        neu = E.klonen(neu);
+        fokus = a ? { art: "block", adr: a } : null;
+      }
+    }
+    if (!neu) return false;
+    aenderung(neu, { fokus: fokus });
+    return true;
+  }
+
+  /* ---------- Ziehen (Pointer Events) ----------------------- */
+
+  document.addEventListener("keydown", function () { eingabe = "tastatur"; }, true);
+  document.addEventListener("pointerdown", function () { eingabe = "zeiger"; }, true);
+  document.addEventListener("click", function (e) {
+    if (unterdruecke) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  document.addEventListener("contextmenu", function (e) {
+    if (e.target.closest && e.target.closest(".grab, .bk-pal")) e.preventDefault();
+  });
+
+  document.addEventListener("pointerdown", function (e) {
+    if (drag || !(e.target instanceof Element)) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (e.target.closest(".nograb")) return;
+    var pal = e.target.closest(".bk-pal");
+    var g = pal || e.target.closest("#arbeit .grab");
+    if (!g) return;
+    var q = pal
+      ? { quelle: "palette", typ: pal.dataset.typ, cmd: pal.dataset.cmd || null }
+      : { quelle: "block", adr: adrParse(g.closest(".bk-blk").dataset.adr) };
+    drag = {
+      q: q, el: g, id: e.pointerId, x0: e.clientX, y0: e.clientY, px: e.clientX, py: e.clientY,
+      aktiv: false, touch: e.pointerType !== "mouse", ghost: null, heiss: null, korb: false, scroll: 0, raf: 0
+    };
+    try { g.setPointerCapture(e.pointerId); } catch (err) { /* ohne Capture weiter */ }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onAbbruch);
+  });
+
+  function ziehenStarten() {
+    drag.aktiv = true;
+    try { window.getSelection().removeAllRanges(); } catch (err) { /* ohne Auswahl weiter */ }
+    if (auswahl) { auswahl = null; auswahlAnwenden(); }
+    document.body.classList.add("bk-zieht");
+    drag.ghost = el("div", "bk-ghost", quelleLabel(drag.q));
+    document.body.append(drag.ghost);
+    if (drag.q.quelle === "block") {
+      var b = arbeit.querySelector('.bk-blk[data-adr="' + adrStr(drag.q.adr) + '"]');
+      if (b) b.classList.add("quelle");
+    }
+    slotsMarkieren(drag.q, false);
+  }
+
+  function trefferSuchen() {
+    var px = drag.px, py = drag.py - (drag.touch ? 56 : 0);
+    var ghost = drag.ghost, gw = ghost.offsetWidth, gh = ghost.offsetHeight;
+    ghost.style.transform = drag.touch
+      ? "translate(" + (px - gw / 2) + "px," + (py - gh / 2) + "px)"
+      : "translate(" + (px + 14) + "px," + (py + 14) + "px)";
+
+    var korbTreffer = false;
+    if (drag.q.quelle === "block") {
+      [korb, palette].forEach(function (z) {
+        var r = z.getBoundingClientRect();
+        if (px >= r.left - 6 && px <= r.right + 6 && py >= r.top - 6 && py <= r.bottom + 6) korbTreffer = true;
+      });
+    }
+    var best = null, bd = Infinity, bw = Infinity, max = drag.touch ? 44 : 30;
+    if (!korbTreffer) {
+      Array.prototype.forEach.call(arbeit.querySelectorAll(".bk-slot:not(.ungueltig)"), function (s) {
+        var r = s.getBoundingClientRect();
+        if (!r.width) return;
+        var dx = Math.max(r.left - px, 0, px - r.right), dy = Math.max(r.top - py, 0, py - r.bottom);
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < bd - 0.5 || (Math.abs(d - bd) <= 0.5 && r.width < bw)) { best = s; bd = d; bw = r.width; }
+      });
+      if (bd > max) best = null;
+    }
+    if (drag.heiss !== best) {
+      if (drag.heiss) drag.heiss.classList.remove("heiss");
+      if (best) best.classList.add("heiss");
+      drag.heiss = best;
+    }
+    if (drag.korb !== korbTreffer) {
+      drag.korb = korbTreffer;
+      korb.classList.toggle("heiss", korbTreffer);
+      palette.classList.toggle("heiss", korbTreffer);
+    }
+  }
+
+  function scrollSchleife() {
+    if (!drag || !drag.aktiv || !drag.scroll) { if (drag) drag.raf = 0; return; }
+    window.scrollBy(0, drag.scroll * 14);
+    trefferSuchen();
+    drag.raf = requestAnimationFrame(scrollSchleife);
+  }
+
+  function onMove(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag.px = e.clientX; drag.py = e.clientY;
+    if (!drag.aktiv) {
+      if (Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 7) return;
+      ziehenStarten();
+    }
+    e.preventDefault();
+    trefferSuchen();
+    drag.scroll = e.clientY < 70 ? -1 : (e.clientY > window.innerHeight - 70 ? 1 : 0);
+    if (drag.scroll && !drag.raf) drag.raf = requestAnimationFrame(scrollSchleife);
+  }
+
+  function ziehenBeenden() {
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerup", onUp);
+    window.removeEventListener("pointercancel", onAbbruch);
+    if (drag.raf) cancelAnimationFrame(drag.raf);
+    if (drag.ghost) drag.ghost.remove();
+    document.body.classList.remove("bk-zieht");
+    korb.classList.remove("heiss");
+    palette.classList.remove("heiss");
+    var b = arbeit.querySelector(".bk-blk.quelle");
+    if (b) b.classList.remove("quelle");
+    try { drag.el.releasePointerCapture(drag.id); } catch (err) { /* schon frei */ }
+    if (drag.aktiv) slotsMarkieren(auswahl, !!auswahl);
+  }
+
+  function onUp(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var d = drag;
+    ziehenBeenden();
+    drag = null;
+    if (!d.aktiv) return;                       // kein Ziehen: normaler Klick folgt
+    unterdruecke = true;
+    setTimeout(function () { unterdruecke = false; }, 60);
+    if (d.korb && d.q.quelle === "block") {
+      loeschen(d.q.adr);
+    } else if (d.heiss) {
+      ablegen(d.q, adrParse(d.heiss.dataset.liste), Number(d.heiss.dataset.idx), false);
+    }
+  }
+
+  function onAbbruch(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    ziehenBeenden();
+    var aktiv = drag.aktiv;
+    drag = null;
+    if (aktiv) { unterdruecke = true; setTimeout(function () { unterdruecke = false; }, 60); }
+  }
+
+  /* ---------- Klicks, Tastatur ------------------------------ */
+
+  document.addEventListener("click", function (e) {
+    if (!(e.target instanceof Element)) return;
+    var t = e.target, tastatur = e.detail === 0;
+
+    var s = t.closest(".bk-slot");
+    if (s) {
+      if (!s.disabled && auswahl) {
+        ablegen(auswahl, adrParse(s.dataset.liste), Number(s.dataset.idx), tastatur);
+      }
+      return;
+    }
+    var d = t.closest("#arbeit .bk-del");
+    if (d) { loeschen(adrParse(d.closest(".bk-blk").dataset.adr)); return; }
+
+    var pal = t.closest(".bk-pal");
+    if (pal) {
+      var qp = { quelle: "palette", typ: pal.dataset.typ, cmd: pal.dataset.cmd || null };
+      if (gleicheQuelle(auswahl, qp)) auswahlAufheben(); else auswaehlen(qp, tastatur);
+      return;
+    }
+    var g = t.closest("#arbeit .grab");
+    if (g && !t.closest(".nograb")) {
+      var qb = { quelle: "block", adr: adrParse(g.closest(".bk-blk").dataset.adr) };
+      if (gleicheQuelle(auswahl, qb)) auswahlAufheben(); else auswaehlen(qb, tastatur);
+      return;
+    }
+    if (auswahl && !t.closest(".bk-auswahl, #knopfRueckgaengig")) auswahlAufheben();
+  });
+
+  $("knopfAbbrechen").addEventListener("click", function (e) {
+    e.stopPropagation();
+    var q = auswahl;
+    auswahlAufheben();
+    if (q && e.detail === 0) fokusZurueck(q);
+  });
+  $("knopfRueckgaengig").addEventListener("click", rueckgaengig);
+  $("knopfNeu").addEventListener("click", function () { auswahl = null; aenderung(startProgramm(aufg), { fokus: { art: "palette" } }); });
+
+  function nachbar(liste, aktuellEl, richtung) {
+    var i = liste.indexOf(aktuellEl);
+    var n = liste[i + richtung];
+    if (n) n.focus();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    var t = e.target;
+    if (!(t instanceof Element)) return;
+
+    if (e.key === "Escape") {
+      if (drag && drag.aktiv) { onAbbruch(null); e.preventDefault(); return; }
+      if (auswahl) { var q = auswahl; auswahlAufheben(); fokusZurueck(q); e.preventDefault(); }
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === "z" && !t.matches("input")) {
+      e.preventDefault();
+      rueckgaengig();
+      return;
+    }
+    if (t.matches("input")) return;
+
+    var s = t.closest(".bk-slot");
+    if (s) {
+      var slots = nur(arbeit.querySelectorAll(".bk-slot"), function (x) { return !x.disabled && !x.classList.contains("ungueltig"); });
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); nachbar(slots, s, 1); }
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); nachbar(slots, s, -1); }
+      return;
+    }
+    var m = t.closest("#arbeit .bk-main");
+    if (m) {
+      var mains = Array.prototype.slice.call(arbeit.querySelectorAll(".bk-main"));
+      if (e.key === "ArrowDown") { e.preventDefault(); nachbar(mains, m, 1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); nachbar(mains, m, -1); }
+      else if (e.key === "Delete" || e.key === "Backspace") {
+        e.preventDefault();
+        loeschen(adrParse(m.closest(".bk-blk").dataset.adr));
+      }
+      return;
+    }
+    var c = t.closest(".bk-pal");
+    if (c) {
+      var chips = Array.prototype.slice.call(palette.querySelectorAll(".bk-pal"));
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); nachbar(chips, c, 1); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); nachbar(chips, c, -1); }
+    }
+  });
+
+  /* ---------- Käfer-Feld ------------------------------------ */
+
+  function zx(x) { return RAND + (x - 1) * Z; }
+  function zy(y) { return (aufg.feld.rows - y) * Z + 2; }
+  function mx(x) { return zx(x) + Z / 2; }
+  function my(y) { return zy(y) + Z / 2; }
+
+  function feldBeschreibung() {
+    var f = aufg.feld, z = aufg.ziel;
+    var t = "Käfer-Feld mit " + f.cols + " Spalten und " + f.rows + " Zeilen. Start in Spalte " + f.start[0] + ", Zeile " + f.start[1] +
+      ", Blick nach " + E.BLICK_TEXT[f.blick] + ". ";
+    if (f.hindernisse.length) {
+      t += "Hindernisse: " + f.hindernisse.map(function (h) { return "Spalte " + h[0] + ", Zeile " + h[1]; }).join("; ") + ". ";
+    }
+    if (z.typ === "endfeld") t += "Ziel: Spalte " + z.feld[0] + ", Zeile " + z.feld[1] + ".";
+    else {
+      t += "Markierte Felder: " + z.felder.map(function (h) { return "Spalte " + h[0] + ", Zeile " + h[1]; }).join("; ") + ".";
+      if (z.endfeld) t += " Endfeld: Spalte " + z.endfeld[0] + ", Zeile " + z.endfeld[1] + ".";
+    }
+    return t;
+  }
+
+  function renderFeld() {
+    var f = aufg.feld, z = aufg.ziel;
+    var W = RAND + f.cols * Z + 4, H = f.rows * Z + RAND + 4;
+    var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": feldBeschreibung() });
+    var x, y;
+
+    for (y = 1; y <= f.rows; y++) {
+      for (x = 1; x <= f.cols; x++) {
+        svg.append(svgEl("rect", { x: zx(x), y: zy(y), width: Z, height: Z }, "bk-zelle"));
+      }
+    }
+    for (x = 1; x <= f.cols; x++) {
+      var tx = svgEl("text", { x: mx(x), y: f.rows * Z + 2 + 14 }, "bk-achse");
+      tx.textContent = x;
+      svg.append(tx);
+    }
+    for (y = 1; y <= f.rows; y++) {
+      var ty = svgEl("text", { x: RAND / 2, y: my(y) + 3.5 }, "bk-achse");
+      ty.textContent = y;
+      svg.append(ty);
+    }
+
+    var spurFlaechen = svgEl("g"), ziel = svgEl("g"), spurLinien = svgEl("g"), hind = svgEl("g"), marken = svgEl("g");
+    svg.append(spurFlaechen, ziel);
+
+    var st = svgEl("text", { x: zx(f.start[0]) + 3, y: zy(f.start[1]) + 9 }, "bk-start");
+    st.textContent = "Start";
+    svg.append(st);
+
+    function flagge(feld) {
+      var cx = mx(feld[0]), cy = my(feld[1]);
+      ziel.append(svgEl("line", { x1: cx - 7, y1: cy - 12, x2: cx - 7, y2: cy + 12 }, "bk-flaggenmast"));
+      ziel.append(svgEl("polygon", { points: (cx - 7) + "," + (cy - 12) + " " + (cx + 11) + "," + (cy - 6) + " " + (cx - 7) + "," + cy }, "bk-flagge"));
+    }
+    if (z.typ === "endfeld") {
+      ziel.append(svgEl("rect", { x: zx(z.feld[0]) + 3, y: zy(z.feld[1]) + 3, width: Z - 6, height: Z - 6 }, "bk-zielzelle"));
+      flagge(z.feld);
+    } else if (z.typ === "besucht") {
+      z.felder.forEach(function (c) {
+        ziel.append(svgEl("rect", { x: zx(c[0]) + 3, y: zy(c[1]) + 3, width: Z - 6, height: Z - 6 }, "bk-zielzelle"));
+        ziel.append(svgEl("circle", { cx: mx(c[0]) + 11, cy: my(c[1]) + 11, r: 2.5 }, "bk-zielpunkt"));
+      });
+      if (z.endfeld) flagge(z.endfeld);
+    }
+
+    svg.append(spurLinien, hind);
+    f.hindernisse.forEach(function (h) {
+      hind.append(svgEl("rect", { x: zx(h[0]) + 1, y: zy(h[1]) + 1, width: Z - 2, height: Z - 2 }, "bk-hindernis"));
+      hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + Z - 6, x2: zx(h[0]) + Z - 6, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
+      hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + 20, x2: zx(h[0]) + 20, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
+      hind.append(svgEl("line", { x1: zx(h[0]) + 20, y1: zy(h[1]) + Z - 6, x2: zx(h[0]) + Z - 6, y2: zy(h[1]) + 20 }, "bk-hindernis-muster"));
+    });
+    svg.append(marken);
+
+    var k = svgEl("g", {}, "bk-kaefer");
+    k.append(
+      svgEl("line", { x1: -7, y1: -4, x2: -13, y2: -8 }, "bein"), svgEl("line", { x1: 7, y1: -4, x2: 13, y2: -8 }, "bein"),
+      svgEl("line", { x1: -8, y1: 2, x2: -14, y2: 2 }, "bein"), svgEl("line", { x1: 8, y1: 2, x2: 14, y2: 2 }, "bein"),
+      svgEl("line", { x1: -7, y1: 8, x2: -13, y2: 12 }, "bein"), svgEl("line", { x1: 7, y1: 8, x2: 13, y2: 12 }, "bein"),
+      svgEl("line", { x1: -2, y1: -16, x2: -6, y2: -21 }, "fuehler"), svgEl("line", { x1: 2, y1: -16, x2: 6, y2: -21 }, "fuehler"),
+      svgEl("ellipse", { cx: 0, cy: 1, rx: 8.5, ry: 12 }, "koerper"),
+      svgEl("circle", { cx: 0, cy: -12, r: 5.5 }, "koerper"),
+      svgEl("line", { x1: 0, y1: -8, x2: 0, y2: 12 }, "naht")
+    );
+    svg.append(k);
+
+    feldBox.textContent = "";
+    feldBox.append(svg);
+    feldRef = { svg: svg, spurFlaechen: spurFlaechen, spurLinien: spurLinien, marken: marken, kaefer: k };
+
+    var info = "Feld " + f.cols + " × " + f.rows + ". Start: Spalte " + f.start[0] + ", Zeile " + f.start[1] +
+      ", Blick nach " + E.BLICK_TEXT[f.blick] + ". ";
+    info += z.typ === "endfeld" ? "Ziel: das Feld mit der Flagge."
+      : "Ziel: alle gestrichelt markierten Felder besuchen" + (z.endfeld ? ", Ende auf dem Feld mit der Flagge." : ".");
+    $("feldInfo").textContent = info;
+  }
+
+  function winkelNeu(alt, d) {
+    var ziel = WINKEL[d], mod = ((alt % 360) + 360) % 360;
+    return alt + ((ziel - mod + 540) % 360) - 180;
+  }
+
+  function kaeferSetzen(x, y, winkel, ohneAnim) {
+    var g = feldRef.kaefer;
+    if (ohneAnim) g.style.transition = "none";
+    g.style.transform = "translate(" + mx(x) + "px," + my(y) + "px) rotate(" + winkel + "deg)";
+    if (ohneAnim) { void g.getBoundingClientRect(); g.style.transition = ""; }
+  }
+
+  function spurFlaeche(x, y) {
+    feldRef.spurFlaechen.append(svgEl("rect", { x: zx(x), y: zy(y), width: Z, height: Z }, "bk-zelle bk-spurzelle"));
+  }
+
+  /* ---------- Ablauf ---------------------------------------- */
+
+  function dauerSetzen(ms) { feldRef.svg.style.setProperty("--dauer", ms + "ms"); }
+  function tempoMs() { return TEMPO[Number(tempoEl.value) - 1] || 420; }
+
+  function schrittInfo(text, live) {
+    var s = $("schrittInfo");
+    s.setAttribute("aria-live", live ? "polite" : "off");
+    s.textContent = text;
+  }
+
+  function markiere(pfad, fehler) {
+    Array.prototype.forEach.call(arbeit.querySelectorAll(".bk-blk.aktiv"), function (b) { b.classList.remove("aktiv", "fehler"); });
+    if (!pfad) return;
+    var b = arbeit.querySelector('.bk-blk[data-adr="' + adrStr(pfad) + '"]');
+    if (b) { b.classList.add("aktiv"); if (fehler) b.classList.add("fehler"); }
+  }
+
+  function meldungZeigen(art, titel, text, knopf) {
+    meldungBox.textContent = "";
+    meldungBox.className = "bk-meldung " + art;
+    if (titel) meldungBox.append(el("strong", null, titel));
+    if (text) meldungBox.append(el("p", null, text));
+    if (knopf) meldungBox.append(knopf);
+    meldungBox.hidden = false;
+  }
+  function meldungVerbergen() { meldungBox.hidden = true; meldungBox.textContent = ""; }
+
+  function knoepfe() {
+    $("knopfStart").textContent = sim.laeuft ? "Pause" : (sim.lauf && !sim.ende ? "Weiter" : "Start");
+  }
+
+  function simReset() {
+    clearTimeout(sim.timer);
+    sim.laeuft = false; sim.lauf = null; sim.i = 0; sim.ende = false;
+    if (feldRef) {
+      var f = aufg.feld;
+      feldRef.spurFlaechen.textContent = "";
+      feldRef.spurLinien.textContent = "";
+      feldRef.marken.textContent = "";
+      feldRef.kaefer.classList.remove("fehler");
+      spurFlaeche(f.start[0], f.start[1]);
+      sim.winkel = WINKEL[f.blick];
+      dauerSetzen(300);
+      kaeferSetzen(f.start[0], f.start[1], sim.winkel, true);
+    }
+    markiere(null);
+    schrittInfo("", false);
+    meldungVerbergen();
+    knoepfe();
+  }
+
+  function simBereit() {
+    if (sim.lauf) return true;
+    if (!prog.length) { meldungZeigen("fehler", null, E.TEXTE.leer); return false; }
+    if (arbeit.querySelector(".bk-n.ungueltig")) {
+      meldungZeigen("fehler", null, "Bitte geben Sie bei «wiederhole» eine ganze Zahl von 1 bis " + E.MAX_WIEDERHOLUNG + " ein.");
+      return false;
+    }
+    sim.lauf = E.run(aufg.feld, prog);
+    sim.i = 0;
+    sim.ende = false;
+    return true;
+  }
+
+  function anwenden(ev) {
+    markiere(ev.pfad, ev.typ === "fehler");
+    var text = "";
+    if (ev.typ === "act") {
+      sim.winkel = winkelNeu(sim.winkel, ev.d);
+      if (ev.bewegt) {
+        feldRef.spurLinien.append(svgEl("line", { x1: mx(ev.von[0]), y1: my(ev.von[1]), x2: mx(ev.x), y2: my(ev.y) }, "bk-spurlinie"));
+        spurFlaeche(ev.x, ev.y);
+      }
+      kaeferSetzen(ev.x, ev.y, sim.winkel, false);
+      text = E.BEFEHLE[ev.cmd].label;
+    } else if (ev.typ === "loop") {
+      text = "wiederhole " + ev.n + "-mal – Durchlauf " + ev.durchlauf + " von " + ev.n;
+    } else if (ev.typ === "if") {
+      text = E.BEDINGUNGEN.frei.label + " → " + (ev.ja ? "Ja" : "Nein");
+    } else {
+      var dr = SCREEN_DIR[ev.d], cx = mx(ev.x), cy = my(ev.y), h = Z / 2;
+      var ex = cx + dr[0] * h, ey = cy + dr[1] * h;
+      feldRef.marken.append(svgEl("line", {
+        x1: ex + dr[1] * h, y1: ey + dr[0] * h, x2: ex - dr[1] * h, y2: ey - dr[0] * h
+      }, "bk-stosslinie"));
+      feldRef.kaefer.classList.add("fehler");
+      kaeferSetzen(ev.x + (dr[0] * 0.3), ev.y - (dr[1] * 0.3), sim.winkel, false);
+      setTimeout(function () { if (sim.lauf) kaeferSetzen(ev.x, ev.y, sim.winkel, false); }, 180);
+      text = "Der Käfer stösst an.";
+    }
+    schrittInfo(text, !sim.laeuft);
+  }
+
+  function simSchritt(auto) {
+    var tr = sim.lauf.trace;
+    if (sim.i >= tr.length) { abschluss(); return; }
+    anwenden(tr[sim.i++]);
+    if (sim.i >= tr.length) {
+      if (auto) sim.timer = setTimeout(abschluss, tempoMs()); else abschluss();
+      return;
+    }
+    if (auto) sim.timer = setTimeout(tick, tempoMs());
+  }
+  function tick() { if (sim.laeuft) simSchritt(true); }
+
+  function abschluss() {
+    sim.laeuft = false;
+    sim.ende = true;
+    knoepfe();
+    $("schrittInfo").setAttribute("aria-live", "polite");
+    var res = E.pruefe(aufg, prog);
+    if (res.ok) {
+      geloest[aufg.id] = Math.min(res.bloecke, geloest[aufg.id] || res.bloecke);
+      speichereFortschritt();
+      tabsAktualisieren();
+      var knopf = null;
+      if (aktuell < aufgaben.length - 1) {
+        knopf = el("button", "bk-knopf primaer", "Nächste Aufgabe");
+        knopf.type = "button";
+        knopf.addEventListener("click", function () { waehleAufgabe(aktuell + 1); window.scrollTo({ top: 0, behavior: "smooth" }); });
+      }
+      meldungZeigen("ok", "Geschafft", "Der Käfer hat die Aufgabe gelöst. " + E.bausteineText(res.bloecke, res.max) + "." +
+        (knopf ? "" : " Das war die letzte Aufgabe."), knopf);
+    } else if (res.grund === "bloecke" && res.zielErreicht) {
+      meldungZeigen("fehler", "Fast", "Der Käfer löst die Aufgabe, aber: " + res.text + " Geht es mit weniger?");
+    } else {
+      meldungZeigen("fehler", null, res.text);
+    }
+  }
+
+  function pause() {
+    clearTimeout(sim.timer);
+    sim.laeuft = false;
+    knoepfe();
+    $("schrittInfo").setAttribute("aria-live", "polite");
+  }
+
+  $("knopfStart").addEventListener("click", function () {
+    if (sim.laeuft) { pause(); return; }
+    if (sim.ende) simReset();
+    if (!simBereit()) return;
+    meldungVerbergen();
+    sim.laeuft = true;
+    dauerSetzen(Math.min(380, Math.round(tempoMs() * 0.8)));
+    $("schrittInfo").setAttribute("aria-live", "off");
+    knoepfe();
+    simSchritt(true);
+  });
+
+  $("knopfSchritt").addEventListener("click", function () {
+    if (sim.laeuft) pause();
+    if (sim.ende) simReset();
+    if (!simBereit()) return;
+    meldungVerbergen();
+    dauerSetzen(300);
+    knoepfe();
+    simSchritt(false);
+  });
+
+  $("knopfReset").addEventListener("click", function () { simReset(); });
+
+  tempoEl.addEventListener("input", function () {
+    tempoEl.setAttribute("aria-valuetext", TEMPO_TEXT[Number(tempoEl.value) - 1]);
+    if (sim.laeuft && feldRef) dauerSetzen(Math.min(380, Math.round(tempoMs() * 0.8)));
+  });
+})();

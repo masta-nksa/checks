@@ -1,0 +1,256 @@
+/* ============================================================
+   baukasten.css – Struktogramm-Baukasten (Käfer)
+   Farbtokens (--ink, --accent, --surface, ...) kommen aus assets/check.css,
+   Hell/Dunkel wie auf der ganzen Plattform. Hier nur Ergänzungen.
+   ============================================================ */
+
+:root{
+  --hl:#b3ddd7;        /* aktueller Baustein beim Ausführen */
+  --spur:#cde8e4;      /* besuchte Felder */
+  --hinder:#46524f;    /* Hindernis */
+  --rahmen:1.5px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--hl:#2c6860;--spur:#1f3d39;--hinder:#8b9c99}
+}
+:root[data-theme="dark"]{--hl:#2c6860;--spur:#1f3d39;--hinder:#8b9c99}
+
+.bk{max-width:1120px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:20px}
+.bk-kopf-seite{gap:10px}
+.bk-zurueck{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem;color:var(--ink-soft);
+  text-decoration:none;align-self:flex-start;padding:6px 0;
+}
+.bk-zurueck:hover{color:var(--accent);text-decoration:underline}
+.bk h2{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.78rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 10px;font-weight:600;
+}
+
+/* ---------- Aufgabenwahl ---------- */
+.bk-aufgaben ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.bk-tab{
+  font:inherit;font-size:.9rem;cursor:pointer;min-height:44px;padding:8px 14px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);
+  display:flex;align-items:center;gap:8px;
+}
+.bk-tab:hover{border-color:var(--accent)}
+.bk-tab[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.bk-tab .haken{color:var(--ok);font-weight:700}
+.bk-tab:focus-visible,.bk-knopf:focus-visible,.bk-pal:focus-visible,.bk-slot:focus-visible,
+.bk-main:focus-visible,.bk-del:focus-visible,.bk-tempo input:focus-visible,.bk-hinweis summary:focus-visible{
+  outline:3px solid var(--accent);outline-offset:2px;
+}
+
+.bk-aufgabe{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.bk-aufgabe h2{font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--ink);margin-bottom:6px}
+.bk-aufgabe p{margin:0}
+.bk-hinweis{margin-top:10px;font-size:.92rem;color:var(--ink-soft)}
+.bk-hinweis summary{cursor:pointer;min-height:44px;display:flex;align-items:center;width:max-content;max-width:100%}
+.bk-hinweis p{padding:2px 0 6px}
+
+/* ---------- Raster ---------- */
+.bk-raster{display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:720px){
+  .bk-raster{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:start}
+  .bk-lauf{position:sticky;top:12px}
+}
+.bk-bau,.bk-lauf{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;
+  display:flex;flex-direction:column;gap:12px;min-width:0;
+}
+.bk-bau h2,.bk-lauf h2{margin:0}
+
+/* ---------- Knöpfe ---------- */
+.bk-knopf{
+  font:inherit;font-size:.9rem;cursor:pointer;min-height:44px;padding:8px 16px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--ink-soft);border-radius:var(--radius);
+}
+.bk-knopf:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.bk-knopf:disabled{opacity:.45;cursor:default}
+.bk-knopf.primaer{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:600}
+.bk-knopf.primaer:hover:not(:disabled){background:var(--accent);filter:brightness(1.1)}
+
+/* ---------- Palette ---------- */
+.bk-palette{display:flex;flex-wrap:wrap;gap:8px;padding:2px;border-radius:var(--radius)}
+.bk-pal{
+  font:inherit;font-size:.92rem;min-height:48px;min-width:48px;padding:6px 14px;cursor:grab;
+  background:var(--surface);color:var(--ink);border:var(--rahmen) solid var(--ink);border-radius:2px;
+  display:flex;align-items:center;gap:8px;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+}
+.bk-pal:hover{background:var(--accent-soft)}
+.bk-pal[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:2px;background:var(--accent-soft)}
+.bk-pal-loop{background:linear-gradient(90deg,var(--accent-soft) 0 14px,var(--ink) 14px 15.5px,var(--surface) 15.5px);padding-left:26px}
+.bk-pal-if svg{width:26px;height:20px;flex:none}
+.bk-pal-if line{stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.bk-palette.heiss{outline:3px dashed var(--no);outline-offset:2px}
+
+.bk-leiste{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.bk-leiste-knoepfe{display:flex;gap:8px;flex-wrap:wrap}
+.bk-zaehler{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.85rem;font-variant-numeric:tabular-nums}
+.bk-zaehler.zu-viele{color:var(--no);font-weight:600}
+
+.bk-auswahl{
+  display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  border-left:3px solid var(--accent);background:var(--accent-soft);padding:6px 6px 6px 12px;font-size:.9rem;
+}
+.bk-auswahl[hidden]{display:none}
+
+/* ---------- Struktogramm ---------- */
+.bk-arbeit{padding:var(--rahmen) 0 0;min-height:120px}
+.bk-baum{padding:var(--rahmen) 0 var(--rahmen);}
+.bk-blk{
+  position:relative;border:var(--rahmen) solid var(--ink);margin-top:calc(var(--rahmen) * -1);background:var(--surface);
+}
+.bk-blk.gewaehlt{outline:3px solid var(--accent);outline-offset:1px;z-index:2}
+.bk-blk.quelle{opacity:.35}
+
+/* Greifflächen: ziehen, antippen */
+.grab{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
+
+.bk-main{
+  font:inherit;color:inherit;background:transparent;border:0;cursor:inherit;
+  min-height:44px;padding:0 10px;text-align:center;
+}
+.bk-del{
+  font:inherit;font-size:1.3rem;line-height:1;color:var(--ink-soft);background:transparent;border:0;
+  width:44px;min-height:44px;cursor:pointer;flex:none;
+}
+.bk-del:hover{color:var(--no);background:var(--no-soft)}
+
+.bk-act{display:flex;align-items:stretch;min-height:44px}
+.bk-act .bk-main{flex:1;padding-left:44px}
+
+.bk-kopf{display:flex;align-items:center;gap:6px;min-height:48px;padding-left:10px;background:var(--accent-soft)}
+.bk-kopf .bk-main{padding:0;min-height:44px;font-weight:600}
+.bk-kopf .bk-mal{font-weight:600}
+.bk-kopf .bk-spacer{flex:1}
+.bk-n{
+  font:inherit;font-weight:600;width:64px;height:40px;text-align:center;
+  background:var(--surface);color:var(--ink);border:var(--rahmen) solid var(--ink);border-radius:2px;
+}
+.bk-n:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.bk-n.ungueltig{border-color:var(--no);background:var(--no-soft)}
+
+.bk-loop > .bk-kopf{border-bottom:var(--rahmen) solid var(--ink)}
+.bk-rumpf{display:flex}
+.bk-balken{flex:0 0 26px;background:var(--accent-soft);border-right:var(--rahmen) solid var(--ink)}
+.bk-rumpf > .bk-zone{flex:1;min-width:0}
+
+/* Verzweigung: Dreieck mit Ja links und Nein rechts */
+.bk-if > .bk-kopf{
+  position:relative;display:block;min-height:68px;padding:0;
+  border-bottom:var(--rahmen) solid var(--ink);
+}
+.bk-dreieck{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bk-dreieck line{stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.bk-if .bk-main{position:absolute;left:50%;top:0;transform:translateX(-50%);max-width:70%;padding:0 6px;white-space:nowrap}
+.bk-ja,.bk-nein{position:absolute;bottom:4px;font-size:.78rem;pointer-events:none}
+.bk-ja{left:8px}
+.bk-nein{right:8px}
+.bk-if .bk-del{position:absolute;right:0;top:0}
+.bk-aeste{display:grid;grid-template-columns:1fr 1fr}
+.bk-ast{min-width:0}
+.bk-ast + .bk-ast{border-left:var(--rahmen) solid var(--ink)}
+.bk-aeste .bk-zone,.bk-rumpf .bk-zone{margin-bottom:calc(var(--rahmen) * -1)}
+
+/* aktueller Baustein beim Ausführen */
+.bk-act.aktiv,.bk-blk.aktiv > .bk-kopf{background:var(--hl)}
+.bk-blk.aktiv{outline:3px solid var(--accent);outline-offset:-1px;z-index:3}
+.bk-blk.aktiv.fehler{outline-color:var(--no)}
+.bk-blk.aktiv.fehler.bk-act,.bk-blk.aktiv.fehler > .bk-kopf{background:var(--no-soft)}
+
+/* ---------- Ablagestellen ---------- */
+.bk-slot{
+  display:block;position:relative;width:100%;height:0;padding:0;margin:0;border:0;overflow:visible;
+  background:transparent;font:inherit;color:var(--accent);cursor:pointer;
+}
+.bk-slot .bk-slot-text{display:none}
+.bk-slot.ungueltig{display:none}
+/* Einfügemarke beim Ziehen */
+.bk-slot.heiss::after{
+  content:"";position:absolute;left:0;right:0;top:-4px;height:8px;background:var(--accent);border-radius:4px;z-index:6;
+}
+/* leere Liste */
+.bk-slot.leer{
+  height:auto;min-height:44px;display:flex;align-items:center;justify-content:center;
+  border:2px dashed var(--line);margin:var(--rahmen);width:calc(100% - 2 * var(--rahmen));
+  font-size:.8rem;color:var(--ink-soft);pointer-events:none;
+}
+.bk-slot.leer .bk-slot-text{display:inline}
+.bk-baum > .bk-zone > .bk-slot.leer{min-height:120px;font-size:.9rem}
+.bk-slot.leer.heiss{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.bk-slot.leer.heiss::after{display:none}
+/* Antippen / Tastatur: Ablagestellen werden sichtbar und gross */
+.bk-waehlen .bk-slot{
+  height:44px;margin:4px 0;border:2px dashed var(--accent);background:var(--accent-soft);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;pointer-events:auto;
+}
+.bk-waehlen .bk-slot .bk-slot-text{display:inline}
+.bk-waehlen .bk-slot:hover,.bk-waehlen .bk-slot:focus-visible{border-style:solid;background:var(--hl)}
+.bk-waehlen .bk-slot.leer{margin:var(--rahmen) var(--rahmen)}
+
+.bk-korb{
+  border:2px dashed var(--line);border-radius:var(--radius);padding:10px;text-align:center;
+  font-size:.85rem;color:var(--ink-soft);
+}
+.bk-korb.heiss{border-color:var(--no);background:var(--no-soft);color:var(--no)}
+
+/* Ziehbild */
+.bk-ghost{
+  position:fixed;z-index:1000;pointer-events:none;left:0;top:0;
+  padding:10px 16px;background:var(--surface);color:var(--ink);border:2px solid var(--accent);border-radius:3px;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);font-weight:600;font-size:.92rem;white-space:nowrap;opacity:.96;
+}
+body.bk-zieht{cursor:grabbing;user-select:none;-webkit-user-select:none}
+body.bk-zieht *{cursor:grabbing!important}
+
+/* ---------- Käfer-Feld ---------- */
+.bk-feld{display:flex;justify-content:center}
+.bk-feld svg{display:block;width:100%;height:auto;max-width:420px}
+.bk-zelle{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.bk-spurzelle{fill:var(--spur)}
+.bk-zielzelle{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:4 3}
+.bk-zielpunkt,.bk-flagge{fill:var(--accent)}
+.bk-flaggenmast{stroke:var(--accent);stroke-width:2}
+.bk-hindernis{fill:var(--hinder)}
+.bk-hindernis-muster{stroke:var(--surface);stroke-width:1.5;opacity:.55}
+.bk-spurlinie{stroke:var(--accent);stroke-width:3;stroke-linecap:round;fill:none;opacity:.55}
+.bk-achse{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;fill:var(--ink-soft);text-anchor:middle}
+.bk-start{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:8px;fill:var(--ink-soft)}
+.bk-stosslinie{stroke:var(--no);stroke-width:4;stroke-linecap:round}
+.bk-kaefer{transition:transform var(--dauer,.3s) ease-in-out}
+.bk-kaefer .koerper{fill:var(--accent)}
+.bk-kaefer .bein,.bk-kaefer .fuehler{stroke:var(--accent);stroke-width:2;stroke-linecap:round}
+.bk-kaefer .naht{stroke:var(--surface);stroke-width:1.5}
+.bk-kaefer.fehler .koerper{fill:var(--no)}
+.bk-kaefer.fehler .bein,.bk-kaefer.fehler .fuehler{stroke:var(--no)}
+.bk-feldinfo{margin:0;font-size:.82rem;color:var(--ink-soft)}
+
+.bk-steuerung{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bk-tempo{display:flex;flex-direction:column;gap:2px;font-size:.8rem;color:var(--ink-soft);flex:1;min-width:140px}
+.bk-tempo input{width:100%;min-height:44px;margin:0;accent-color:var(--accent)}
+.bk-tempo-skala{display:flex;justify-content:space-between;font-size:.7rem;margin-top:-10px}
+.bk-schritt{margin:0;min-height:1.5em;font-size:.85rem;color:var(--ink-soft);font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+.bk-meldung{
+  border-left:3px solid var(--accent);padding:10px 12px;background:var(--accent-soft);
+  display:flex;flex-direction:column;gap:8px;align-items:flex-start;
+}
+.bk-meldung[hidden]{display:none}
+.bk-meldung.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.bk-meldung.fehler{border-left-color:var(--no);background:var(--no-soft)}
+.bk-meldung strong{font-size:1.05rem}
+.bk-meldung p{margin:0}
+
+.bk-hilfe{margin:0;font-size:.85rem;color:var(--ink-soft);max-width:90ch}
+.bk-hilfe b{color:var(--ink)}
+
+@media (prefers-reduced-motion: reduce){.bk-kaefer{transition:none}}
+@media (max-width:560px){
+  .bk{padding:20px 14px 48px}
+  .bk-aufgaben ol{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
+  .bk-tab{white-space:nowrap;flex:none}
+  .bk-bau,.bk-lauf,.bk-aufgabe{padding:14px}
+}
