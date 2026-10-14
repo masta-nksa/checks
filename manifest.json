@@ -53,6 +53,7 @@
       ],
       "checks": [
         { "titel": "Algorithmus-Check", "untertitel": "Anforderungen, Bausteine, Struktogramm", "pfad": "algorithmen/begriff/" },
+        { "titel": "Struktogramm-Check", "untertitel": "Wiederholung, Verzweigung, Käfer", "pfad": "algorithmen/struktogramme/" },
         { "titel": "Sortier-Check", "untertitel": "Bubble Sort, Merge Sort, binäre Suche", "pfad": "algorithmen/sortieren/" },
         { "titel": "Daten-Check", "untertitel": "Speicherarten, CRUD", "pfad": "algorithmen/daten/" }
       ]
