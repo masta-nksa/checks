@@ -72,6 +72,25 @@ Die Reihenfolge der Themen und der Checks innerhalb eines Themas ist genau die
 Reihenfolge in dieser Datei – sinnvollerweise von den Grundlagen zu den Anwendungen.
 `gefaess` und `untertitel` sind optional.
 
+Neben `checks` kennt ein Thema optional `lernseiten` («Zum Nachlesen») und
+`werkzeuge` («Zum Ausprobieren», Kennzeichnung «Werkzeug»). Ein Eintrag in
+`werkzeuge` hat dieselben Felder wie ein Check (`titel`, `untertitel`, `pfad`),
+verweist aber auf eine eigenständige Seite statt auf einen Fragenkatalog.
+
+## Werkzeug: Struktogramm-Baukasten (Käfer)
+
+`algorithmen/baukasten/` ist kein Check, sondern ein eigenes Werkzeug (reines
+HTML/CSS/JS, keine Bibliotheken, es wird nichts gesendet). Bausteine werden per
+Drag and Drop (Maus und Touch) oder per Antippen/Tastatur ins Struktogramm
+gesetzt; der Käfer führt das Programm auf einem Feld aus.
+
+- `aufgaben.json`: die Aufgaben (Feld, Palette, Bausteinlimit, Ziel). **Keine Lösungen.**
+- `engine.js`: Interpreter, Prüfung und Programmbaum als reine Funktionen (ohne DOM).
+  Befehle, Bedingungen und Ziel-Typen stehen in Tabellen und sind erweiterbar.
+- Die Prüfung vergleicht das **Ergebnis** (Endfeld, besuchte Felder, Bausteinlimit),
+  nie ein Muster. Lösungen und Tests gehören nicht in dieses Repo.
+- Gelöste Aufgaben merkt sich der Browser in `localStorage` (Schlüssel `checks.baukasten.v1`).
+
 ## Papierversion
 
 Check-Seite im Browser drucken (Strg+P). Die Druckansicht zeigt Ankreuzkästchen
