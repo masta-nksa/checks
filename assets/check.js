@@ -43,6 +43,24 @@
     d.fragen.forEach(function (f, i) {
       var nr = "Frage " + (i + 1) + ": ";
       if (typeof f.q !== "string") throw new Error(nr + "Feld \u201eq\u201c fehlt.");
+
+      if (f.typ === "matrix") {
+        if (!Array.isArray(f.spalten) || f.spalten.length < 2 || f.spalten.length > 4) {
+          throw new Error(nr + "\u201espalten\u201c braucht 2 bis 4 Spalten.");
+        }
+        if (!Array.isArray(f.zeilen) || f.zeilen.length === 0) {
+          throw new Error(nr + "\u201ezeilen\u201c fehlt oder ist leer.");
+        }
+        f.zeilen.forEach(function (z, j) {
+          var zn = nr + "Zeile " + (j + 1) + ": ";
+          if (!z || typeof z.z !== "string") throw new Error(zn + "Feld \u201ez\u201c fehlt.");
+          if (typeof z.a !== "number" || z.a < 0 || z.a >= f.spalten.length) {
+            throw new Error(zn + "\u201ea\u201c zeigt auf keine vorhandene Spalte.");
+          }
+        });
+        return;
+      }
+
       if (!Array.isArray(f.opts) || f.opts.length < 2 || f.opts.length > 4) {
         throw new Error(nr + "\u201eopts\u201c braucht 2 bis 4 Optionen.");
       }
@@ -106,10 +124,18 @@
     score.append(reset);
 
     var solution = el("div", "solution");
-    var key = data.fragen.map(function (f, i) {
-      return (i + 1) + " " + KEYS[f.a];
-    }).join(" \u00b7 ");
-    solution.append(el("h2", null, "L\u00f6sungsschl\u00fcssel"), el("p", null, key));
+    solution.append(el("h2", null, "L\u00f6sungsschl\u00fcssel"));
+    var kurz = [];
+    data.fragen.forEach(function (f, i) {
+      if (f.typ === "matrix") {
+        solution.append(el("p", null, (i + 1) + " " + f.zeilen.map(function (z) {
+          return z.z + " = " + f.spalten[z.a];
+        }).join(", ")));
+      } else {
+        kurz.push((i + 1) + " " + KEYS[f.a]);
+      }
+    });
+    if (kurz.length) solution.insertBefore(el("p", null, kurz.join(" \u00b7 ")), solution.children[1] || null);
 
     root.append(head, quiz, score, solution);
 
@@ -131,8 +157,15 @@
         text.innerHTML = item.q;
         qhead.append(num, text);
 
-        var opts = el("div", "opts");
         var fb = el("div", "fb");
+
+        if (item.typ === "matrix") {
+          card.append(qhead, matrix(item, fb), fb);
+          quiz.append(card);
+          return;
+        }
+
+        var opts = el("div", "opts");
 
         var buttons = item.opts.map(function (opt, j) {
           var b = document.createElement("button");
@@ -168,6 +201,73 @@
         card.append(qhead, opts, fb);
         quiz.append(card);
       });
+    }
+
+    /* Matrix-Frage: eine Zeile pro Objekt, eine Spalte pro Kategorie.
+       Zaehlt als eine Frage; richtig ist sie nur, wenn alle Zeilen stimmen. */
+    function matrix(item, fb) {
+      var offen = item.zeilen.length, stimmen = 0;
+
+      var wrap = el("div", "matrix-wrap");
+      var table = el("table", "matrix");
+
+      var headRow = el("tr");
+      headRow.append(el("th", "rowhead-empty"));
+      item.spalten.forEach(function (s) {
+        headRow.append(el("th", "colhead", s));
+      });
+      var thead = document.createElement("thead");
+      thead.append(headRow);
+
+      var tbody = document.createElement("tbody");
+      item.zeilen.forEach(function (z) {
+        var tr = el("tr");
+        var rowhead = el("th", null, z.z);
+        rowhead.scope = "row";
+        tr.append(rowhead);
+
+        var zellen = item.spalten.map(function (s, j) {
+          var td = el("td");
+          var b = document.createElement("button");
+          b.className = "cell";
+          b.type = "button";
+          b.setAttribute("aria-label", z.z + ": " + s);
+          b.append(el("span", "box"));
+          td.append(b);
+          tr.append(td);
+
+          b.addEventListener("click", function () {
+            var ok = j === z.a;
+            zellen.forEach(function (other, m) {
+              other.disabled = true;
+              if (m === z.a) other.classList.add(ok ? "correct" : "miss");
+              else if (m === j) other.classList.add("wrong");
+            });
+            if (ok) stimmen++;
+            offen--;
+            if (offen > 0) return;
+
+            var alle = stimmen === item.zeilen.length;
+            fb.innerHTML =
+              (alle ? "<b>Richtig.</b> "
+                    : "<b>Nicht ganz.</b> " + stimmen + " von " +
+                      item.zeilen.length + " Zeilen stimmen. ") +
+              (item.fb || "");
+            fb.style.borderLeftColor = alle ? "var(--ok)" : "var(--no)";
+            fb.classList.add("show");
+            done++; if (alle) right++;
+            doneEl.textContent = done;
+            rightEl.textContent = right;
+          });
+          return b;
+        });
+
+        tbody.append(tr);
+      });
+
+      table.append(thead, tbody);
+      wrap.append(table);
+      return wrap;
     }
 
     reset.addEventListener("click", function () {
