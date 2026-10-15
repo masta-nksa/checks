@@ -23,6 +23,7 @@
   window.BaukastenFigur = api;
 
   var aktuell = null;
+  var figurDialog = $("figurDialog");
 
   /* ---------- Speicher ---------- */
 
@@ -38,7 +39,6 @@
     } catch (e) { /* ohne Speicher: Bild gilt nur bis zum Neuladen */ }
   }
   function geaendert() {
-    $("knopfBildWeg").hidden = !aktuell;
     if (typeof api.onChange === "function") api.onChange();
   }
 
@@ -220,12 +220,14 @@
   /* ---------- Knöpfe ---------- */
 
   var dateiKamera = $("bildDateiKamera"), dateiWahl = $("bildDateiWahl");
-  $("knopfBildKamera").addEventListener("click", function () { meldung(""); dateiKamera.value = ""; dateiKamera.click(); });
-  $("knopfBildWahl").addEventListener("click", function () { meldung(""); dateiWahl.value = ""; dateiWahl.click(); });
+  function menueZu() { if (figurDialog.open) figurDialog.close(); }
+  $("knopfBildKamera").addEventListener("click", function () { menueZu(); meldung(""); dateiKamera.value = ""; dateiKamera.click(); });
+  $("knopfBildWahl").addEventListener("click", function () { menueZu(); meldung(""); dateiWahl.value = ""; dateiWahl.click(); });
+  $("figurZu").addEventListener("click", menueZu);
   dateiKamera.addEventListener("change", function () { einlesen(dateiKamera.files[0], "kamera"); });
   dateiWahl.addEventListener("change", function () { einlesen(dateiWahl.files[0], "datei"); });
 
-  $("knopfBildWeg").addEventListener("click", function () { aktuell = null; speichern(); geaendert(); });
+  $("knopfBildWeg").addEventListener("click", function () { menueZu(); aktuell = null; speichern(); geaendert(); });
   $("bildOk").addEventListener("click", uebernehmen);
   $("bildAbbruch").addEventListener("click", schliessen);
   $("bildNeu").addEventListener("click", function () {
@@ -235,6 +237,20 @@
     (quelle === "kamera" ? dateiKamera : dateiWahl).click();
   });
   dialog.addEventListener("cancel", function () { if (bild && typeof bild.close === "function") bild.close(); bild = null; zeiger = {}; pinch = null; });
+
+  // Versteckt: dreimal schnell auf den Käfer (oder das Bild) klicken öffnet das Figur-Menü.
+  var klicks = 0, klickZeit = 0;
+  $("feld").addEventListener("click", function (e) {
+    if (!e.target.closest || !e.target.closest(".bk-kaefer")) { klicks = 0; return; }
+    var jetzt = Date.now();
+    klicks = jetzt - klickZeit < 700 ? klicks + 1 : 1;
+    klickZeit = jetzt;
+    if (klicks >= 3) {
+      klicks = 0;
+      $("knopfBildWeg").hidden = !aktuell;
+      if (!figurDialog.open) figurDialog.showModal();
+    }
+  });
 
   laden();
   $("knopfBildWeg").hidden = !aktuell;

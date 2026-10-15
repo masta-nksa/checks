@@ -254,9 +254,8 @@ body.bk-zieht *{cursor:grabbing!important}
 .bk-kaefer.fehler .bein,.bk-kaefer.fehler .fuehler{stroke:var(--no)}
 .bk-feldinfo{margin:0;font-size:.82rem;color:var(--ink-soft)}
 
-.bk-figur{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.bk-figur-titel{font-size:.82rem;color:var(--ink-soft);margin-right:4px}
-.bk-figur [hidden]{display:none}
+.bk-treffer{fill:rgba(0,0,0,0);stroke:none;pointer-events:all}
+.bk-bild [hidden]{display:none}
 .bk-bild{
   width:min(92vw,380px);padding:18px;border:1px solid var(--line);border-radius:var(--radius);
   background:var(--surface);color:var(--ink);box-shadow:0 12px 40px rgba(0,0,0,.35);

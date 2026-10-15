@@ -45,7 +45,7 @@
         <span class="bk-zaehler" id="zaehler"></span>
         <span class="bk-leiste-knoepfe">
           <button type="button" class="bk-knopf" id="knopfRueckgaengig">Rückgängig</button>
-          <button type="button" class="bk-knopf" id="knopfNeu">Neu beginnen</button>
+          <button type="button" class="bk-knopf" id="knopfNeu" title="Löscht alle Bausteine dieser Aufgabe. «Rückgängig» holt sie zurück.">Alles löschen</button>
         </span>
       </div>
 
@@ -64,14 +64,6 @@
       <div class="bk-feld" id="feld"></div>
       <p class="bk-feldinfo" id="feldInfo"></p>
 
-      <div class="bk-figur" role="group" aria-label="Figur auf dem Feld">
-        <span class="bk-figur-titel">Eigenes Bild statt Käfer:</span>
-        <button type="button" class="bk-knopf" id="knopfBildKamera">Foto aufnehmen</button>
-        <button type="button" class="bk-knopf" id="knopfBildWahl">Bild wählen</button>
-        <button type="button" class="bk-knopf" id="knopfBildWeg" hidden>Zurück zum Käfer</button>
-        <input type="file" id="bildDateiKamera" accept="image/*" capture="user" hidden>
-        <input type="file" id="bildDateiWahl" accept="image/*" hidden>
-      </div>
 
       <div class="bk-steuerung">
         <button type="button" class="bk-knopf primaer" id="knopfStart">Start</button>
@@ -95,6 +87,19 @@
     Entf löscht den Baustein mit Fokus, Strg+Z macht rückgängig.
   </p>
 </div>
+
+<dialog class="bk-bild" id="figurDialog" aria-labelledby="figurTitel">
+  <h2 id="figurTitel">Eigene Figur</h2>
+  <p class="bk-bild-hilfe">Statt des Käfers läuft Ihr eigenes Bild über das Feld. Es bleibt in diesem Browser und wird nicht gesendet.</p>
+  <div class="bk-bild-knoepfe">
+    <button type="button" class="bk-knopf primaer" id="knopfBildKamera">Foto aufnehmen</button>
+    <button type="button" class="bk-knopf" id="knopfBildWahl">Bild wählen</button>
+    <button type="button" class="bk-knopf" id="knopfBildWeg" hidden>Zurück zum Käfer</button>
+    <button type="button" class="bk-knopf" id="figurZu">Schliessen</button>
+  </div>
+  <input type="file" id="bildDateiKamera" accept="image/*" capture="user" hidden>
+  <input type="file" id="bildDateiWahl" accept="image/*" hidden>
+</dialog>
 
 <dialog class="bk-bild" id="bildDialog" aria-labelledby="bildTitel">
   <h2 id="bildTitel">Bild zuschneiden</h2>

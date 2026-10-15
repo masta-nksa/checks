@@ -82,6 +82,25 @@
 
   /* ---------- Fortschritt (localStorage, immer mit try/catch) - */
 
+  var PROG_SPEICHER = "checks.baukasten.prog.v1";
+  var gespeicherteProgramme = {};
+
+  function ladeProgramme() {
+    try {
+      var d = JSON.parse(localStorage.getItem(PROG_SPEICHER) || "{}");
+      if (d && typeof d === "object" && !Array.isArray(d)) gespeicherteProgramme = d;
+    } catch (e) { gespeicherteProgramme = {}; }
+  }
+  // Der aktuelle Stand der Aufgabe bleibt auch nach Seitenwechsel oder Neuladen erhalten.
+  function speichereProgramm() {
+    if (prog.length) gespeicherteProgramme[aufg.id] = prog; else delete gespeicherteProgramme[aufg.id];
+    try { localStorage.setItem(PROG_SPEICHER, JSON.stringify(gespeicherteProgramme)); } catch (e) { /* ohne Speicher weiter */ }
+  }
+  function gespeichertesProgramm(a) {
+    var p = gespeicherteProgramme[a.id];
+    return Array.isArray(p) && p.length && E.validiere(p, maxTiefe(a)) === null ? E.klonen(p) : null;
+  }
+
   function ladeFortschritt() {
     try {
       var d = JSON.parse(localStorage.getItem(SPEICHER) || "{}");
@@ -159,6 +178,7 @@
   if (window.BaukastenFigur) window.BaukastenFigur.onChange = function () { if (aufg) { renderFeld(); simReset(); } };
 
   ladeFortschritt();
+  ladeProgramme();
   baueReihen();
   zeigeReihe(reihe);
 
@@ -202,7 +222,7 @@
     aktuell = i;
     aufg = aufgaben[i];
     var z = zustand[aufg.id];
-    prog = z ? z.prog : startProgramm(aufg);
+    prog = z ? z.prog : (gespeichertesProgramm(aufg) || startProgramm(aufg));
     undoStack = z ? z.undo : [];
     auswahl = null;
     fokusZiel = null;
@@ -376,6 +396,7 @@
         inp.classList.toggle("ungueltig", !ok);
         if (ok) {
           E.blockAt(prog, adr).n = n;
+          speichereProgramm();
           simReset();
           zaehlerAktualisieren();
         }
@@ -515,6 +536,7 @@
       if (undoStack.length > 100) undoStack.shift();
       prog = neu;
     }
+    speichereProgramm();
     simReset();
     renderBau();
   }
@@ -523,6 +545,7 @@
     if (!undoStack.length) return;
     prog = JSON.parse(undoStack.pop());
     auswahl = null;
+    speichereProgramm();
     simReset();
     renderBau();
   }
@@ -906,6 +929,7 @@
     svg.append(marken);
 
     var k = svgEl("g", {}, "bk-kaefer");
+    k.append(svgEl("circle", { cx: 0, cy: 0, r: 19 }, "bk-treffer"));   // unsichtbare Klickfläche (Versteck)
     var bildUrl = window.BaukastenFigur && window.BaukastenFigur.bild();
     var bildGruppe = null;
     if (bildUrl) {
