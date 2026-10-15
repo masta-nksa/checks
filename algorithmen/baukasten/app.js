@@ -155,6 +155,9 @@
     });
   }
 
+  // Eigenes Bild gewählt oder entfernt: Feld neu zeichnen, Ablauf zurücksetzen.
+  if (window.BaukastenFigur) window.BaukastenFigur.onChange = function () { if (aufg) { renderFeld(); simReset(); } };
+
   ladeFortschritt();
   baueReihen();
   zeigeReihe(reihe);
@@ -903,7 +906,18 @@
     svg.append(marken);
 
     var k = svgEl("g", {}, "bk-kaefer");
-    k.append(
+    var bildUrl = window.BaukastenFigur && window.BaukastenFigur.bild();
+    var bildGruppe = null;
+    if (bildUrl) {
+      // Eigenes Bild: bleibt aufrecht, nur der Zeiger am Rand dreht sich mit der Blickrichtung.
+      bildGruppe = svgEl("g", {}, "bk-kaefer bk-kaefer-bild");
+      bildGruppe.append(svgEl("image", { href: bildUrl, x: -16, y: -16, width: 32, height: 32 }));
+      svg.append(bildGruppe);
+      k.append(
+        svgEl("circle", { cx: 0, cy: 0, r: 16.5 }, "bild-ring"),
+        svgEl("polygon", { points: "0,-24 -6,-16 6,-16" }, "koerper")
+      );
+    } else k.append(
       svgEl("line", { x1: -7, y1: -4, x2: -13, y2: -8 }, "bein"), svgEl("line", { x1: 7, y1: -4, x2: 13, y2: -8 }, "bein"),
       svgEl("line", { x1: -8, y1: 2, x2: -14, y2: 2 }, "bein"), svgEl("line", { x1: 8, y1: 2, x2: 14, y2: 2 }, "bein"),
       svgEl("line", { x1: -7, y1: 8, x2: -13, y2: 12 }, "bein"), svgEl("line", { x1: 7, y1: 8, x2: 13, y2: 12 }, "bein"),
@@ -916,7 +930,7 @@
 
     feldBox.textContent = "";
     feldBox.append(svg);
-    feldRef = { svg: svg, spurFlaechen: spurFlaechen, spurLinien: spurLinien, marken: marken, kaefer: k };
+    feldRef = { svg: svg, spurFlaechen: spurFlaechen, spurLinien: spurLinien, marken: marken, kaefer: k, bild: bildGruppe };
 
     var info = "Feld " + f.cols + " × " + f.rows + ". Start: Spalte " + f.start[0] + ", Zeile " + f.start[1] +
       ", Blick nach " + E.BLICK_TEXT[f.blick] + ". ";
@@ -933,8 +947,11 @@
   function kaeferSetzen(x, y, winkel, ohneAnim) {
     var g = feldRef.kaefer;
     if (ohneAnim) g.style.transition = "none";
+    var b = feldRef.bild;
+    if (b && ohneAnim) b.style.transition = "none";
     g.style.transform = "translate(" + mx(x) + "px," + my(y) + "px) rotate(" + winkel + "deg)";
-    if (ohneAnim) { void g.getBoundingClientRect(); g.style.transition = ""; }
+    if (b) b.style.transform = "translate(" + mx(x) + "px," + my(y) + "px)";
+    if (ohneAnim) { void g.getBoundingClientRect(); g.style.transition = ""; if (b) b.style.transition = ""; }
   }
 
   function spurFlaeche(x, y) {

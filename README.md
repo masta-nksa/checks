@@ -100,6 +100,11 @@ gesetzt; der Käfer führt das Programm auf einem Feld aus.
 - Die Prüfung vergleicht das **Ergebnis** (Endfeld, besuchte Felder, Bausteinlimit),
   nie ein Muster. Lösungen und Tests gehören nicht in dieses Repo.
 - Gelöste Aufgaben merkt sich der Browser in `localStorage` (Schlüssel `checks.baukasten.v1`).
+- Eigenes Bild statt Käfer (`figur.js`): «Foto aufnehmen» (Kamera auf Handy und Tablet) oder
+  «Bild wählen», danach Zuschneiden in einem runden Ausschnitt (verschieben, zoomen, auch per
+  Tastatur). Gespeichert wird nur der kleine Ausschnitt (128 px) in `localStorage`
+  (`checks.baukasten.figur.v1`); das Foto wird nicht gesendet und danach verworfen. Das Bild
+  bleibt aufrecht, ein Zeiger am Rand zeigt die Blickrichtung. «Zurück zum Käfer» entfernt es.
 
 ## Papierversion
 
