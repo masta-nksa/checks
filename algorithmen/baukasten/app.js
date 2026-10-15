@@ -919,7 +919,7 @@
   }
 
   function spurFlaeche(x, y) {
-    feldRef.spurFlaechen.append(svgEl("rect", { x: zx(x), y: zy(y), width: Z, height: Z }, "bk-zelle bk-spurzelle"));
+    feldRef.spurFlaechen.append(svgEl("circle", { cx: mx(x), cy: my(y), r: 3.5 }, "bk-spurpunkt"));
   }
 
   /* ---------- Ablauf ---------------------------------------- */

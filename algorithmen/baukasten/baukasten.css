@@ -6,16 +6,15 @@
 
 :root{
   --hl:#b3ddd7;        /* aktueller Baustein beim Ausführen */
-  --spur:#cde8e4;      /* besuchte Felder */
   --stein:#6e7a77;     /* Hindernis: Steinblock */
   --stein-kante:#4b5653;
   --stein-licht:#97a5a2;
   --rahmen:1.5px;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){--hl:#2c6860;--spur:#1f3d39;--stein:#3b4745;--stein-kante:#27312f;--stein-licht:#5d6d6a}
+  :root:not([data-theme="light"]){--hl:#2c6860;--stein:#3b4745;--stein-kante:#27312f;--stein-licht:#5d6d6a}
 }
-:root[data-theme="dark"]{--hl:#2c6860;--spur:#1f3d39;--stein:#3b4745;--stein-kante:#27312f;--stein-licht:#5d6d6a}
+:root[data-theme="dark"]{--hl:#2c6860;--stein:#3b4745;--stein-kante:#27312f;--stein-licht:#5d6d6a}
 
 .bk{max-width:1120px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:20px}
 .bk-kopf-seite{gap:10px}
@@ -223,7 +222,7 @@ body.bk-zieht *{cursor:grabbing!important}
 .bk-feld{display:flex;justify-content:center}
 .bk-feld svg{display:block;width:100%;height:auto;max-width:420px}
 .bk-zelle{fill:var(--surface);stroke:var(--line);stroke-width:1}
-.bk-spurzelle{fill:var(--spur)}
+.bk-spurpunkt{fill:var(--accent);opacity:.6}
 .bk-zielzelle{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:4 3}
 .bk-zielpunkt,.bk-flagge{fill:var(--accent)}
 .bk-flaggenmast{stroke:var(--accent);stroke-width:2}
@@ -232,7 +231,7 @@ body.bk-zieht *{cursor:grabbing!important}
 .bk-stein2 .bk-stein-block{filter:brightness(.94)}
 .bk-stein-licht{stroke:var(--stein-licht);stroke-width:2;stroke-linecap:round;fill:none}
 .bk-stein-riss{stroke:var(--stein-kante);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.bk-spurlinie{stroke:var(--accent);stroke-width:3;stroke-linecap:round;fill:none;opacity:.55}
+.bk-spurlinie{stroke:var(--accent);stroke-width:3;stroke-linecap:round;fill:none;opacity:.6}
 .bk-achse{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;fill:var(--ink-soft);text-anchor:middle}
 .bk-start{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:8px;fill:var(--ink-soft)}
 .bk-stosslinie{stroke:var(--no);stroke-width:4;stroke-linecap:round}
