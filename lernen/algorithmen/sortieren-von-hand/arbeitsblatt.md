@@ -33,16 +33,15 @@ Sie suchen den Namen **Keller**. Liste A ist durcheinander, Liste B alphabetisch
 
 [[antwort:2]]
 
-*Kontrollhinweis: In Liste B kommen Sie mit deutlich weniger Namen aus als in Liste A.*
 [[/aufgabe]]
 
 ## Teil 2 — Sortieren: Weshalb?
 
 **Sortieren** heisst, Daten nach einem **Kriterium** in eine Reihenfolge zu bringen: alphabetisch, nach Zahl, nach Datum, nach Preis. Das lohnt sich aus drei Gründen:
 
-- **Schneller suchen:** In einer sortierten Liste kann man gezielt springen, wie Sie es gerade in Liste B getan haben.
+- **Schneller suchen:** In einer sortierten Liste kann man gezielt springen (wie in Liste B).
 - **Bessere Übersicht:** Höchste Note, tiefster Preis, ältester Eintrag sind sofort zu sehen.
-- **Vorbereitung:** Viele weitere Verfahren (Suchen, Zusammenführen, Filtern) arbeiten nur mit sortierten Daten effizient.
+- **Vorbereitung:** Viele weitere Verfahren arbeiten nur mit sortierten Daten effizient.
 
 [[aufgabe:Aufgabe 2 — Kriterien]]
 Nach welchem Kriterium sortiert man sinnvoll? Geben Sie zu jeder Liste **ein** Kriterium an.
@@ -57,7 +56,7 @@ Nach welchem Kriterium sortiert man sinnvoll? Geben Sie zu jeder Liste **ein** K
 
 Wann ist «nach Name» ein **unpassendes** Kriterium? Nennen Sie ein Beispiel.
 
-[[antwort:2]]
+[[antwort:1]]
 [[/aufgabe]]
 
 ## Teil 3 — Wir sortieren live: Bubble Sort

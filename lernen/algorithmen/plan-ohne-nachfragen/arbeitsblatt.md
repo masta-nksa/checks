@@ -47,7 +47,7 @@ Jetzt sind Sie der Roboter. Arbeiten Sie zu zweit: Eine Person **sagt an**, die 
 [[/anleitung]]
 
 [[aufgabe:Aufgabe 2 — Zeichnung und Protokoll]]
-Zeichnen Sie in das passende Raster. Füllen Sie danach das Protokoll aus: Wie viele Anweisungen waren es ungefähr? Wie gut passt die Zeichnung (1 = gar nicht, 5 = identisch)? Was hat gefehlt?
+Zeichnen Sie in das passende Raster und füllen Sie danach das Protokoll aus (Passung: 1 = gar nicht, 5 = identisch).
 
 <div style="display:flex;gap:8mm;flex-wrap:wrap">
 <div style="width:46%"><svg viewBox="0 0 172 190" role="img" aria-label="Punktraster zum Zeichnen" style="display:block;width:100%;height:auto">
@@ -69,9 +69,9 @@ Zeichnen Sie in das passende Raster. Füllen Sie danach das Protokoll aus: Wie v
 
 **a)** Was hat in Runde 2 besser funktioniert als in Runde 1, und warum?
 
-[[antwort:3]]
+[[antwort:2]]
 
-**b)** Auf welche Wörter haben Sie sich geeinigt, damit die Anweisungen klar waren? (Zum Beispiel «ein Kästchen nach rechts».)
+**b)** Auf welche Wörter haben Sie sich geeinigt, damit die Anweisungen klar waren?
 
 [[antwort:2]]
 [[/aufgabe]]
@@ -152,7 +152,13 @@ Verbessern Sie nun Anweisung 1 oder 2 so, dass sie **eindeutig** wird.
 - Ich kann Eingabe, Verarbeitung und Ausgabe an einem Beispiel zeigen.
 [[/checkliste]]
 
-[[aufgabe:Aufgabe 5 — grösste von drei Zahlen]]
+[[aufgabe:Aufgabe 5 — Vorgeschmack auf die Turtle]]
+Der Roboter auf Papier kennt die drei Befehle aus Teil 1: «gehe n Kästchen vorwärts», «drehe dich nach rechts» und «drehe dich nach links» (Vierteldrehung). Schreiben Sie einen Plan für ein **Quadrat mit Seitenlänge 3** und markieren Sie darin Stellen, die sich wiederholen.
+
+[[antwort:3]]
+[[/aufgabe]]
+
+[[aufgabe:Aufgabe 6 — grösste von drei Zahlen]]
 Dieser Plan findet die grösste von drei Zahlen a, b und c:
 
 1. Ist a grösser als b? Dann merken Sie sich a, sonst b.
@@ -173,7 +179,7 @@ Funktioniert der Plan auch für **vier** Zahlen? Was müssten Sie ergänzen? Und
 [[antwort:3]]
 [[/aufgabe]]
 
-[[aufgabe:Aufgabe 6 — eigener Alltagsalgorithmus]]
+[[aufgabe:Aufgabe 7 — eigener Alltagsalgorithmus]]
 Wählen Sie eine Alltagsaufgabe (Znüni vorbereiten, Velo-Pneu aufpumpen, Handy ausschalten, Tee kochen) und schreiben Sie einen Plan, den Ihre Partnerin **ohne Rückfrage** ausführen kann. Tauschen Sie dann und testen Sie.
 
 [[antwort:4]]
@@ -181,14 +187,6 @@ Wählen Sie eine Alltagsaufgabe (Znüni vorbereiten, Velo-Pneu aufpumpen, Handy 
 **Test:** Wo hat es gehakt, und welche Anforderung war nicht erfüllt?
 
 [[antwort:2]]
-[[/aufgabe]]
-
-[[aufgabe:Aufgabe 7 — Vorgeschmack auf die Turtle]]
-Ein Roboter auf Papier kennt dieselben drei Befehle wie der Roboter in Teil 1: «gehe n Kästchen vorwärts», «drehe dich nach rechts» und «drehe dich nach links» (jeweils eine Vierteldrehung). Schreiben Sie einen Plan auf, mit dem er ein **Quadrat mit Seitenlänge 3** zeichnet.
-
-[[antwort:4]]
-
-Ihr Plan enthält vermutlich Stellen, die sich wiederholen. Markieren Sie diese. Dazu mehr in der nächsten Lektion.
 [[/aufgabe]]
 
 [[aufgabe:Take-Away]]

@@ -8,8 +8,8 @@
 **Heute**
 
 - Sie vergleichen Bubble Sort und Merge Sort, indem Sie **Vergleiche zählen**.
-- Sie entdecken, warum sich Sortieren lohnt: Sie spielen **Zahlenraten** und finden eine schnelle Suchstrategie.
-- Sie brauchen für die Aufgaben **Zahlenkarten 1 bis 8**. Schneiden Sie sie aus dem Anhang aus (am Ende des Dossiers). Ein Kartensatz pro Zweiergruppe genügt.
+- Sie entdecken beim **Zahlenraten**, warum sich Sortieren lohnt.
+- Sie brauchen die **Zahlenkarten 1 bis 8** aus dem Anhang (ausschneiden, ein Satz pro Zweiergruppe).
 
 Arbeiten Sie die Aufgaben der Reihe nach durch. Wer vor dem Ende der Lektion fertig ist, macht einfach mit der nächsten Aufgabe weiter. Nach Aufgabe 5 folgt der Selbstcheck, das Take-Away steht ganz am Schluss.
 [[/anleitung]]
@@ -18,7 +18,7 @@ Arbeiten Sie die Aufgaben der Reihe nach durch. Wer vor dem Ende der Lektion fer
 
 In der letzten Lektion haben Sie zwei Verfahren kennengelernt, die beide **richtig** sortieren. Welches ist besser?
 
-«Besser» kann vieles heissen. Wir verwenden hier ein Mass, das nicht vom Gerät abhängt: **Wie viele Schritte braucht das Verfahren?** Bei Sortierverfahren zählt man dazu die **Vergleiche**, denn jeder Vergleich kostet Zeit.
+«Besser» kann vieles heissen. Wir zählen die **Schritte**, bei Sortierverfahren genauer die **Vergleiche**. Das hängt nicht vom Gerät ab, und jeder Vergleich kostet Zeit.
 
 [[merksatz]]
 Ein Algorithmus ist **besser**, wenn er für dieselbe Aufgabe **weniger Schritte** braucht.
@@ -35,13 +35,11 @@ Legen Sie die Karten in der angegebenen Reihenfolge hin und sortieren Sie mit **
 
 **a)** Was fällt Ihnen bei der Anzahl der **Vergleiche** auf?
 
-[[antwort:2]]
+[[antwort:1]]
 
 **b)** Und bei der Anzahl der **Tausche**?
 
-[[antwort:2]]
-
-*Kontrollhinweis: Die Vergleiche hängen nur von der Anzahl der Karten ab, nicht von der Reihenfolge.*
+[[antwort:1]]
 [[/aufgabe]]
 
 ## Teil 2 — Eine Formel für Bubble Sort
@@ -124,9 +122,7 @@ Berechnen Sie die Spalte für Bubble Sort mit der Formel aus Teil 2 (nehmen Sie 
 
 **b)** Ein Mensch braucht für einen Vergleich **1 Sekunde**. Wie lange dauert das Sortieren von 1024 Werten mit jedem Verfahren? Rechnen Sie in Tage bzw. Stunden um (1 Tag = 86 400 Sekunden, 1 Stunde = 3600 Sekunden).
 
-[[antwort:3]]
-
-*Kontrollhinweis: Bei 1024 Werten braucht Bubble Sort rund 57-mal so viele Vergleiche wie Merge Sort.*
+[[antwort:2]]
 [[/aufgabe]]
 
 [[merksatz]]
@@ -137,16 +133,8 @@ Bei **wenigen** Daten sind beide Verfahren ähnlich gut. Bei **vielen** Daten wi
 
 Sie kennen Liste A (durcheinander) und Liste B (sortiert) aus der letzten Lektion. Jetzt spielen Sie das Prinzip dahinter.
 
-[[anleitung]]
-**Zahlenraten**
-
-- Person A denkt sich eine Zahl von **1 bis 100** aus und schreibt sie verdeckt auf.
-- Person B darf nur Fragen der Form «**Ist die Zahl grösser als …?**» stellen. A antwortet nur mit **Ja** oder **Nein**.
-- B zählt die Fragen, bis die Zahl feststeht. Danach tauschen Sie die Rollen.
-[[/anleitung]]
-
 [[aufgabe:Aufgabe 4 — Zahlenraten spielen]]
-Spielen Sie drei Runden und tragen Sie das Protokoll ein.
+Spielen Sie **Zahlenraten**: Person A denkt sich eine Zahl von **1 bis 100** aus und schreibt sie verdeckt auf. Person B darf nur Fragen der Form «**Ist die Zahl grösser als …?**» stellen, A antwortet nur mit **Ja** oder **Nein**. B zählt die Fragen. Spielen Sie drei Runden mit Rollentausch und tragen Sie das Protokoll ein.
 
 | Runde | Gesuchte Zahl | Anzahl Fragen |
 |---|---|---|
@@ -156,7 +144,7 @@ Spielen Sie drei Runden und tragen Sie das Protokoll ein.
 
 **a)** Welche Strategie hat am wenigsten Fragen gebraucht?
 
-[[antwort:2]]
+[[antwort:1]]
 
 **b)** Wie viele Fragen braucht man im **schlimmsten Fall**, wenn man die Strategie perfekt anwendet?
 
@@ -176,7 +164,6 @@ Bei jeder Frage halbiert sich der Bereich. Wie viele Ja/Nein-Fragen brauchen Sie
 | 1 bis 1000 | |
 | 1 bis 1 000 000 | |
 
-*Kontrollhinweis: Bei 1 bis 100 sind es 7 Fragen, weil 2 hoch 7 gleich 128 ist.*
 [[/aufgabe]]
 
 [[merksatz]]

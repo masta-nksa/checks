@@ -59,36 +59,16 @@ Welcher Baustein steckt in jedem Satz? Schreiben Sie *Sequenz*, *Verzweigung* od
 
 ## Teil 3 — Das Struktogramm
 
-Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird immer **von oben nach unten** gelesen. Jeder Baustein hat sein Symbol:
+Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird immer **von oben nach unten** gelesen. Was **eingerückt** unter einem Kopf steht, gehört dazu. Jeder Baustein hat sein Symbol:
 
-<div style="break-inside:avoid"><p><b>Sequenz:</b> Die Kästen folgen untereinander.</p><svg viewBox="0 0 216 96" role="img" aria-label="Sequenz im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
+<div style="display:flex;gap:8mm;align-items:flex-start"><div style="width:48%"><p><b>Sequenz:</b> Die Kästen folgen untereinander.</p><svg viewBox="0 0 216 96" role="img" aria-label="Sequenz im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
 <rect x="3" y="3" width="210" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="108.0" y="22.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
 <rect x="3" y="33" width="210" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="108.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt B</text>
 <rect x="3" y="63" width="210" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="108.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt C</text>
-</svg></div>
-
-<div style="break-inside:avoid"><p><b>Wiederholung:</b> Der farbige Kopf nennt, wie oft oder wie lange. Was <b>eingerückt</b> darunter steht, wird wiederholt.</p><div style="display:flex;gap:8mm;flex-wrap:wrap"><div style="width:46%"><svg viewBox="0 0 216 96" role="img" aria-label="Wiederholung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
-<rect x="3" y="3" width="210" height="90" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
-<rect x="3" y="33" width="26" height="60" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
-<text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
-<rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
-<rect x="29" y="63" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<text x="121.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt B</text>
-</svg></div><div style="width:46%"><svg viewBox="0 0 216 66" role="img" aria-label="Wiederholung mit Bedingung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
-<rect x="3" y="3" width="210" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
-<rect x="3" y="33" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
-<text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">solange Bedingung gilt</text>
-<rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
-<text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
-</svg></div></div></div>
-
-<div style="break-inside:avoid"><p><b>Verzweigung:</b> Oben steht die Bedingung. Trifft sie zu, geht es links weiter (<i>Ja</i>), sonst rechts (<i>Nein</i>).</p><svg viewBox="0 0 266 82" role="img" aria-label="Verzweigung im Struktogramm" style="display:block;width:100%;height:auto;max-width:266px">
+</svg><p><b>Verzweigung:</b> Oben steht die Bedingung. Trifft sie zu, geht es links weiter (<i>Ja</i>), sonst rechts (<i>Nein</i>).</p><svg viewBox="0 0 266 82" role="img" aria-label="Verzweigung im Struktogramm" style="display:block;width:100%;height:auto;max-width:266px">
 <rect x="3" y="3" width="260" height="76" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <rect x="3" y="3" width="260" height="46" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
 <line x1="3" y1="3" x2="133.0" y2="49" stroke="currentColor" stroke-width="1.4"/>
@@ -101,9 +81,25 @@ Ein **Struktogramm** zeigt einen Algorithmus als Aufbau aus Kästen. Es wird imm
 <text x="68.0" y="68.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
 <rect x="133.0" y="49" width="130.0" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
 <text x="198.0" y="68.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt B</text>
-</svg></div>
+</svg></div><div style="width:48%"><p><b>Wiederholung:</b> Der farbige Kopf nennt, wie oft oder wie lange. Was eingerückt darunter steht, wird wiederholt.</p><svg viewBox="0 0 216 96" role="img" aria-label="Wiederholung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
+<rect x="3" y="3" width="210" height="90" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="60" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">wiederhole 4-mal</text>
+<rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
+<rect x="29" y="63" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<text x="121.0" y="82.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt B</text>
+</svg><svg viewBox="0 0 216 66" role="img" aria-label="Wiederholung mit Bedingung im Struktogramm" style="display:block;width:100%;height:auto;max-width:216px">
+<rect x="3" y="3" width="210" height="60" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="3" width="210" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<rect x="3" y="33" width="26" height="30" fill="var(--accent)" fill-opacity="0.10" stroke="currentColor" stroke-width="1.4"/>
+<text x="13" y="22.5" font-size="13" font-weight="600" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">solange Bedingung gilt</text>
+<rect x="29" y="33" width="184" height="30" fill="none" stroke="currentColor" stroke-width="1.4"/>
+<text x="121.0" y="52.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Schritt A</text>
+</svg></div></div>
 
-Der Wasserflaschen-Plan aus Teil 1 sieht als Struktogramm so aus:
+Der Wasserflaschen-Plan aus Teil 1 als Struktogramm:
 
 <svg viewBox="0 0 426 126" role="img" aria-label="Struktogramm Wasserflaschen tragen" style="display:block;width:100%;height:auto;max-width:426px">
 <rect x="3" y="3" width="420" height="120" fill="none" stroke="currentColor" stroke-width="1.4"/>
@@ -118,29 +114,15 @@ Der Wasserflaschen-Plan aus Teil 1 sieht als Struktogramm so aus:
 <text x="226.0" y="112.5" text-anchor="middle" font-size="13" fill="currentColor" font-family="'IBM Plex Sans', system-ui, sans-serif">Flaschen auspacken, Harass zurückbringen</text>
 </svg>
 
-[[merksatz]]
-Struktogramm: von oben nach unten lesen. **Eingerückt** heisst: gehört zum Kasten darüber. Ein Rahmen mit Kopf heisst: wiederholen. Ein Dreieck mit Ja und Nein heisst: Verzweigung.
-[[/merksatz]]
-
-<div style="break-before:page"></div>
-
 ## Teil 4 — Streifen ordnen
 
 [[aufgabe:Aufgabe 3 — Getränkeautomat]]
-Ein Getränkeautomat verlangt **2 Fr.** für ein Getränk. Auf den **Streifen** im Anhang (am Ende des Dossiers) steht, was er tut, aber durcheinander. Schneiden Sie die Streifen aus und legen Sie sie zu zweit so, dass der Automat richtig arbeitet:
+Ein Getränkeautomat verlangt **2 Fr.** Auf den **Streifen** im Anhang steht, was er tut, aber durcheinander. Schneiden Sie die Streifen aus und legen Sie sie zu zweit so, dass der Automat richtig arbeitet: Er nimmt Münzen, **solange** der Betrag kleiner als 2 Fr. ist, gibt dann das Getränk aus und gibt Rückgeld aus, wenn zu viel bezahlt wurde, **sonst** meldet er «Passend bezahlt». Zeichnen Sie das Ergebnis als Struktogramm in das Feld (Rahmen mit Kopf für die Wiederholung, Dreieck für die Verzweigung).
 
-- Er nimmt Münzen, **solange** der Betrag kleiner als 2 Fr. ist.
-- Danach gibt er das Getränk aus.
-- Wenn zu viel bezahlt wurde, gibt er Rückgeld aus, **sonst** meldet er «Passend bezahlt».
-
-Zeichnen Sie das Ergebnis dann als Struktogramm in das Feld. Verwenden Sie dafür **einen Rahmen mit Kopf** (Wiederholung) und **ein Dreieck** (Verzweigung).
-
-<svg viewBox="0 0 640 330" role="img" aria-label="Leere Zeichenflaeche" style="display:block;width:100%;height:auto;max-width:640px">
-<defs><pattern id="bb3" width="21" height="21" patternUnits="userSpaceOnUse"><path d="M21 0H0V21" fill="none" stroke="currentColor" stroke-opacity="0.14"/></pattern></defs>
-<rect x="1" y="1" width="638" height="328" rx="3" fill="url(#bb3)" stroke="currentColor" stroke-opacity="0.45"/>
+<svg viewBox="0 0 640 235" role="img" aria-label="Zeichenfläche für das Struktogramm" style="display:block;width:100%;height:auto;max-width:640px">
+<defs><pattern id="bb51" width="21" height="21" patternUnits="userSpaceOnUse"><path d="M21 0H0V21" fill="none" stroke="currentColor" stroke-opacity="0.14"/></pattern></defs>
+<rect x="1" y="1" width="638" height="233" rx="3" fill="url(#bb51)" stroke="currentColor" stroke-opacity="0.45"/>
 </svg>
-
-*Kontrollhinweis: Ihr Struktogramm hat 7 Kästchen mit Text, davon 2 in der Wiederholung und 2 in der Verzweigung.*
 [[/aufgabe]]
 
 <div style="break-before:page"></div>
