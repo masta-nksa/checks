@@ -28,6 +28,15 @@
 }
 
 /* ---------- Aufgabenwahl ---------- */
+.bk-reihen{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.bk-reihe{
+  font:inherit;font-size:.82rem;font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;
+  cursor:pointer;min-height:40px;padding:6px 14px;background:transparent;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:var(--radius);
+}
+.bk-reihe:hover{border-color:var(--accent);color:var(--ink)}
+.bk-reihe[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--ink);font-weight:600}
+.bk-reihe:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .bk-aufgaben ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .bk-tab{
   font:inherit;font-size:.9rem;cursor:pointer;min-height:44px;padding:8px 14px;
@@ -153,6 +162,8 @@
 .bk-aeste{display:grid;grid-template-columns:1fr 1fr}
 .bk-ast{min-width:0}
 .bk-ast + .bk-ast{border-left:var(--rahmen) solid var(--ink)}
+.bk-ast-aus{display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px;background:repeating-linear-gradient(135deg,transparent 0 6px,var(--accent-soft) 6px 7px)}
+.bk-ast-text{font-size:.78rem;color:var(--ink-soft);text-align:center}
 .bk-aeste .bk-zone,.bk-rumpf .bk-zone{margin-bottom:calc(var(--rahmen) * -1)}
 
 /* aktueller Baustein beim Ausführen */
@@ -215,6 +226,7 @@ body.bk-zieht *{cursor:grabbing!important}
 .bk-zielpunkt,.bk-flagge{fill:var(--accent)}
 .bk-flaggenmast{stroke:var(--accent);stroke-width:2}
 .bk-hindernis{fill:var(--hinder)}
+.bk-wand{stroke:var(--hinder)}
 .bk-hindernis-muster{stroke:var(--surface);stroke-width:1.5;opacity:.55}
 .bk-spurlinie{stroke:var(--accent);stroke-width:3;stroke-linecap:round;fill:none;opacity:.55}
 .bk-achse{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;fill:var(--ink-soft);text-anchor:middle}

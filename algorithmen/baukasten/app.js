@@ -20,6 +20,11 @@
   var palette = $("palette"), arbeit = $("arbeit"), korb = $("korb");
   var feldBox = $("feld"), meldungBox = $("meldung"), tempoEl = $("tempo");
 
+  var REIHEN = [
+    { id: "kaefer", titel: "Käfer-Aufgaben", datei: "aufgaben.json" },
+    { id: "labyrinth", titel: "Labyrinth", datei: "labyrinth.json" }
+  ];
+  var reihe = REIHEN[0], reihenCache = {};
   var aufgaben = [], aktuell = 0, aufg = null;
   var prog = [], undoStack = [];
   var zustand = {};                // pro Aufgabe: {prog, undo}
@@ -53,20 +58,27 @@
   }
   function nur(liste, f) { return Array.prototype.filter.call(liste, f); }
 
+  var BIS_LABEL = "wiederhole bis Ziel";
+
   function blockLabel(b) {
     if (b.t === "act") return E.BEFEHLE[b.cmd].label;
     if (b.t === "loop") return "wiederhole " + b.n + "-mal";
+    if (b.t === "until") return BIS_LABEL;
     return E.BEDINGUNGEN[b.cond].label;
   }
   function quelleLabel(q) {
     if (q.quelle === "block") return blockLabel(E.blockAt(prog, q.adr));
     if (q.typ === "act") return E.BEFEHLE[q.cmd].label;
     if (q.typ === "loop") return "wiederhole n-mal";
-    return E.BEDINGUNGEN.frei.label;
+    if (q.typ === "until") return BIS_LABEL;
+    return E.BEDINGUNGEN[q.cmd || "frei"].label;
   }
+  // Verzweigungen sind standardmässig mit Sonst-Zweig; Aufgaben können «sonst: false» verlangen.
+  function neuerBlock(q) { return E.neuerBlock(q.typ, q.cmd, aufg.palette.sonst === false ? false : true); }
   function quelleBlock(q) {
-    return q.quelle === "block" ? E.blockAt(prog, q.adr) : E.neuerBlock(q.typ, q.cmd);
+    return q.quelle === "block" ? E.blockAt(prog, q.adr) : neuerBlock(q);
   }
+  function istBehaelterMitBody(b) { return b.t === "loop" || b.t === "until"; }
 
   /* ---------- Fortschritt (localStorage, immer mit try/catch) - */
 
@@ -85,26 +97,67 @@
   var rule = $("pixelrule");
   for (var pi = 0; pi < 40; pi++) rule.append(document.createElement("i"));
 
-  fetch("aufgaben.json", { cache: "no-cache" })
-    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function (d) {
-      if (!d || !Array.isArray(d.aufgaben) || !d.aufgaben.length) throw new Error("Feld „aufgaben“ fehlt oder ist leer.");
-      aufgaben = d.aufgaben;
-      ladeFortschritt();
+  var reiheParam = null;
+  try { reiheParam = new URLSearchParams(location.search).get("reihe"); } catch (e) { /* ohne Parameter weiter */ }
+  REIHEN.forEach(function (r) { if (r.id === reiheParam) reihe = r; });
+
+  function ladeFehler(err, datei) {
+    var box = el("div", "oops");
+    box.append(el("h2", null, "Der Baukasten kann nicht geladen werden."));
+    var p = el("p");
+    p.innerHTML = "Die Datei <code>" + datei + "</code> fehlt oder enthält einen Fehler. " +
+      "Bitte melden Sie das der Lehrperson.<br><code>" + String(err && err.message ? err.message : err) + "</code>";
+    box.append(p);
+    $("bk").textContent = "";
+    $("bk").append(box);
+    console.error("[baukasten]", err);
+  }
+
+  function ladeReihe(r) {
+    if (reihenCache[r.id]) return Promise.resolve(reihenCache[r.id]);
+    return fetch(r.datei, { cache: "no-cache" })
+      .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+      .then(function (d) {
+        if (!d || !Array.isArray(d.aufgaben) || !d.aufgaben.length) throw new Error("Feld „aufgaben“ fehlt oder ist leer.");
+        reihenCache[r.id] = d.aufgaben.map(E.vorbereiten);
+        return reihenCache[r.id];
+      });
+  }
+
+  function zeigeReihe(r) {
+    return ladeReihe(r).then(function (liste) {
+      reihe = r;
+      aufgaben = liste;
+      try {
+        var u = new URL(location.href);
+        if (r === REIHEN[0]) u.searchParams.delete("reihe"); else u.searchParams.set("reihe", r.id);
+        history.replaceState(null, "", u.href);
+      } catch (e) { /* Adresszeile bleibt, wie sie ist */ }
+      reihenAktualisieren();
       baueTabs();
       waehleAufgabe(0);
-    })
-    .catch(function (err) {
-      var box = el("div", "oops");
-      box.append(el("h2", null, "Der Baukasten kann nicht geladen werden."));
-      var p = el("p");
-      p.innerHTML = "Die Datei <code>aufgaben.json</code> fehlt oder enthält einen Fehler. " +
-        "Bitte melden Sie das der Lehrperson.<br><code>" + String(err && err.message ? err.message : err) + "</code>";
-      box.append(p);
-      $("bk").textContent = "";
-      $("bk").append(box);
-      console.error("[baukasten]", err);
+    }).catch(function (err) { ladeFehler(err, r.datei); });
+  }
+
+  function baueReihen() {
+    var box = $("reihen");
+    REIHEN.forEach(function (r) {
+      var b = el("button", "bk-reihe", r.titel);
+      b.type = "button";
+      b.dataset.id = r.id;
+      b.addEventListener("click", function () { if (r !== reihe) zeigeReihe(r); });
+      box.append(b);
     });
+  }
+  function reihenAktualisieren() {
+    Array.prototype.forEach.call($("reihen").querySelectorAll(".bk-reihe"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.id === reihe.id ? "true" : "false");
+    });
+  }
+
+  ladeFortschritt();
+  baueReihen();
+  zeigeReihe(reihe);
 
   /* ---------- Aufgabenwahl ---------------------------------- */
 
@@ -172,7 +225,12 @@
       if (E.BEFEHLE[c]) palette.append(chip({ typ: "act", cmd: c }, E.BEFEHLE[c].label, "bk-pal-act"));
     });
     if (p.wiederholung) palette.append(chip({ typ: "loop" }, "wiederhole n-mal", "bk-pal-loop"));
-    if (p.verzweigung) palette.append(chip({ typ: "if" }, E.BEDINGUNGEN.frei.label, "bk-pal-if"));
+    if (p.bis) palette.append(chip({ typ: "until" }, BIS_LABEL, "bk-pal-loop"));
+    if (p.verzweigung) {
+      (p.bedingungen || ["frei"]).forEach(function (c) {
+        if (E.BEDINGUNGEN[c]) palette.append(chip({ typ: "if", cmd: c }, E.BEDINGUNGEN[c].label, "bk-pal-if"));
+      });
+    }
   }
 
   function chip(q, text, cls) {
@@ -228,7 +286,7 @@
     var wo = "im Programm";
     if (ladr.length) {
       var pb = E.blockAt(prog, ladr.slice(0, -1)), key = ladr[ladr.length - 1];
-      wo = pb.t === "loop" ? "in «" + blockLabel(pb) + "»"
+      wo = istBehaelterMitBody(pb) ? "in «" + blockLabel(pb) + "»"
         : "im " + (key === "yes" ? "Ja" : "Nein") + "-Zweig von «" + blockLabel(pb) + "»";
     }
     return "Hier einfügen: " + wo + ", Position " + (idx + 1) + " von " + (len + 1);
@@ -268,6 +326,17 @@
     if (b.t === "act") {
       blk.classList.add("grab");
       blk.append(mainBtn(b, adr, laenge, blockLabel(b)), delBtn());
+      return blk;
+    }
+
+    if (b.t === "until") {
+      blk.classList.add("bk-loop");
+      var kopfU = el("div", "bk-kopf grab");
+      kopfU.append(mainBtn(b, adr, laenge, BIS_LABEL), el("span", "bk-spacer"), delBtn());
+      blk.append(kopfU);
+      var rumpfU = el("div", "bk-rumpf");
+      rumpfU.append(el("div", "bk-balken grab"), renderZone(b.body, adr.concat(["body"])));
+      blk.append(rumpfU);
       return blk;
     }
 
@@ -317,7 +386,10 @@
     var aeste = el("div", "bk-aeste");
     var yes = el("div", "bk-ast"), no = el("div", "bk-ast");
     yes.append(renderZone(b.yes, adr.concat(["yes"])));
-    no.append(renderZone(b.no, adr.concat(["no"])));
+    if (b.sonst === false) {
+      no.classList.add("bk-ast-aus");
+      no.append(el("span", "bk-ast-text", "kein Sonst-Zweig"));
+    } else no.append(renderZone(b.no, adr.concat(["no"])));
     aeste.append(yes, no);
     blk.append(aeste);
     return blk;
@@ -434,7 +506,7 @@
     for (var i = 0; i < liste.length; i++) {
       var b = liste[i], a = adr.concat([i]);
       if (b._neu) { delete b._neu; return a; }
-      var keys = b.t === "loop" ? ["body"] : b.t === "if" ? ["yes", "no"] : [];
+      var keys = istBehaelterMitBody(b) ? ["body"] : b.t === "if" ? ["yes", "no"] : [];
       for (var k = 0; k < keys.length; k++) {
         var r = findeMarke(b[keys[k]], a.concat([keys[k]]));
         if (r) return r;
@@ -447,7 +519,7 @@
   function ablegen(q, ladr, idx, tastatur) {
     var neu, fokus = null;
     if (q.quelle === "palette") {
-      neu = E.einfuegen(prog, ladr, idx, E.neuerBlock(q.typ, q.cmd));
+      neu = E.einfuegen(prog, ladr, idx, neuerBlock(q));
       // Befehle bleiben gewählt (mehrere hintereinander einfügen), Wiederholung/Verzweigung nur einmal.
       if (neu && q.typ !== "act") auswahl = null;
       if (neu && tastatur) fokus = q.typ === "act" ? { art: "slot", liste: adrStr(ladr), idx: idx + 1 } : { art: "block", adr: ladr.concat([idx]) };
@@ -701,11 +773,28 @@
   function mx(x) { return zx(x) + Z / 2; }
   function my(y) { return zy(y) + Z / 2; }
 
+  // Freie Felder je Zeile als Bereiche, z. B. «Zeile 6: Spalte 2 bis 4».
+  function freieFelderText(f) {
+    var teile = [];
+    for (var y = f.rows; y >= 1; y--) {
+      var bereiche = [], von = 0;
+      for (var x = 1; x <= f.cols + 1; x++) {
+        var frei = x <= f.cols && !f.hindernisse.some(function (h) { return h[0] === x && h[1] === y; });
+        if (frei && !von) von = x;
+        if (!frei && von) { bereiche.push(von === x - 1 ? "Spalte " + von : "Spalte " + von + " bis " + (x - 1)); von = 0; }
+      }
+      if (bereiche.length) teile.push("Zeile " + y + ": " + bereiche.join(", "));
+    }
+    return teile.join("; ");
+  }
+
   function feldBeschreibung() {
     var f = aufg.feld, z = aufg.ziel;
     var t = "Käfer-Feld mit " + f.cols + " Spalten und " + f.rows + " Zeilen. Start in Spalte " + f.start[0] + ", Zeile " + f.start[1] +
       ", Blick nach " + E.BLICK_TEXT[f.blick] + ". ";
-    if (f.hindernisse.length) {
+    if (f.karte) {
+      t += "Labyrinth, freie Felder je Zeile von oben nach unten: " + freieFelderText(f) + ". ";
+    } else if (f.hindernisse.length) {
       t += "Hindernisse: " + f.hindernisse.map(function (h) { return "Spalte " + h[0] + ", Zeile " + h[1]; }).join("; ") + ". ";
     }
     if (z.typ === "endfeld") t += "Ziel: Spalte " + z.feld[0] + ", Zeile " + z.feld[1] + ".";
@@ -763,6 +852,10 @@
 
     svg.append(spurLinien, hind);
     f.hindernisse.forEach(function (h) {
+      if (f.karte) {
+        hind.append(svgEl("rect", { x: zx(h[0]), y: zy(h[1]), width: Z, height: Z }, "bk-hindernis bk-wand"));
+        return;
+      }
       hind.append(svgEl("rect", { x: zx(h[0]) + 1, y: zy(h[1]) + 1, width: Z - 2, height: Z - 2 }, "bk-hindernis"));
       hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + Z - 6, x2: zx(h[0]) + Z - 6, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
       hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + 20, x2: zx(h[0]) + 20, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
@@ -868,7 +961,7 @@
       meldungZeigen("fehler", null, "Bitte geben Sie bei «wiederhole» eine ganze Zahl von 1 bis " + E.MAX_WIEDERHOLUNG + " ein.");
       return false;
     }
-    sim.lauf = E.run(aufg.feld, prog);
+    sim.lauf = E.run(aufg.feld, prog, { ziel: E.zielfeld(aufg.ziel) });
     sim.i = 0;
     sim.ende = false;
     return true;
@@ -887,8 +980,10 @@
       text = E.BEFEHLE[ev.cmd].label;
     } else if (ev.typ === "loop") {
       text = "wiederhole " + ev.n + "-mal – Durchlauf " + ev.durchlauf + " von " + ev.n;
+    } else if (ev.typ === "until") {
+      text = BIS_LABEL + " – Durchlauf " + ev.durchlauf;
     } else if (ev.typ === "if") {
-      text = E.BEDINGUNGEN.frei.label + " → " + (ev.ja ? "Ja" : "Nein");
+      text = E.BEDINGUNGEN[ev.cond || "frei"].label + " → " + (ev.ja ? "Ja" : "Nein");
     } else {
       var dr = SCREEN_DIR[ev.d], cx = mx(ev.x), cy = my(ev.y), h = Z / 2;
       var ex = cx + dr[0] * h, ey = cy + dr[1] * h;

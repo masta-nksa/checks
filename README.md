@@ -85,6 +85,14 @@ Drag and Drop (Maus und Touch) oder per Antippen/Tastatur ins Struktogramm
 gesetzt; der Käfer führt das Programm auf einem Feld aus.
 
 - `aufgaben.json`: die Aufgaben (Feld, Palette, Bausteinlimit, Ziel). **Keine Lösungen.**
+- `labyrinth.json`: zweite Reihe «Labyrinth» (10 Levels nach Blockly Games, Maze; Karten und
+  Bausteinlimits aus <https://github.com/google/blockly-games>, Apache-Lizenz 2.0), gleiches
+  Format. Aufruf direkt per `algorithmen/baukasten/?reihe=labyrinth`, sonst über die Reihenwahl
+  oben im Baukasten. Das Feld wird als Zeichenkarte angegeben (`feld.karte`, oberste Zeile zuerst:
+  `#` Mauer, `.` Weg, `S` Start, `Z` Ziel); Start und Ziel ergeben sich daraus.
+- Palette-Optionen (zusätzlich zu `befehle`, `wiederholung`, `verzweigung`): `bis: true` bietet
+  «wiederhole bis Ziel»; `bedingungen` (`frei`, `freiLinks`, `freiRechts`) legt fest, welche
+  «Feld … frei?»-Verzweigungen es gibt; `sonst: false` blendet den Sonst-Zweig aus.
 - `engine.js`: Interpreter, Prüfung und Programmbaum als reine Funktionen (ohne DOM).
   Befehle, Bedingungen und Ziel-Typen stehen in Tabellen und sind erweiterbar.
 - Die Prüfung vergleicht das **Ergebnis** (Endfeld, besuchte Felder, Bausteinlimit),

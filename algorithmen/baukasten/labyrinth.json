@@ -1,0 +1,250 @@
+{
+  "hinweis": "Labyrinth-Reihe fuer den Struktogramm-Baukasten (Kaefer). Karten und Bausteinlimits nach Blockly Games, Maze (Level 1 bis 10, Apache-Lizenz 2.0). Keine Loesungen enthalten.",
+  "aufgaben": [
+    {
+      "id": "lab1",
+      "titel": "1 · Geradeaus",
+      "stufe": "Sequenz",
+      "text": "Verbinden Sie «vorwärts»-Bausteine, damit der Käfer das Ziel erreicht.",
+      "feld": {
+        "karte": ["#######", "#######", "#######", "#######", "##S.Z##", "#######", "#######"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": false,
+        "verzweigung": false
+      },
+      "maxBloecke": null
+    },
+    {
+      "id": "lab2",
+      "titel": "2 · Um die Ecke",
+      "stufe": "Sequenz",
+      "text": "Der Weg hat eine Kurve. Bringen Sie den Käfer mit «vorwärts» und den Dreh-Bausteinen ins Ziel.",
+      "feld": {
+        "karte": ["########", "########", "########", "###.Z###", "##S.####", "########", "########", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": false,
+        "verzweigung": false
+      },
+      "maxBloecke": null,
+      "hinweis": "Zum Drehen gibt es «rechts drehen» und «links drehen». Setzen Sie den Käfer zurück, wenn das Programm das Labyrinth nicht löst."
+    },
+    {
+      "id": "lab3",
+      "titel": "3 · Lange Gerade",
+      "stufe": "Wiederholung",
+      "text": "Der Weg ist lang und gerade. Erreichen Sie das Ende mit höchstens 2 Bausteinen.",
+      "feld": {
+        "karte": ["########", "########", "########", "########", "#S....Z#", "########", "########", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": false
+      },
+      "maxBloecke": 2,
+      "hinweis": "Mit «wiederhole bis Ziel» führen Sie einen Baustein mehr als einmal aus."
+    },
+    {
+      "id": "lab4",
+      "titel": "4 · Treppe",
+      "stufe": "Wiederholung",
+      "text": "Der Weg führt treppenartig nach oben. Erreichen Sie das Ziel mit höchstens 5 Bausteinen. Der Weg geht über Start und Ziel hinaus weiter: Es geht nur darum, vom Start zum Ziel zu kommen.",
+      "feld": {
+        "karte": ["#######.", "######..", "#####Z.#", "####..##", "###..###", "##..####", "#S.#####", "..######"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": false
+      },
+      "maxBloecke": 5,
+      "hinweis": "Sie können mehr als einen Baustein in «wiederhole bis Ziel» legen."
+    },
+    {
+      "id": "lab5",
+      "titel": "5 · Ecke mit Gerade",
+      "stufe": "Wiederholung",
+      "text": "Der Weg biegt einmal ab. Erreichen Sie das Ziel mit höchstens 5 Bausteinen.",
+      "feld": {
+        "karte": ["########", "#####Z##", "#####.##", "#####.##", "#####.##", "#####.##", "###S..##", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": false
+      },
+      "maxBloecke": 5,
+      "hinweis": "Bausteine ausserhalb von «wiederhole bis Ziel» werden nur einmal ausgeführt."
+    },
+    {
+      "id": "lab6",
+      "titel": "6 · Spirale",
+      "stufe": "Verzweigung",
+      "text": "Der Weg windet sich nach innen. Erreichen Sie das Ziel mit höchstens 5 Bausteinen.",
+      "feld": {
+        "karte": ["########", "########", "#.....##", "#.###.##", "#..Z#.##", "#####.##", "#S....##", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": true,
+        "bedingungen": [
+          "freiLinks"
+        ],
+        "sonst": false
+      },
+      "maxBloecke": 5,
+      "hinweis": "Ein «falls»-Baustein macht etwas, wenn die Bedingung stimmt. Versuchen Sie, links abzubiegen, falls links ein Weg frei ist."
+    },
+    {
+      "id": "lab7",
+      "titel": "7 · Abzweigungen",
+      "stufe": "Verzweigung",
+      "text": "Der Weg hat Abzweigungen. Erreichen Sie das Ziel mit höchstens 5 Bausteinen.",
+      "feld": {
+        "karte": ["########", "#####..#", "#S....##", "#####..#", "#..Z#.##", "#.#.#.##", "#......#", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": true,
+        "bedingungen": [
+          "frei",
+          "freiLinks",
+          "freiRechts"
+        ],
+        "sonst": false
+      },
+      "maxBloecke": 5,
+      "hinweis": "Wählen Sie in der Palette die Bedingung, die zum Weg passt: vorne, links oder rechts frei."
+    },
+    {
+      "id": "lab8",
+      "titel": "8 · Der Umweg",
+      "stufe": "Verzweigung",
+      "text": "Der Weg ist verzweigt und führt einen Umweg. Erreichen Sie das Ziel mit höchstens 10 Bausteinen.",
+      "feld": {
+        "karte": ["########", "########", "#....###", "#.##..##", "#...#.##", "###.#.##", "#S..#Z##", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": true,
+        "bedingungen": [
+          "frei",
+          "freiLinks",
+          "freiRechts"
+        ],
+        "sonst": false
+      },
+      "maxBloecke": 10
+    },
+    {
+      "id": "lab9",
+      "titel": "9 · Kreuzungen",
+      "stufe": "Falls-Sonst",
+      "text": "Hier gibt es viele Kreuzungen. Erreichen Sie das Ziel mit höchstens 7 Bausteinen.",
+      "feld": {
+        "karte": ["########", "#.....##", "##.#####", "Z......#", "#.#.#..#", ".....#.#", "#.#.#S.#", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": true,
+        "bedingungen": [
+          "frei",
+          "freiLinks",
+          "freiRechts"
+        ],
+        "sonst": true
+      },
+      "maxBloecke": 7,
+      "hinweis": "Ein «falls … sonst»-Baustein führt entweder den einen oder den anderen Zweig aus. Die Bedingung wählen Sie in der Palette."
+    },
+    {
+      "id": "lab10",
+      "titel": "10 · Der Wandfolger",
+      "stufe": "Falls-Sonst",
+      "text": "Können Sie dieses komplizierte Labyrinth lösen? Folgen Sie der linken Wand. Erreichen Sie das Ziel mit höchstens 10 Bausteinen. Nur für Fortgeschrittene.",
+      "feld": {
+        "karte": ["########", "#..#Z#.#", "#..#...#", "#.#.#.##", "#......#", "###.##.#", "#S...#.#", "########"],
+        "blick": "E"
+      },
+      "palette": {
+        "befehle": [
+          "vor",
+          "rechts",
+          "links"
+        ],
+        "wiederholung": false,
+        "bis": true,
+        "verzweigung": true,
+        "bedingungen": [
+          "frei",
+          "freiLinks",
+          "freiRechts"
+        ],
+        "sonst": true
+      },
+      "maxBloecke": 10
+    }
+  ]
+}
