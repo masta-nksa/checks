@@ -217,11 +217,75 @@
     if (bild) zoomSetzen(Number(zoomEl.value) / 100, C, C);
   });
 
+  /* ---------- Kamera (Live-Vorschau mit Auslöser) ---------- */
+
+  // Am Computer öffnet «capture» nur die Dateiauswahl; darum zeigt der Browser hier selbst die Kamera.
+  var kameraDialog = $("kameraDialog"), video = $("kameraVideo"), strom = null;
+
+  function kameraMeldung(text) {
+    var m = $("kameraMeldung");
+    m.textContent = text;
+    m.hidden = !text;
+  }
+  function kameraStopp() {
+    if (strom) { strom.getTracks().forEach(function (t) { t.stop(); }); strom = null; }
+    video.srcObject = null;
+    $("kameraAusloeser").disabled = true;
+  }
+  function kameraZu() {
+    kameraStopp();
+    if (kameraDialog.open) kameraDialog.close();
+  }
+
+  function kameraOeffnen() {
+    kameraMeldung("");
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      // Kein Zugriff über die Seite möglich (z. B. ältere Browser): Systemkamera bzw. Dateiauswahl.
+      dateiKamera.value = "";
+      dateiKamera.click();
+      return;
+    }
+    if (!kameraDialog.open) kameraDialog.showModal();
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false })
+      .then(function (s) {
+        if (!kameraDialog.open) { s.getTracks().forEach(function (t) { t.stop(); }); return; }   // inzwischen abgebrochen
+        strom = s;
+        video.srcObject = s;
+        return video.play().catch(function () { /* Autoplay: Vorschau startet beim Auslösen trotzdem */ });
+      })
+      .then(function () { if (strom) $("kameraAusloeser").disabled = false; })
+      .catch(function (err) {
+        var n = err && err.name;
+        kameraMeldung(n === "NotAllowedError" || n === "SecurityError"
+          ? "Der Zugriff auf die Kamera ist gesperrt. Erlauben Sie ihn in der Adressleiste des Browsers oder wählen Sie ein Bild aus."
+          : n === "NotFoundError" || n === "OverconstrainedError"
+            ? "Es wurde keine Kamera gefunden. Wählen Sie stattdessen ein Bild aus."
+            : "Die Kamera kann nicht gestartet werden. Wählen Sie stattdessen ein Bild aus.");
+      });
+  }
+
+  $("kameraAusloeser").addEventListener("click", function () {
+    var w = video.videoWidth, h = video.videoHeight;
+    if (!w || !h) return;
+    var c = document.createElement("canvas");
+    c.width = w; c.height = h;
+    var ctx = c.getContext("2d");
+    ctx.translate(w, 0); ctx.scale(-1, 1);          // wie in der Vorschau: gespiegelt, wie ein Spiegelbild
+    ctx.drawImage(video, 0, 0, w, h);
+    kameraZu();
+    letzteQuelle = "kamera";
+    if (window.createImageBitmap) createImageBitmap(c).then(function (b) { oeffnen(b, w, h); }, function () { oeffnen(c, w, h); });
+    else oeffnen(c, w, h);
+  });
+  $("kameraAbbruch").addEventListener("click", kameraZu);
+  $("kameraDatei").addEventListener("click", function () { kameraZu(); dateiWahl.value = ""; dateiWahl.click(); });
+  kameraDialog.addEventListener("close", kameraStopp);     // Escape oder Schliessen: Kamera immer freigeben
+
   /* ---------- Knöpfe ---------- */
 
   var dateiKamera = $("bildDateiKamera"), dateiWahl = $("bildDateiWahl");
   function menueZu() { if (figurDialog.open) figurDialog.close(); }
-  $("knopfBildKamera").addEventListener("click", function () { menueZu(); meldung(""); dateiKamera.value = ""; dateiKamera.click(); });
+  $("knopfBildKamera").addEventListener("click", function () { menueZu(); meldung(""); kameraOeffnen(); });
   $("knopfBildWahl").addEventListener("click", function () { menueZu(); meldung(""); dateiWahl.value = ""; dateiWahl.click(); });
   $("figurZu").addEventListener("click", menueZu);
   dateiKamera.addEventListener("change", function () { einlesen(dateiKamera.files[0], "kamera"); });
@@ -233,8 +297,9 @@
   $("bildNeu").addEventListener("click", function () {
     var quelle = letzteQuelle;
     schliessen();
-    (quelle === "kamera" ? dateiKamera : dateiWahl).value = "";
-    (quelle === "kamera" ? dateiKamera : dateiWahl).click();
+    if (quelle === "kamera") { kameraOeffnen(); return; }
+    dateiWahl.value = "";
+    dateiWahl.click();
   });
   dialog.addEventListener("cancel", function () { if (bild && typeof bild.close === "function") bild.close(); bild = null; zeiger = {}; pinch = null; });
 
