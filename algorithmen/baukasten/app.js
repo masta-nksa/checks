@@ -187,9 +187,11 @@
     });
   }
 
+  function maxTiefe(a) { return (a || aufg).maxTiefe || E.MAX_TIEFE; }
+
   function startProgramm(a) {
     var p = a.startprogramm ? E.klonen(a.startprogramm) : [];
-    return E.validiere(p) === null ? p : [];
+    return E.validiere(p, maxTiefe(a)) === null ? p : [];
   }
 
   function waehleAufgabe(i) {
@@ -255,6 +257,8 @@
     arbeit.textContent = "";
     var baum = el("div", "bk-baum");
     baum.append(renderZone(prog, []));
+    // Sehr schmale Anzeige: lieber seitlich scrollen als Wörter zerreissen.
+    baum.style.minWidth = (gewicht(prog) * 92 + 30 * E.tiefe(prog)) + "px";
     arbeit.append(baum);
     zaehlerAktualisieren();
     $("knopfRueckgaengig").disabled = !undoStack.length;
@@ -319,13 +323,28 @@
     return d;
   }
 
+  // Relative Breite einer Liste in einer Verzweigung: Zweige mit verschachtelten Verzweigungen
+  // bekommen mehr Platz, damit alle Blätter etwa gleich breit bleiben.
+  function gewicht(liste) {
+    var m = 1;
+    liste.forEach(function (b) {
+      var g = 1;
+      if (b.t === "loop" || b.t === "until") g = gewicht(b.body);
+      else if (b.t === "if") g = gewicht(b.yes) + gewicht(b.no);
+      if (g > m) m = g;
+    });
+    return m;
+  }
+
   function renderBlock(b, adr, laenge) {
     var blk = el("div", "bk-blk bk-" + b.t);
     blk.dataset.adr = adrStr(adr);
+    var ebene = Math.min(5, (adr.length - 1) / 2);      // 0 = oberste Ebene; je tiefer, desto kleiner die Schrift
+    blk.dataset.ebene = ebene;
 
     if (b.t === "act") {
       blk.classList.add("grab");
-      blk.append(mainBtn(b, adr, laenge, blockLabel(b)), delBtn());
+      blk.append(mainBtn(b, adr, laenge, ebene >= 2 && E.BEFEHLE[b.cmd].kurz ? E.BEFEHLE[b.cmd].kurz : blockLabel(b)), delBtn());
       return blk;
     }
 
@@ -381,9 +400,11 @@
     var k2 = el("div", "bk-kopf grab");
     var dreieck = svgEl("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true" }, "bk-dreieck");
     dreieck.append(svgEl("line", { x1: 0, y1: 0, x2: 50, y2: 100 }), svgEl("line", { x1: 100, y1: 0, x2: 50, y2: 100 }));
-    k2.append(dreieck, mainBtn(b, adr, laenge, blockLabel(b)), el("span", "bk-ja", "Ja"), el("span", "bk-nein", "Nein"), delBtn());
+    var bed = E.BEDINGUNGEN[b.cond];
+    k2.append(dreieck, mainBtn(b, adr, laenge, ebene >= 2 && bed.kurz ? bed.kurz : bed.label), el("span", "bk-ja", "Ja"), el("span", "bk-nein", "Nein"), delBtn());
     blk.append(k2);
     var aeste = el("div", "bk-aeste");
+    aeste.style.gridTemplateColumns = "minmax(0," + gewicht(b.yes) + "fr) minmax(0," + (b.sonst === false ? 1 : gewicht(b.no)) + "fr)";
     var yes = el("div", "bk-ast"), no = el("div", "bk-ast");
     yes.append(renderZone(b.yes, adr.concat(["yes"])));
     if (b.sonst === false) {
@@ -407,7 +428,17 @@
   function slotGueltig(s, q) {
     var ladr = adrParse(s.dataset.liste);
     if (q.quelle === "block" && E.istPraefix(q.adr, ladr)) return false;
-    return E.kannEinfuegen(prog, ladr, quelleBlock(q));
+    return E.kannEinfuegen(prog, ladr, quelleBlock(q), maxTiefe());
+  }
+
+  // Gibt es Ablagestellen, die nur wegen der Verschachtelungstiefe nicht angeboten werden?
+  function tiefeVerhindert(q) {
+    var block = quelleBlock(q);
+    return Array.prototype.some.call(arbeit.querySelectorAll(".bk-slot"), function (s) {
+      var ladr = adrParse(s.dataset.liste);
+      if (q.quelle === "block" && E.istPraefix(q.adr, ladr)) return false;
+      return E.zuTief(prog, ladr, block, maxTiefe());
+    });
   }
 
   // Zeigt gültige Ablagestellen; q = Quelle beim Antippen oder Ziehen, sonst null.
@@ -437,7 +468,10 @@
       $("auswahlText").textContent = "Baustein «" + quelleLabel(auswahl) + "» gewählt. " +
         (auswahl.quelle === "palette"
           ? "Wählen Sie eine gestrichelte Ablagestelle, um ihn einzufügen. Er bleibt gewählt, bis Sie abbrechen."
-          : "Wählen Sie eine gestrichelte Ablagestelle, um ihn dorthin zu verschieben.");
+          : "Wählen Sie eine gestrichelte Ablagestelle, um ihn dorthin zu verschieben.") +
+        (tiefeVerhindert(auswahl)
+          ? " Manche Stellen fehlen, weil Wiederholungen und Verzweigungen höchstens " + maxTiefe() + " Ebenen tief ineinander stecken dürfen."
+          : "");
     }
   }
 
@@ -519,14 +553,14 @@
   function ablegen(q, ladr, idx, tastatur) {
     var neu, fokus = null;
     if (q.quelle === "palette") {
-      neu = E.einfuegen(prog, ladr, idx, neuerBlock(q));
+      neu = E.einfuegen(prog, ladr, idx, neuerBlock(q), maxTiefe());
       // Befehle bleiben gewählt (mehrere hintereinander einfügen), Wiederholung/Verzweigung nur einmal.
       if (neu && q.typ !== "act") auswahl = null;
       if (neu && tastatur) fokus = q.typ === "act" ? { art: "slot", liste: adrStr(ladr), idx: idx + 1 } : { art: "block", adr: ladr.concat([idx]) };
     } else {
       var kopie = E.klonen(prog);
       E.blockAt(kopie, q.adr)._neu = true;
-      neu = E.verschieben(kopie, q.adr, ladr, idx);
+      neu = E.verschieben(kopie, q.adr, ladr, idx, maxTiefe());
       if (neu) {
         var a = findeMarke(neu, []);
         neu = E.klonen(neu);
@@ -904,7 +938,7 @@
   }
 
   function spurFlaeche(x, y) {
-    feldRef.spurFlaechen.append(svgEl("rect", { x: zx(x), y: zy(y), width: Z, height: Z }, "bk-zelle bk-spurzelle"));
+    feldRef.spurFlaechen.append(svgEl("circle", { cx: mx(x), cy: my(y), r: 3.5 }, "bk-spurpunkt"));
   }
 
   /* ---------- Ablauf ---------------------------------------- */

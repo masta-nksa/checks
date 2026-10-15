@@ -50,21 +50,21 @@
   // ausfuehren(z, ctx) liefert "anstoss" bei Fehler, sonst nichts.
   var BEFEHLE = {
     vor: {
-      label: "vorwärts",
+      label: "vorwärts", kurz: "vor",
       ausfuehren: function (z, ctx) {
         if (!frei(z, ctx)) return "anstoss";
         z.x += DIRS[z.d][0]; z.y += DIRS[z.d][1];
         z.besucht.push([z.x, z.y]);
       }
     },
-    rechts: { label: "rechts drehen", ausfuehren: function (z) { z.d = RECHTS[z.d]; } },
-    links: { label: "links drehen", ausfuehren: function (z) { z.d = LINKS[z.d]; } }
+    rechts: { label: "rechts drehen", kurz: "↻ rechts", ausfuehren: function (z) { z.d = RECHTS[z.d]; } },
+    links: { label: "links drehen", kurz: "↺ links", ausfuehren: function (z) { z.d = LINKS[z.d]; } }
   };
 
   var BEDINGUNGEN = {
-    frei: { label: "Feld vorne frei?", pruefen: frei },
-    freiLinks: { label: "Feld links frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, LINKS[z.d]); } },
-    freiRechts: { label: "Feld rechts frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, RECHTS[z.d]); } }
+    frei: { label: "Feld vorne frei?", kurz: "vorne frei?", pruefen: frei },
+    freiLinks: { label: "Feld links frei?", kurz: "links frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, LINKS[z.d]); } },
+    freiRechts: { label: "Feld rechts frei?", kurz: "rechts frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, RECHTS[z.d]); } }
   };
 
   function gleich(a, b) { return a[0] === b[0] && a[1] === b[1]; }
@@ -124,7 +124,9 @@
   }
 
   // Liefert eine Fehlermeldung (String) oder null, wenn das Programm gültig aufgebaut ist.
-  function validiere(prog) {
+  // maxTiefe: Obergrenze der Verschachtelung der Aufgabe (Standard MAX_TIEFE).
+  function validiere(prog, maxTiefe) {
+    var grenze = maxTiefe || MAX_TIEFE;
     if (!Array.isArray(prog)) return "Programm ist keine Liste.";
     var fehler = null;
     (function pruefen(liste) {
@@ -148,7 +150,7 @@
         } else fehler = "Unbekannter Bausteintyp: " + b.t;
       });
     })(prog);
-    if (!fehler && tiefe(prog) > MAX_TIEFE) fehler = "Zu tief verschachtelt (höchstens " + MAX_TIEFE + ").";
+    if (!fehler && tiefe(prog) > grenze) fehler = "Zu tief verschachtelt (höchstens " + grenze + ").";
     return fehler;
   }
 
@@ -187,17 +189,22 @@
     return true;
   }
 
-  function kannEinfuegen(prog, ladr, block) {
+  // Würde der Block die erlaubte Verschachtelung überschreiten? (Nur Tiefe, nicht die übrigen Regeln.)
+  function zuTief(prog, ladr, block, maxTiefe) {
+    return ladr.length / 2 + tiefe([block]) > (maxTiefe || MAX_TIEFE);
+  }
+
+  function kannEinfuegen(prog, ladr, block, maxTiefe) {
     if (!listeAt(prog, ladr)) return false;
     if (ladr.length && ladr[ladr.length - 1] === "no") {
       var vater = blockAt(prog, ladr.slice(0, -1));
       if (vater && vater.sonst === false) return false;
     }
-    return ladr.length / 2 + tiefe([block]) <= MAX_TIEFE;
+    return !zuTief(prog, ladr, block, maxTiefe);
   }
 
-  function einfuegen(prog, ladr, idx, block) {
-    if (!kannEinfuegen(prog, ladr, block)) return null;
+  function einfuegen(prog, ladr, idx, block, maxTiefe) {
+    if (!kannEinfuegen(prog, ladr, block, maxTiefe)) return null;
     var neu = klonen(prog);
     var l = listeAt(neu, ladr);
     if (idx < 0 || idx > l.length) return null;
@@ -215,10 +222,10 @@
 
   // Verschiebt einen Block (samt Inhalt). Ziel-Adressen beziehen sich auf das
   // Programm VOR dem Verschieben. Ein Block darf nicht in sich selbst landen.
-  function verschieben(prog, badr, ladr, idx) {
+  function verschieben(prog, badr, ladr, idx, maxTiefe) {
     if (istPraefix(badr, ladr)) return null;
     var block = blockAt(prog, badr);
-    if (!block || !kannEinfuegen(prog, ladr, block)) return null;
+    if (!block || !kannEinfuegen(prog, ladr, block, maxTiefe)) return null;
     var neu = klonen(prog);
     var quelle = listeAt(neu, badr.slice(0, -1));
     var qi = badr[badr.length - 1];
@@ -382,7 +389,7 @@
     BEFEHLE: BEFEHLE, BEDINGUNGEN: BEDINGUNGEN, ZIELTYPEN: ZIELTYPEN,
     klonen: klonen, zaehleBausteine: zaehleBausteine, tiefe: tiefe, validiere: validiere,
     neuerBlock: neuerBlock, listeAt: listeAt, blockAt: blockAt, istPraefix: istPraefix,
-    kannEinfuegen: kannEinfuegen, einfuegen: einfuegen, entfernen: entfernen, verschieben: verschieben,
+    kannEinfuegen: kannEinfuegen, zuTief: zuTief, einfuegen: einfuegen, entfernen: entfernen, verschieben: verschieben,
     run: run, pruefe: pruefe, bausteineText: bausteineText, vorbereiten: vorbereiten, zielfeld: zielfeld
   };
 });

@@ -93,6 +93,8 @@ gesetzt; der Käfer führt das Programm auf einem Feld aus.
 - Palette-Optionen (zusätzlich zu `befehle`, `wiederholung`, `verzweigung`): `bis: true` bietet
   «wiederhole bis Ziel»; `bedingungen` (`frei`, `freiLinks`, `freiRechts`) legt fest, welche
   «Feld … frei?»-Verzweigungen es gibt; `sonst: false` blendet den Sonst-Zweig aus.
+- Aufgabenfeld `maxTiefe` (Standard 3): wie viele Ebenen Wiederholungen und Verzweigungen
+  ineinander stecken dürfen. Die Labyrinth-Levels mit Verzweigung (6 bis 10) erlauben 6.
 - `engine.js`: Interpreter, Prüfung und Programmbaum als reine Funktionen (ohne DOM).
   Befehle, Bedingungen und Ziel-Typen stehen in Tabellen und sind erweiterbar.
 - Die Prüfung vergleicht das **Ergebnis** (Endfeld, besuchte Felder, Bausteinlimit),
