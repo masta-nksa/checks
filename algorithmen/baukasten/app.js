@@ -257,6 +257,8 @@
     arbeit.textContent = "";
     var baum = el("div", "bk-baum");
     baum.append(renderZone(prog, []));
+    // Sehr schmale Anzeige: lieber seitlich scrollen als Wörter zerreissen.
+    baum.style.minWidth = (gewicht(prog) * 92 + 30 * E.tiefe(prog)) + "px";
     arbeit.append(baum);
     zaehlerAktualisieren();
     $("knopfRueckgaengig").disabled = !undoStack.length;
@@ -321,13 +323,28 @@
     return d;
   }
 
+  // Relative Breite einer Liste in einer Verzweigung: Zweige mit verschachtelten Verzweigungen
+  // bekommen mehr Platz, damit alle Blätter etwa gleich breit bleiben.
+  function gewicht(liste) {
+    var m = 1;
+    liste.forEach(function (b) {
+      var g = 1;
+      if (b.t === "loop" || b.t === "until") g = gewicht(b.body);
+      else if (b.t === "if") g = gewicht(b.yes) + gewicht(b.no);
+      if (g > m) m = g;
+    });
+    return m;
+  }
+
   function renderBlock(b, adr, laenge) {
     var blk = el("div", "bk-blk bk-" + b.t);
     blk.dataset.adr = adrStr(adr);
+    var ebene = Math.min(5, (adr.length - 1) / 2);      // 0 = oberste Ebene; je tiefer, desto kleiner die Schrift
+    blk.dataset.ebene = ebene;
 
     if (b.t === "act") {
       blk.classList.add("grab");
-      blk.append(mainBtn(b, adr, laenge, blockLabel(b)), delBtn());
+      blk.append(mainBtn(b, adr, laenge, ebene >= 2 && E.BEFEHLE[b.cmd].kurz ? E.BEFEHLE[b.cmd].kurz : blockLabel(b)), delBtn());
       return blk;
     }
 
@@ -383,9 +400,11 @@
     var k2 = el("div", "bk-kopf grab");
     var dreieck = svgEl("svg", { viewBox: "0 0 100 100", preserveAspectRatio: "none", "aria-hidden": "true" }, "bk-dreieck");
     dreieck.append(svgEl("line", { x1: 0, y1: 0, x2: 50, y2: 100 }), svgEl("line", { x1: 100, y1: 0, x2: 50, y2: 100 }));
-    k2.append(dreieck, mainBtn(b, adr, laenge, blockLabel(b)), el("span", "bk-ja", "Ja"), el("span", "bk-nein", "Nein"), delBtn());
+    var bed = E.BEDINGUNGEN[b.cond];
+    k2.append(dreieck, mainBtn(b, adr, laenge, ebene >= 2 && bed.kurz ? bed.kurz : bed.label), el("span", "bk-ja", "Ja"), el("span", "bk-nein", "Nein"), delBtn());
     blk.append(k2);
     var aeste = el("div", "bk-aeste");
+    aeste.style.gridTemplateColumns = "minmax(0," + gewicht(b.yes) + "fr) minmax(0," + (b.sonst === false ? 1 : gewicht(b.no)) + "fr)";
     var yes = el("div", "bk-ast"), no = el("div", "bk-ast");
     yes.append(renderZone(b.yes, adr.concat(["yes"])));
     if (b.sonst === false) {

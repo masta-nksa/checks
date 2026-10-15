@@ -50,21 +50,21 @@
   // ausfuehren(z, ctx) liefert "anstoss" bei Fehler, sonst nichts.
   var BEFEHLE = {
     vor: {
-      label: "vorwärts",
+      label: "vorwärts", kurz: "vor",
       ausfuehren: function (z, ctx) {
         if (!frei(z, ctx)) return "anstoss";
         z.x += DIRS[z.d][0]; z.y += DIRS[z.d][1];
         z.besucht.push([z.x, z.y]);
       }
     },
-    rechts: { label: "rechts drehen", ausfuehren: function (z) { z.d = RECHTS[z.d]; } },
-    links: { label: "links drehen", ausfuehren: function (z) { z.d = LINKS[z.d]; } }
+    rechts: { label: "rechts drehen", kurz: "↻ rechts", ausfuehren: function (z) { z.d = RECHTS[z.d]; } },
+    links: { label: "links drehen", kurz: "↺ links", ausfuehren: function (z) { z.d = LINKS[z.d]; } }
   };
 
   var BEDINGUNGEN = {
-    frei: { label: "Feld vorne frei?", pruefen: frei },
-    freiLinks: { label: "Feld links frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, LINKS[z.d]); } },
-    freiRechts: { label: "Feld rechts frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, RECHTS[z.d]); } }
+    frei: { label: "Feld vorne frei?", kurz: "vorne frei?", pruefen: frei },
+    freiLinks: { label: "Feld links frei?", kurz: "links frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, LINKS[z.d]); } },
+    freiRechts: { label: "Feld rechts frei?", kurz: "rechts frei?", pruefen: function (z, ctx) { return freiRichtung(z, ctx, RECHTS[z.d]); } }
   };
 
   function gleich(a, b) { return a[0] === b[0] && a[1] === b[1]; }
