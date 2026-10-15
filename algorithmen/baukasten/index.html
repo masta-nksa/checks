@@ -45,7 +45,7 @@
         <span class="bk-zaehler" id="zaehler"></span>
         <span class="bk-leiste-knoepfe">
           <button type="button" class="bk-knopf" id="knopfRueckgaengig">Rückgängig</button>
-          <button type="button" class="bk-knopf" id="knopfNeu">Neu beginnen</button>
+          <button type="button" class="bk-knopf" id="knopfNeu" title="Löscht alle Bausteine dieser Aufgabe. «Rückgängig» holt sie zurück.">Alles löschen</button>
         </span>
       </div>
 
@@ -63,6 +63,7 @@
       <h2 id="laufTitel">Käfer-Feld</h2>
       <div class="bk-feld" id="feld"></div>
       <p class="bk-feldinfo" id="feldInfo"></p>
+
 
       <div class="bk-steuerung">
         <button type="button" class="bk-knopf primaer" id="knopfStart">Start</button>
@@ -87,7 +88,37 @@
   </p>
 </div>
 
+<dialog class="bk-bild" id="figurDialog" aria-labelledby="figurTitel">
+  <h2 id="figurTitel">Eigene Figur</h2>
+  <p class="bk-bild-hilfe">Statt des Käfers läuft Ihr eigenes Bild über das Feld. Es bleibt in diesem Browser und wird nicht gesendet.</p>
+  <div class="bk-bild-knoepfe">
+    <button type="button" class="bk-knopf primaer" id="knopfBildKamera">Foto aufnehmen</button>
+    <button type="button" class="bk-knopf" id="knopfBildWahl">Bild wählen</button>
+    <button type="button" class="bk-knopf" id="knopfBildWeg" hidden>Zurück zum Käfer</button>
+    <button type="button" class="bk-knopf" id="figurZu">Schliessen</button>
+  </div>
+  <input type="file" id="bildDateiKamera" accept="image/*" capture="user" hidden>
+  <input type="file" id="bildDateiWahl" accept="image/*" hidden>
+</dialog>
+
+<dialog class="bk-bild" id="bildDialog" aria-labelledby="bildTitel">
+  <h2 id="bildTitel">Bild zuschneiden</h2>
+  <p class="bk-bild-hilfe">Verschieben Sie das Foto und vergrössern Sie es, bis das Motiv im Kreis sitzt. Das Bild bleibt in diesem Browser und wird nicht gesendet.</p>
+  <canvas id="bildCanvas" width="320" height="320" tabindex="0" role="img"
+    aria-label="Foto mit rundem Ausschnitt. Pfeiltasten verschieben das Foto, Plus und Minus zoomen."></canvas>
+  <label class="bk-bild-zoom">Zoom
+    <input type="range" id="bildZoom" min="100" max="400" step="1" value="100">
+  </label>
+  <p class="bk-meldung fehler" id="bildMeldung" role="alert" hidden></p>
+  <div class="bk-bild-knoepfe">
+    <button type="button" class="bk-knopf primaer" id="bildOk">Übernehmen</button>
+    <button type="button" class="bk-knopf" id="bildNeu">Neu aufnehmen</button>
+    <button type="button" class="bk-knopf" id="bildAbbruch">Abbrechen</button>
+  </div>
+</dialog>
+
 <script src="engine.js"></script>
+<script src="figur.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

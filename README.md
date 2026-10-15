@@ -100,6 +100,16 @@ gesetzt; der Käfer führt das Programm auf einem Feld aus.
 - Die Prüfung vergleicht das **Ergebnis** (Endfeld, besuchte Felder, Bausteinlimit),
   nie ein Muster. Lösungen und Tests gehören nicht in dieses Repo.
 - Gelöste Aufgaben merkt sich der Browser in `localStorage` (Schlüssel `checks.baukasten.v1`).
+- Easter Egg, versteckt: **Dreifachklick auf den Käfer** (drei Klicks innerhalb von 0,7 s) öffnet
+  das Figur-Menü (`figur.js`): «Foto aufnehmen» (Kamera auf Handy und Tablet) oder «Bild wählen»,
+  danach Zuschneiden in einem runden Ausschnitt (verschieben, zoomen, auch per Tastatur).
+  Gespeichert wird nur der kleine Ausschnitt (128 px) in `localStorage`
+  (`checks.baukasten.figur.v1`); das Foto wird nicht gesendet und danach verworfen. Das Bild
+  bleibt aufrecht, ein Zeiger am Rand zeigt die Blickrichtung. Ein weiterer Dreifachklick auf das
+  Bild öffnet das Menü wieder; dort entfernt «Zurück zum Käfer» das Bild.
+- Der Stand der Bausteine jeder Aufgabe bleibt im Browser erhalten (`checks.baukasten.prog.v1`),
+  auch nach Seitenwechsel oder Neuladen. «Alles löschen» leert die Aufgabe; «Rückgängig» holt
+  die Bausteine zurück, solange die Seite offen ist.
 
 ## Papierversion
 

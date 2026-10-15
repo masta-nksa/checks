@@ -82,6 +82,25 @@
 
   /* ---------- Fortschritt (localStorage, immer mit try/catch) - */
 
+  var PROG_SPEICHER = "checks.baukasten.prog.v1";
+  var gespeicherteProgramme = {};
+
+  function ladeProgramme() {
+    try {
+      var d = JSON.parse(localStorage.getItem(PROG_SPEICHER) || "{}");
+      if (d && typeof d === "object" && !Array.isArray(d)) gespeicherteProgramme = d;
+    } catch (e) { gespeicherteProgramme = {}; }
+  }
+  // Der aktuelle Stand der Aufgabe bleibt auch nach Seitenwechsel oder Neuladen erhalten.
+  function speichereProgramm() {
+    if (prog.length) gespeicherteProgramme[aufg.id] = prog; else delete gespeicherteProgramme[aufg.id];
+    try { localStorage.setItem(PROG_SPEICHER, JSON.stringify(gespeicherteProgramme)); } catch (e) { /* ohne Speicher weiter */ }
+  }
+  function gespeichertesProgramm(a) {
+    var p = gespeicherteProgramme[a.id];
+    return Array.isArray(p) && p.length && E.validiere(p, maxTiefe(a)) === null ? E.klonen(p) : null;
+  }
+
   function ladeFortschritt() {
     try {
       var d = JSON.parse(localStorage.getItem(SPEICHER) || "{}");
@@ -155,7 +174,11 @@
     });
   }
 
+  // Eigenes Bild gewählt oder entfernt: Feld neu zeichnen, Ablauf zurücksetzen.
+  if (window.BaukastenFigur) window.BaukastenFigur.onChange = function () { if (aufg) { renderFeld(); simReset(); } };
+
   ladeFortschritt();
+  ladeProgramme();
   baueReihen();
   zeigeReihe(reihe);
 
@@ -199,7 +222,7 @@
     aktuell = i;
     aufg = aufgaben[i];
     var z = zustand[aufg.id];
-    prog = z ? z.prog : startProgramm(aufg);
+    prog = z ? z.prog : (gespeichertesProgramm(aufg) || startProgramm(aufg));
     undoStack = z ? z.undo : [];
     auswahl = null;
     fokusZiel = null;
@@ -373,6 +396,7 @@
         inp.classList.toggle("ungueltig", !ok);
         if (ok) {
           E.blockAt(prog, adr).n = n;
+          speichereProgramm();
           simReset();
           zaehlerAktualisieren();
         }
@@ -512,6 +536,7 @@
       if (undoStack.length > 100) undoStack.shift();
       prog = neu;
     }
+    speichereProgramm();
     simReset();
     renderBau();
   }
@@ -520,6 +545,7 @@
     if (!undoStack.length) return;
     prog = JSON.parse(undoStack.pop());
     auswahl = null;
+    speichereProgramm();
     simReset();
     renderBau();
   }
@@ -903,7 +929,19 @@
     svg.append(marken);
 
     var k = svgEl("g", {}, "bk-kaefer");
-    k.append(
+    k.append(svgEl("circle", { cx: 0, cy: 0, r: 19 }, "bk-treffer"));   // unsichtbare Klickfläche (Versteck)
+    var bildUrl = window.BaukastenFigur && window.BaukastenFigur.bild();
+    var bildGruppe = null;
+    if (bildUrl) {
+      // Eigenes Bild: bleibt aufrecht, nur der Zeiger am Rand dreht sich mit der Blickrichtung.
+      bildGruppe = svgEl("g", {}, "bk-kaefer bk-kaefer-bild");
+      bildGruppe.append(svgEl("image", { href: bildUrl, x: -16, y: -16, width: 32, height: 32 }));
+      svg.append(bildGruppe);
+      k.append(
+        svgEl("circle", { cx: 0, cy: 0, r: 16.5 }, "bild-ring"),
+        svgEl("polygon", { points: "0,-24 -6,-16 6,-16" }, "koerper")
+      );
+    } else k.append(
       svgEl("line", { x1: -7, y1: -4, x2: -13, y2: -8 }, "bein"), svgEl("line", { x1: 7, y1: -4, x2: 13, y2: -8 }, "bein"),
       svgEl("line", { x1: -8, y1: 2, x2: -14, y2: 2 }, "bein"), svgEl("line", { x1: 8, y1: 2, x2: 14, y2: 2 }, "bein"),
       svgEl("line", { x1: -7, y1: 8, x2: -13, y2: 12 }, "bein"), svgEl("line", { x1: 7, y1: 8, x2: 13, y2: 12 }, "bein"),
@@ -916,7 +954,7 @@
 
     feldBox.textContent = "";
     feldBox.append(svg);
-    feldRef = { svg: svg, spurFlaechen: spurFlaechen, spurLinien: spurLinien, marken: marken, kaefer: k };
+    feldRef = { svg: svg, spurFlaechen: spurFlaechen, spurLinien: spurLinien, marken: marken, kaefer: k, bild: bildGruppe };
 
     var info = "Feld " + f.cols + " × " + f.rows + ". Start: Spalte " + f.start[0] + ", Zeile " + f.start[1] +
       ", Blick nach " + E.BLICK_TEXT[f.blick] + ". ";
@@ -933,8 +971,11 @@
   function kaeferSetzen(x, y, winkel, ohneAnim) {
     var g = feldRef.kaefer;
     if (ohneAnim) g.style.transition = "none";
+    var b = feldRef.bild;
+    if (b && ohneAnim) b.style.transition = "none";
     g.style.transform = "translate(" + mx(x) + "px," + my(y) + "px) rotate(" + winkel + "deg)";
-    if (ohneAnim) { void g.getBoundingClientRect(); g.style.transition = ""; }
+    if (b) b.style.transform = "translate(" + mx(x) + "px," + my(y) + "px)";
+    if (ohneAnim) { void g.getBoundingClientRect(); g.style.transition = ""; if (b) b.style.transition = ""; }
   }
 
   function spurFlaeche(x, y) {
