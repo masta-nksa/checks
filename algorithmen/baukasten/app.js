@@ -187,9 +187,11 @@
     });
   }
 
+  function maxTiefe(a) { return (a || aufg).maxTiefe || E.MAX_TIEFE; }
+
   function startProgramm(a) {
     var p = a.startprogramm ? E.klonen(a.startprogramm) : [];
-    return E.validiere(p) === null ? p : [];
+    return E.validiere(p, maxTiefe(a)) === null ? p : [];
   }
 
   function waehleAufgabe(i) {
@@ -407,7 +409,17 @@
   function slotGueltig(s, q) {
     var ladr = adrParse(s.dataset.liste);
     if (q.quelle === "block" && E.istPraefix(q.adr, ladr)) return false;
-    return E.kannEinfuegen(prog, ladr, quelleBlock(q));
+    return E.kannEinfuegen(prog, ladr, quelleBlock(q), maxTiefe());
+  }
+
+  // Gibt es Ablagestellen, die nur wegen der Verschachtelungstiefe nicht angeboten werden?
+  function tiefeVerhindert(q) {
+    var block = quelleBlock(q);
+    return Array.prototype.some.call(arbeit.querySelectorAll(".bk-slot"), function (s) {
+      var ladr = adrParse(s.dataset.liste);
+      if (q.quelle === "block" && E.istPraefix(q.adr, ladr)) return false;
+      return E.zuTief(prog, ladr, block, maxTiefe());
+    });
   }
 
   // Zeigt gültige Ablagestellen; q = Quelle beim Antippen oder Ziehen, sonst null.
@@ -437,7 +449,10 @@
       $("auswahlText").textContent = "Baustein «" + quelleLabel(auswahl) + "» gewählt. " +
         (auswahl.quelle === "palette"
           ? "Wählen Sie eine gestrichelte Ablagestelle, um ihn einzufügen. Er bleibt gewählt, bis Sie abbrechen."
-          : "Wählen Sie eine gestrichelte Ablagestelle, um ihn dorthin zu verschieben.");
+          : "Wählen Sie eine gestrichelte Ablagestelle, um ihn dorthin zu verschieben.") +
+        (tiefeVerhindert(auswahl)
+          ? " Manche Stellen fehlen, weil Wiederholungen und Verzweigungen höchstens " + maxTiefe() + " Ebenen tief ineinander stecken dürfen."
+          : "");
     }
   }
 
@@ -519,14 +534,14 @@
   function ablegen(q, ladr, idx, tastatur) {
     var neu, fokus = null;
     if (q.quelle === "palette") {
-      neu = E.einfuegen(prog, ladr, idx, neuerBlock(q));
+      neu = E.einfuegen(prog, ladr, idx, neuerBlock(q), maxTiefe());
       // Befehle bleiben gewählt (mehrere hintereinander einfügen), Wiederholung/Verzweigung nur einmal.
       if (neu && q.typ !== "act") auswahl = null;
       if (neu && tastatur) fokus = q.typ === "act" ? { art: "slot", liste: adrStr(ladr), idx: idx + 1 } : { art: "block", adr: ladr.concat([idx]) };
     } else {
       var kopie = E.klonen(prog);
       E.blockAt(kopie, q.adr)._neu = true;
-      neu = E.verschieben(kopie, q.adr, ladr, idx);
+      neu = E.verschieben(kopie, q.adr, ladr, idx, maxTiefe());
       if (neu) {
         var a = findeMarke(neu, []);
         neu = E.klonen(neu);

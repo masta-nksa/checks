@@ -112,6 +112,7 @@
     },
     {
       "id": "lab6",
+      "maxTiefe": 6,
       "titel": "6 · Spirale",
       "stufe": "Verzweigung",
       "text": "Der Weg windet sich nach innen. Erreichen Sie das Ziel mit höchstens 5 Bausteinen.",
@@ -138,6 +139,7 @@
     },
     {
       "id": "lab7",
+      "maxTiefe": 6,
       "titel": "7 · Abzweigungen",
       "stufe": "Verzweigung",
       "text": "Der Weg hat Abzweigungen. Erreichen Sie das Ziel mit höchstens 5 Bausteinen.",
@@ -166,6 +168,7 @@
     },
     {
       "id": "lab8",
+      "maxTiefe": 6,
       "titel": "8 · Der Umweg",
       "stufe": "Verzweigung",
       "text": "Der Weg ist verzweigt und führt einen Umweg. Erreichen Sie das Ziel mit höchstens 10 Bausteinen.",
@@ -193,6 +196,7 @@
     },
     {
       "id": "lab9",
+      "maxTiefe": 6,
       "titel": "9 · Kreuzungen",
       "stufe": "Falls-Sonst",
       "text": "Hier gibt es viele Kreuzungen. Erreichen Sie das Ziel mit höchstens 7 Bausteinen.",
@@ -221,6 +225,7 @@
     },
     {
       "id": "lab10",
+      "maxTiefe": 6,
       "titel": "10 · Der Wandfolger",
       "stufe": "Falls-Sonst",
       "text": "Können Sie dieses komplizierte Labyrinth lösen? Folgen Sie der linken Wand. Erreichen Sie das Ziel mit höchstens 10 Bausteinen. Nur für Fortgeschrittene.",
