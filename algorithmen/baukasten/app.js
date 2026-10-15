@@ -851,15 +851,20 @@
     }
 
     svg.append(spurLinien, hind);
+    // Hindernisse als Steinblöcke; Form und Helligkeit variieren leicht von Feld zu Feld.
+    var RISSE = [
+      "M{a} {b} l5 6 l-3 5 l6 7", "M{c} {b} l-4 7 l5 4 l-2 8", "M{a} {d} l7 -3 l3 5 l8 -2"
+    ];
     f.hindernisse.forEach(function (h) {
-      if (f.karte) {
-        hind.append(svgEl("rect", { x: zx(h[0]), y: zy(h[1]), width: Z, height: Z }, "bk-hindernis bk-wand"));
-        return;
-      }
-      hind.append(svgEl("rect", { x: zx(h[0]) + 1, y: zy(h[1]) + 1, width: Z - 2, height: Z - 2 }, "bk-hindernis"));
-      hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + Z - 6, x2: zx(h[0]) + Z - 6, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
-      hind.append(svgEl("line", { x1: zx(h[0]) + 6, y1: zy(h[1]) + 20, x2: zx(h[0]) + 20, y2: zy(h[1]) + 6 }, "bk-hindernis-muster"));
-      hind.append(svgEl("line", { x1: zx(h[0]) + 20, y1: zy(h[1]) + Z - 6, x2: zx(h[0]) + Z - 6, y2: zy(h[1]) + 20 }, "bk-hindernis-muster"));
+      var x0 = zx(h[0]), y0 = zy(h[1]), v = (h[0] * 31 + h[1] * 17) % 3;
+      var g = svgEl("g", {}, "bk-stein bk-stein" + v);
+      g.append(
+        svgEl("rect", { x: x0 + 1.5, y: y0 + 1.5, width: Z - 3, height: Z - 3, rx: 6 }, "bk-stein-block"),
+        svgEl("path", { d: "M" + (x0 + 7) + " " + (y0 + 6) + " H" + (x0 + Z - 12) }, "bk-stein-licht"),
+        svgEl("path", { d: "M" + (x0 + 6) + " " + (y0 + 7) + " V" + (y0 + 14) }, "bk-stein-licht"),
+        svgEl("path", { d: RISSE[v].replace("{a}", x0 + 12).replace("{b}", y0 + 10).replace("{c}", x0 + 26).replace("{d}", y0 + 28) }, "bk-stein-riss")
+      );
+      hind.append(g);
     });
     svg.append(marken);
 
