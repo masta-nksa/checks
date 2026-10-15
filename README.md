@@ -101,7 +101,8 @@ gesetzt; der Käfer führt das Programm auf einem Feld aus.
   nie ein Muster. Lösungen und Tests gehören nicht in dieses Repo.
 - Gelöste Aufgaben merkt sich der Browser in `localStorage` (Schlüssel `checks.baukasten.v1`).
 - Easter Egg, versteckt: **Dreifachklick auf den Käfer** (drei Klicks innerhalb von 0,7 s) öffnet
-  das Figur-Menü (`figur.js`): «Foto aufnehmen» (Kamera auf Handy und Tablet) oder «Bild wählen»,
+  das Figur-Menü (`figur.js`): «Foto aufnehmen» (Kamera-Vorschau mit Auslöser, am Computer wie am Handy; der Browser fragt
+  zuerst nach der Erlaubnis, ohne Kamera bleibt «Bild wählen») oder «Bild wählen»,
   danach Zuschneiden in einem runden Ausschnitt (verschieben, zoomen, auch per Tastatur).
   Gespeichert wird nur der kleine Ausschnitt (128 px) in `localStorage`
   (`checks.baukasten.figur.v1`); das Foto wird nicht gesendet und danach verworfen. Das Bild

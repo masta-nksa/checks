@@ -101,6 +101,18 @@
   <input type="file" id="bildDateiWahl" accept="image/*" hidden>
 </dialog>
 
+<dialog class="bk-bild" id="kameraDialog" aria-labelledby="kameraTitel">
+  <h2 id="kameraTitel">Foto aufnehmen</h2>
+  <p class="bk-bild-hilfe" id="kameraHilfe">Der Browser fragt zuerst, ob er die Kamera benutzen darf. Das Bild bleibt in diesem Browser und wird nicht gesendet.</p>
+  <video id="kameraVideo" autoplay playsinline muted></video>
+  <p class="bk-meldung fehler" id="kameraMeldung" role="alert" hidden></p>
+  <div class="bk-bild-knoepfe">
+    <button type="button" class="bk-knopf primaer" id="kameraAusloeser" disabled>Foto auslösen</button>
+    <button type="button" class="bk-knopf" id="kameraDatei">Bild wählen</button>
+    <button type="button" class="bk-knopf" id="kameraAbbruch">Abbrechen</button>
+  </div>
+</dialog>
+
 <dialog class="bk-bild" id="bildDialog" aria-labelledby="bildTitel">
   <h2 id="bildTitel">Bild zuschneiden</h2>
   <p class="bk-bild-hilfe">Verschieben Sie das Foto und vergrössern Sie es, bis das Motiv im Kreis sitzt. Das Bild bleibt in diesem Browser und wird nicht gesendet.</p>
