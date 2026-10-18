@@ -79,6 +79,11 @@ verweist aber auf eine eigenständige Seite statt auf einen Fragenkatalog.
 
 ## Werkzeug: Struktogramm-Baukasten (Käfer)
 
+> Weiterentwickelt wird der Baukasten im eigenen Repo
+> [masta-nksa/kara](https://github.com/masta-nksa/kara) (<https://masta-nksa.github.io/kara/>),
+> mit Labyrinthen, Inseln, Nebel, Editor und eigenen Challenges. Die Kopie hier bleibt
+> unverändert stehen; die Beschreibung unten gilt für diesen Stand.
+
 `algorithmen/baukasten/` ist kein Check, sondern ein eigenes Werkzeug (reines
 HTML/CSS/JS, keine Bibliotheken, es wird nichts gesendet). Bausteine werden per
 Drag and Drop (Maus und Touch) oder per Antippen/Tastatur ins Struktogramm
