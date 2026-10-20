@@ -1,7 +1,7 @@
 {
   "titel": "Dateiformat-Check",
   "eyebrow": "Gym · Codes und Algorithmen · Dateiformate",
-  "intro": "Zwölf Fragen zum Dossier «Dem Fall auf der Spur»: Codierung, Textformat SVG, Bitfolgen als Bild, Magic Numbers und Spielstände. Klicken Sie eine Antwort an; Sie sehen sofort, ob sie stimmt, und warum.",
+  "intro": "22 Fragen zum Dossier «Dem Fall auf der Spur»: Codierung, Textformat SVG, Bitfolgen als Bild, Magic Numbers und Spielstände. Bei mehreren Fragen lesen Sie selbst ein Bild, eine SVG-Datei oder einen Spielstand aus den Daten. Klicken Sie eine Antwort an; Sie sehen sofort, ob sie stimmt, und warum.",
   "quellen": [
     "oinf.ch/kurs/codes-und-algorithmen/dateiformate/"
   ],
@@ -62,6 +62,39 @@
       "fb": "Der Ursprung <code>(0, 0)</code> liegt <b>oben links</b>, die y-Achse zeigt <b>nach unten</b>. Ein kleinerer y-Wert bedeutet also weiter oben."
     },
     {
+      "q": "Eine SVG-Datei enthält:<br><code>&lt;svg width=\"200\" height=\"100\"&gt;<br>&nbsp;&nbsp;&lt;rect x=\"10\" y=\"10\" width=\"80\" height=\"40\" fill=\"red\"/&gt;<br>&nbsp;&nbsp;&lt;circle cx=\"150\" cy=\"70\" r=\"20\" fill=\"blue\"/&gt;<br>&lt;/svg&gt;</code><br>Wo im Bild liegt der blaue Kreis?",
+      "opts": [
+        "Oben links",
+        "Oben rechts",
+        "Unten links",
+        "Unten rechts"
+      ],
+      "a": 3,
+      "fb": "Das Bild ist 200 breit und 100 hoch. Der Mittelpunkt <code>(150, 70)</code> liegt rechts der Mitte (150 &gt; 100) und unter der Mitte (70 &gt; 50), weil die y-Achse <b>nach unten</b> zeigt."
+    },
+    {
+      "q": "Dieselbe SVG-Datei:<br><code>&lt;svg width=\"200\" height=\"100\"&gt;<br>&nbsp;&nbsp;&lt;rect x=\"10\" y=\"10\" width=\"80\" height=\"40\" fill=\"red\"/&gt;<br>&nbsp;&nbsp;&lt;circle cx=\"150\" cy=\"70\" r=\"20\" fill=\"blue\"/&gt;<br>&lt;/svg&gt;</code><br>Welche Änderung macht das rote Rechteck doppelt so breit?",
+      "opts": [
+        "<code>x=\"20\"</code>",
+        "<code>height=\"80\"</code>",
+        "<code>width=\"160\"</code>",
+        "<code>fill=\"darkred\"</code>"
+      ],
+      "a": 2,
+      "fb": "Die Breite steht im Attribut <code>width</code>: aus 80 wird <b>160</b>. <code>x</code> verschiebt das Rechteck nur, <code>height</code> ändert die Höhe."
+    },
+    {
+      "q": "Dieselbe SVG-Datei:<br><code>&lt;svg width=\"200\" height=\"100\"&gt;<br>&nbsp;&nbsp;&lt;rect x=\"10\" y=\"10\" width=\"80\" height=\"40\" fill=\"red\"/&gt;<br>&nbsp;&nbsp;&lt;circle cx=\"150\" cy=\"70\" r=\"20\" fill=\"blue\"/&gt;<br>&lt;/svg&gt;</code><br>Das Bild wird auf 2000 × 1000 Pixel vergrössert angezeigt. Was passiert?",
+      "opts": [
+        "Es wird pixelig, weil jedes Pixel zehnmal grösser wird.",
+        "Die Kanten bleiben scharf, weil die Formen für die neue Grösse neu gezeichnet werden.",
+        "Die Datei wird hundertmal grösser.",
+        "Das geht nicht, SVG-Bilder haben eine feste Grösse."
+      ],
+      "a": 1,
+      "fb": "Die Datei speichert <b>keine Pixel</b>, sondern Formen mit Koordinaten. Beim Anzeigen berechnet der Browser die Pixel neu, in jeder Grösse. Die Datei bleibt gleich gross."
+    },
+    {
       "q": "Ein Mini-Bildformat hat Breite 4 Bit, Höhe 4 Bit und Farbtiefe 3 Bit. Das Bild ist 4 Pixel breit und 4 Pixel hoch. Wie viele Bits haben die Pixeldaten?",
       "opts": [
         "16 Bit",
@@ -95,6 +128,61 @@
       "fb": "Die Bits sind gleich, nur die <b>Brille</b> (das Format) ist anders: andere Breite, Höhe und Farbtiefe führen zu einem anderen Bild."
     },
     {
+      "q": "<b>Mini-Bildformat:</b> zuerst 4 Bit Breite, 4 Bit Höhe, 8 Bit Farbtiefe, danach die Pixel zeilenweise ab oben links, je 3 Bit (Rot, Grün, Blau; 1 = an).<br>Bitfolge: <code>0011001000000011100010001111000110</code><br>Welche Auflösung (Breite × Höhe) hat das Bild?",
+      "opts": [
+        "2 × 3",
+        "3 × 2",
+        "3 × 3",
+        "4 × 4"
+      ],
+      "a": 1,
+      "fb": "Die ersten 16 Bit sind der Header: <code>0011</code> = 3 (Breite), <code>0010</code> = 2 (Höhe), <code>00000011</code> = 3 (Farbtiefe). Das Bild ist also <b>3 × 2</b> Pixel gross."
+    },
+    {
+      "q": "<b>Mini-Bildformat:</b> zuerst 4 Bit Breite, 4 Bit Höhe, 8 Bit Farbtiefe, danach die Pixel zeilenweise ab oben links, je 3 Bit (Rot, Grün, Blau; 1 = an).<br>Bitfolge: <code>0011001000000011100010001111000110</code><br>Welche Farbe hat das dritte Pixel?",
+      "opts": [
+        "Rot",
+        "Grün",
+        "Weiss",
+        "Blau"
+      ],
+      "a": 3,
+      "fb": "Nach den 16 Header-Bit folgen die Pixel in 3er-Gruppen: <code>100</code> (Rot), <code>010</code> (Grün), <code>001</code>. Beim dritten ist nur Blau an: <b>Blau</b>."
+    },
+    {
+      "q": "<b>Mini-Bildformat:</b> zuerst 4 Bit Breite, 4 Bit Höhe, 8 Bit Farbtiefe, danach die Pixel zeilenweise ab oben links, je 3 Bit (Rot, Grün, Blau; 1 = an).<br>Bitfolge: <code>0011001000000011100010001111000110</code><br>Wo im Bild liegt das vierte Pixel?",
+      "opts": [
+        "In der ersten Zeile ganz rechts",
+        "In der zweiten Zeile links",
+        "In der zweiten Zeile rechts",
+        "Es gibt kein viertes Pixel."
+      ],
+      "a": 1,
+      "fb": "Die Breite ist 3, also füllen die Pixel 1 bis 3 die erste Zeile. Pixel 4 beginnt die <b>zweite Zeile links</b>. Es ist <code>111</code>, also weiss."
+    },
+    {
+      "q": "<b>Mini-Bildformat:</b> zuerst 4 Bit Breite, 4 Bit Höhe, 8 Bit Farbtiefe, danach die Pixel zeilenweise ab oben links, je 3 Bit (Rot, Grün, Blau; 1 = an).<br>Bitfolge: <code>0011001000000011100010001111000110</code><br>Jemand ändert im Header nur die Breite von <code>0011</code> auf <code>0010</code>. Welche Farbe hat jetzt das Pixel in der zweiten Zeile links?",
+      "opts": [
+        "Weiss",
+        "Schwarz",
+        "Blau",
+        "Grün"
+      ],
+      "a": 2,
+      "fb": "Bei Breite 2 bilden die Pixel 1 und 2 die erste Zeile; die zweite Zeile beginnt mit Pixel 3, <code>001</code> = <b>Blau</b> (vorher Weiss). Bei 2 × 2 Pixeln werden nur 12 Pixel-Bit gelesen, die letzten 6 bleiben übrig. Gleiche Bits, andere Brille, anderes Bild."
+    },
+    {
+      "q": "<b>Mini-Bildformat:</b> zuerst 4 Bit Breite, 4 Bit Höhe, 8 Bit Farbtiefe, danach die Pixel zeilenweise ab oben links, je 3 Bit (Rot, Grün, Blau; 1 = an).<br>Welche Bitfolge beschreibt ein Bild mit 2 Pixeln nebeneinander, links rot, rechts blau?",
+      "opts": [
+        "<code>0001 0010 00000011 100 001</code>",
+        "<code>0010 0001 00000011 100 010</code>",
+        "<code>0010 0001 00000011 100 001</code>",
+        "<code>0010 0001 00000011 001 100</code>"
+      ],
+      "a": 2,
+      "fb": "Breite 2 (<code>0010</code>), Höhe 1 (<code>0001</code>), Farbtiefe 3, dann zuerst das linke Pixel Rot (<code>100</code>) und danach das rechte Pixel Blau (<code>001</code>). Bei A sind Breite und Höhe vertauscht, bei B ist das zweite Pixel grün, bei D stehen die Farben verkehrt."
+    },
+    {
       "q": "Eine Datei heisst <i>Ferienfoto.jpg</i> und beginnt mit den Bytes <code>4D 5A</code>. Was ist sie vermutlich wirklich?",
       "opts": [
         "Ein JPG-Bild",
@@ -117,17 +205,6 @@
       "fb": "Umbenennen ändert nur den Namen, nicht die Bytes. Zum Umwandeln braucht es ein Programm, das die Daten neu schreibt."
     },
     {
-      "q": "Eine Datei beginnt mit den Bytes <code>FF D8 FF</code>. Welches Format ist das?",
-      "opts": [
-        "PNG",
-        "PDF",
-        "JPG",
-        "GIF"
-      ],
-      "a": 2,
-      "fb": "<code>FF D8 FF</code> ist die Magic Number von <b>JPG</b>. In einem Editor mit erweiterter Tabelle (Windows-1252, ähnlich Latin-1) erscheint sie als <b>ÿØÿ</b>. In 7-Bit-ASCII (<code>00</code> bis <code>7F</code>) wären diese Zeichen nicht lesbar."
-    },
-    {
       "q": "Ein Spielstand soll so gespeichert werden, dass 8 verschiedene Zustände unterscheidbar sind. Wie viele Bit braucht man mindestens?",
       "opts": [
         "2 Bit",
@@ -137,6 +214,39 @@
       ],
       "a": 1,
       "fb": "Mit n Bit gibt es 2ⁿ Möglichkeiten. 2² = 4 reicht nicht, 2³ = 8 genau. Es braucht also <b>3 Bit</b>."
+    },
+    {
+      "q": "<b>Tic-Tac-Toe-Format:</b> 9 Felder zeilenweise ab oben links, je 2 Bit: <code>00</code> leer, <code>01</code> X, <code>10</code> O.<br>Spielstand: <code>011000000110000001</code><br>Wer hat gewonnen?",
+      "opts": [
+        "X, mit der Diagonale von oben links nach unten rechts",
+        "O, mit der rechten Spalte",
+        "Niemand, das Spiel läuft noch.",
+        "Das lässt sich nur mit einem Bild der Spielfläche sagen."
+      ],
+      "a": 0,
+      "fb": "In 2er-Gruppen: <code>01 10 00 | 00 01 10 | 00 00 01</code>. X steht auf den Feldern 1, 5 und 9, also auf der <b>Diagonale</b>. Das Format genügt, um das Spielfeld zu rekonstruieren."
+    },
+    {
+      "q": "<b>Tic-Tac-Toe-Format:</b> 9 Felder zeilenweise ab oben links, je 2 Bit: <code>00</code> leer, <code>01</code> X, <code>10</code> O.<br>Warum braucht dieses Format 2 Bit pro Feld und nicht nur 1?",
+      "opts": [
+        "Damit die Datei genau 2 Byte gross wird.",
+        "Weil X und O je ein eigenes Bit brauchen, egal ob das Feld leer ist.",
+        "Damit man auch Zahlen speichern kann.",
+        "Weil ein Feld drei Zustände hat (leer, X, O) und 1 Bit nur zwei unterscheidet."
+      ],
+      "a": 3,
+      "fb": "Mit 1 Bit gibt es nur 2 Möglichkeiten, mit 2 Bit sind es 2² = 4. Drei davon werden gebraucht, <code>11</code> bleibt frei. Der ganze Spielstand hat 9 · 2 = 18 Bit."
+    },
+    {
+      "q": "<b>Tic-Tac-Toe-Format:</b> 9 Felder zeilenweise ab oben links, je 2 Bit: <code>00</code> leer, <code>01</code> X, <code>10</code> O.<br>Spielstand: <code>011000000110000001</code><br>Nun setzt O auf das Feld in der Mitte der unteren Zeile. Was ändert sich in der Bitfolge?",
+      "opts": [
+        "Bit 8 wird zu 1.",
+        "Bit 15 und 16 werden von <code>00</code> zu <code>01</code>.",
+        "Bit 15 und 16 werden von <code>00</code> zu <code>10</code>.",
+        "Alle 18 Bit werden neu geschrieben."
+      ],
+      "a": 2,
+      "fb": "Das Feld unten Mitte ist das <b>8. Feld</b>; es belegt die Bits 15 und 16 (Feld n beginnt bei Bit 2n − 1). O ist <code>10</code>. Alle anderen Bits bleiben gleich."
     }
   ]
 }

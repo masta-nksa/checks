@@ -68,7 +68,7 @@
       "checks": [
         {
           "titel": "Dateiformat-Check",
-          "untertitel": "Codierung, SVG, Bitfolgen als Bild, Magic Numbers",
+          "untertitel": "Codierung, SVG, Bitfolgen als Bild, Magic Numbers, Spielstände",
           "pfad": "dateiformate/format-check/"
         }
       ]
