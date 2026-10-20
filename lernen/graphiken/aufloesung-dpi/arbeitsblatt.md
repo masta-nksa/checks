@@ -225,7 +225,7 @@ Die Pixelanzahl bestimmt die Details, die DPI bestimmt, wie diese Details auf de
 Besprechen Sie die beiden Fragen mit Ihrer Sitznachbarin oder Ihrem Sitznachbarn und halten Sie danach beide je eine Antwort schriftlich fest.
 
 [[aufgabe:Aufgabe 7]]
-**a)** Warum ist eine Bildschirmauflösung von z. B. 72 DPI für den Druck nicht ausreichend?
+**a)** Ein Bild ist für den Bildschirm gemacht (72 DPI). Warum eignet es sich nicht für den Druck?
 
 [[antwort:3]]
 
@@ -235,7 +235,7 @@ Besprechen Sie die beiden Fragen mit Ihrer Sitznachbarin oder Ihrem Sitznachbarn
 [[/aufgabe]]
 
 [[kontrolle]]
-- **a)** Ein Bild, das für den Bildschirm gedacht ist, enthält entsprechend wenige Pixel — mehr könnte der Bildschirm gar nicht anzeigen (siehe Aufgabe 3: nur 2,1 Megapixel). Für guten Druck braucht man aber rund 300 DPI. Von so einem Bildschirmbild bliebe bei 300 DPI nur eine sehr kleine scharfe Fläche übrig.
+- **a)** Bei 72 DPI liegen nur 72 Punkte auf einem Zoll. Jeder Punkt ist gut 0,3 mm gross und als Klötzchen sichtbar. Ein Bild für den Bildschirm hat meist wenige Pixel, z. B. 1920 × 1080. Bei 300 DPI (üblich für scharfen Druck) ergibt das nur 16,3 × 9,1 cm. Druckt man es grösser, sinkt die DPI: Auf 68 × 38 cm sind es nur noch 72 DPI, und das Bild wirkt unscharf.
 - **b)** Beide zusammen ergeben die Qualität. Die Pixelanzahl setzt die Obergrenze an Details — was nicht in der Datei steckt, kann kein Drucker ergänzen. Die DPI bestimmt, wie fein diese Details verteilt werden. Für gross **und** scharf brauchen Sie beides.
 [[/kontrolle]]
 

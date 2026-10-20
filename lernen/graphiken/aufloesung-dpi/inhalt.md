@@ -199,9 +199,11 @@ Bild B, weil es mehr Pixel hat (3600 × 2400 statt 2400 × 1800). Bei gleicher D
 ## Zwei Transferfragen
 
 <details>
-<summary>Warum reicht eine Bildschirmauflösung von 72 DPI für den Druck nicht?</summary>
+<summary>Ein Bild ist für den Bildschirm gemacht (72 DPI). Warum eignet es sich nicht für den Druck?</summary>
 
-Ein Bild, das für den Bildschirm gedacht ist, enthält entsprechend wenige Pixel — mehr könnte der Bildschirm gar nicht anzeigen (ein Schulzimmer-Bildschirm schafft 2,1 Megapixel, eine aktuelle Handykamera rund 50). Für guten Druck braucht man aber rund 300 DPI. Von so einem Bildschirmbild bliebe bei 300 DPI nur eine sehr kleine scharfe Fläche übrig.
+Bei 72 DPI liegen nur 72 Punkte auf einem Zoll. Jeder Punkt ist gut 0,3 mm gross und als Klötzchen sichtbar.
+
+Ein Bild für den Bildschirm hat meist wenige Pixel, z. B. 1920 × 1080. Bei 300 DPI (üblich für scharfen Druck) ergibt das nur 16,3 × 9,1 cm. Druckt man es grösser, sinkt die DPI: Auf 68 × 38 cm sind es nur noch 72 DPI, und das Bild wirkt unscharf.
 
 </details>
 
