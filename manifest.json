@@ -61,6 +61,17 @@
         { "titel": "Struktogramm-Baukasten (Käfer)", "untertitel": "Bausteine ziehen, Käfer laufen lassen", "pfad": "algorithmen/baukasten/" },
         { "titel": "Käfer-Labyrinth", "untertitel": "10 Levels: Wiederholung, Verzweigung, Wandfolger", "pfad": "algorithmen/baukasten/?reihe=labyrinth" }
       ]
+    },
+    {
+      "thema": "Dateiformate",
+      "gefaess": "Gym",
+      "checks": [
+        {
+          "titel": "Dateiformat-Check",
+          "untertitel": "Codierung, SVG, Bitfolgen als Bild, Magic Numbers",
+          "pfad": "dateiformate/format-check/"
+        }
+      ]
     }
   ]
 }
