@@ -1,0 +1,142 @@
+{
+  "titel": "Dateiformat-Check",
+  "eyebrow": "Gym · Codes und Algorithmen · Dateiformate",
+  "intro": "Zwölf Fragen zum Dossier «Dem Fall auf der Spur»: Codierung, Textformat SVG, Bitfolgen als Bild, Magic Numbers und Spielstände. Klicken Sie eine Antwort an; Sie sehen sofort, ob sie stimmt, und warum.",
+  "quellen": [
+    "oinf.ch/kurs/codes-und-algorithmen/dateiformate/"
+  ],
+  "fragen": [
+    {
+      "q": "In einer Textdatei steht <b>ZÃ¼rich</b> statt <b>Zürich</b>. Was ist die wahrscheinlichste Ursache?",
+      "opts": [
+        "Die Datei ist beschädigt, einzelne Bits sind gekippt.",
+        "Die Bytes wurden mit der falschen Codierung gelesen (UTF-8-Text als Windows-1252).",
+        "Der Editor kennt keine Umlaute.",
+        "Die Datei hat die falsche Dateiendung."
+      ],
+      "a": 1,
+      "fb": "Das <b>ü</b> besteht in UTF-8 aus zwei Bytes (<code>C3 BC</code>). Liest ein Programm sie mit der Windows-Tabelle, wird daraus <b>Ã¼</b>. Die Bits sind in Ordnung; es fehlt nur die richtige «Brille»."
+    },
+    {
+      "q": "Die Bytes <code>48 61 6C 6C 6F</code> stehen in einer Textdatei. Welches Wort ergibt die ASCII-Tabelle?",
+      "opts": [
+        "Hello",
+        "Hallo",
+        "Halle",
+        "Hullo"
+      ],
+      "a": 1,
+      "fb": "<code>48</code> = H, <code>61</code> = a, <code>6C</code> = l, <code>6C</code> = l, <code>6F</code> = o. Es ergibt <b>Hallo</b>."
+    },
+    {
+      "q": "Was legt ein Dateiformat fest?",
+      "opts": [
+        "Nur die Dateiendung, zum Beispiel .png.",
+        "Nur, wie gross die Datei höchstens sein darf.",
+        "Wie die Daten angeordnet sind und was die einzelnen Bits oder Bytes bedeuten (Codierung).",
+        "Mit welchem Programm man die Datei bearbeiten muss."
+      ],
+      "a": 2,
+      "fb": "Ein Format ist die Kombination aus <b>Anordnung</b> (zum Beispiel Header, dann Daten) und <b>Codierung</b> (was die Werte bedeuten). Ohne dieses Wissen sind es nur Bits."
+    },
+    {
+      "q": "Sie öffnen eine SVG-Datei in einem Texteditor. Was sehen Sie?",
+      "opts": [
+        "Nur unlesbare Sonderzeichen, weil SVG ein Binärformat ist.",
+        "Lesbaren Text mit Angaben wie Koordinaten, Formen und Farben.",
+        "Eine leere Datei, weil Bilder nur im Browser sichtbar sind.",
+        "Eine Liste mit allen Pixeln des Bildes."
+      ],
+      "a": 1,
+      "fb": "SVG ist ein <b>Textformat</b>: Das Bild wird mit Anweisungen beschrieben (zum Beispiel ein Polygon mit Eckpunkten). Man kann es lesen und sogar von Hand ändern."
+    },
+    {
+      "q": "In einer SVG-Datei liegt der Punkt A bei <code>(100, 100)</code> und der Punkt B bei <code>(100, 50)</code>. Wo liegt B im Bild?",
+      "opts": [
+        "Unterhalb von A.",
+        "Über A.",
+        "Links von A.",
+        "Rechts von A."
+      ],
+      "a": 1,
+      "fb": "Der Ursprung <code>(0, 0)</code> liegt <b>oben links</b>, die y-Achse zeigt <b>nach unten</b>. Ein kleinerer y-Wert bedeutet also weiter oben."
+    },
+    {
+      "q": "Ein Mini-Bildformat hat Breite 4 Bit, Höhe 4 Bit und Farbtiefe 3 Bit. Das Bild ist 4 Pixel breit und 4 Pixel hoch. Wie viele Bits haben die Pixeldaten?",
+      "opts": [
+        "16 Bit",
+        "24 Bit",
+        "48 Bit",
+        "64 Bit"
+      ],
+      "a": 2,
+      "fb": "n = Breite · Höhe · Farbtiefe = 4 · 4 · 3 = <b>48 Bit</b>. Die 16 Bit des Headers (4 + 4 + 8) kommen noch dazu."
+    },
+    {
+      "q": "Im Mini-Bildformat hat jedes Pixel 3 Bit: je 1 Bit für Rot, Grün und Blau (1 = an, 0 = aus). Welche Farbe ist <code>110</code>?",
+      "opts": [
+        "Weiss",
+        "Blau",
+        "Gelb",
+        "Schwarz"
+      ],
+      "a": 2,
+      "fb": "<code>110</code> heisst Rot an, Grün an, Blau aus. Rot und Grün zusammen ergeben <b>Gelb</b>. Zur Kontrolle: <code>111</code> ist Weiss, <code>000</code> ist Schwarz."
+    },
+    {
+      "q": "Dieselbe Bitfolge wird einmal nach Format A und einmal nach Format B aufgeteilt. Es entstehen zwei verschiedene Bilder. Warum?",
+      "opts": [
+        "Eines der beiden Bilder ist falsch gespeichert.",
+        "Der Computer würfelt bei unklaren Daten.",
+        "Die Bits ändern sich beim Öffnen.",
+        "Das Format bestimmt, wie die Bits aufgeteilt und gedeutet werden."
+      ],
+      "a": 3,
+      "fb": "Die Bits sind gleich, nur die <b>Brille</b> (das Format) ist anders: andere Breite, Höhe und Farbtiefe führen zu einem anderen Bild."
+    },
+    {
+      "q": "Eine Datei heisst <i>Ferienfoto.jpg</i> und beginnt mit den Bytes <code>4D 5A</code>. Was ist sie vermutlich wirklich?",
+      "opts": [
+        "Ein JPG-Bild",
+        "Ein ausführbares Windows-Programm (EXE)",
+        "Eine PDF-Datei",
+        "Eine Textdatei"
+      ],
+      "a": 1,
+      "fb": "<code>4D 5A</code> ist in ASCII <b>MZ</b>, die Magic Number von Windows-Programmen. Die Endung lässt sich beliebig ändern, der Dateianfang verrät den wahren Typ. Eine solche Datei sollte man nicht öffnen."
+    },
+    {
+      "q": "Sie benennen <i>katze.png</i> in <i>katze.pdf</i> um. Was passiert mit dem Inhalt der Datei?",
+      "opts": [
+        "Er wird in ein PDF umgewandelt.",
+        "Er bleibt unverändert; es sind weiterhin PNG-Daten mit der Magic Number <code>89 50 4E 47</code>.",
+        "Die Datei wird leer.",
+        "Die Bytes werden neu angeordnet."
+      ],
+      "a": 1,
+      "fb": "Umbenennen ändert nur den Namen, nicht die Bytes. Zum Umwandeln braucht es ein Programm, das die Daten neu schreibt."
+    },
+    {
+      "q": "Eine Datei beginnt mit den Bytes <code>FF D8 FF</code>. Welches Format ist das?",
+      "opts": [
+        "PNG",
+        "PDF",
+        "JPG",
+        "GIF"
+      ],
+      "a": 2,
+      "fb": "<code>FF D8 FF</code> ist die Magic Number von <b>JPG</b>. In einem Editor mit erweiterter Tabelle (Windows-1252, ähnlich Latin-1) erscheint sie als <b>ÿØÿ</b>. In 7-Bit-ASCII (<code>00</code> bis <code>7F</code>) wären diese Zeichen nicht lesbar."
+    },
+    {
+      "q": "Ein Spielstand soll so gespeichert werden, dass 8 verschiedene Zustände unterscheidbar sind. Wie viele Bit braucht man mindestens?",
+      "opts": [
+        "2 Bit",
+        "3 Bit",
+        "4 Bit",
+        "8 Bit"
+      ],
+      "a": 1,
+      "fb": "Mit n Bit gibt es 2ⁿ Möglichkeiten. 2² = 4 reicht nicht, 2³ = 8 genau. Es braucht also <b>3 Bit</b>."
+    }
+  ]
+}
