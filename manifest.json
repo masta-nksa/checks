@@ -65,6 +65,13 @@
     {
       "thema": "Dateiformate",
       "gefaess": "Gym",
+      "lernseiten": [
+        {
+          "titel": "Lösungen zum Dossier «Dem Fall auf der Spur»",
+          "untertitel": "Aufgaben 1.1 bis A.2 zum Aufklappen",
+          "pfad": "lernen/dateiformate/loesungen/"
+        }
+      ],
       "checks": [
         {
           "titel": "Dateiformat-Check",
